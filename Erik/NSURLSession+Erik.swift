@@ -10,7 +10,7 @@ import Foundation
 
 extension NSURLSession: URLBrowser {
     
-    public func browseURL(URL: NSURL, completionHandler: ((AnyObject?, NSError?) -> Void)?) {
+    public func browseURL(URL: NSURL, completionHandler: ((Any?, ErrorType?) -> Void)?) {
         self.dataTaskWithURL(URL) { (data, response, error) -> Void in
             if let e = error {
                 completionHandler?(data, e)

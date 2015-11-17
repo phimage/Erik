@@ -9,12 +9,11 @@
 import Foundation
 import WebKit
 
-// MARK: WKWebView as JavaScriptEvaluator & URLBrowser
-extension WKWebView: JavaScriptEvaluator {}
+// MARK: WKWebView as JavaScriptEvaluator & URLBrowserluator {}
 
-extension WKWebView: URLBrowser {
+extension WKWebView: LayoutEngine {
 
-    public func browseURL(URL: NSURL, completionHandler: ((AnyObject?, NSError?) -> Void)?) {
+    public func browseURL(URL: NSURL, completionHandler: ((Any?, ErrorType?) -> Void)?) {
         let request = NSURLRequest(URL: URL)
         self.loadRequest(request)
         handleLoadRequestCompletion {
@@ -39,42 +38,3 @@ extension WKWebView: URLBrowser {
         }
     }
 }
-
-// MARK: WKUserContentController as JavaScriptEvaluator
-
-private let JSENotificationKey = "uccjse"
-extension WKUserContentController: JavaScriptEvaluator {
-    
-    func initialize() {
-        self.addScriptMessageHandler(self, name: JSENotificationKey)
-    }
-    
-    public func evaluateJavaScript(javaScriptString: String, completionHandler: ((AnyObject?, NSError?) -> Void)?) {
-        
-        var source = "try {"
-        source +=  "window.webkit.messageHandlers.\(JSENotificationKey).postMessage({body: javaScriptString});"
-        source += "}"
-        source +=  "catch(err) {"
-        source +=  "window.webkit.messageHandlers.\(JSENotificationKey).postMessage({error: err.message});"
-        source += "}"
-        
-        let userScript = WKUserScript(source: source, injectionTime: WKUserScriptInjectionTime.AtDocumentEnd, forMainFrameOnly: true)
-        
-        self.addUserScript(userScript)
-        
-        
-        // wait on finish (maybe need some id in js to wait the good one
-        
-        
-    }
-}
-
-extension WKUserContentController: WKScriptMessageHandler {
-    public func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-        
-        assert(message.name == JSENotificationKey)
-        
-        print(message.body)
-    }
-}
-

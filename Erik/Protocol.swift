@@ -9,22 +9,32 @@
 import Foundation
 import Kanna
 
-public typealias Resources = [String]
 
-public typealias CallBack = ((AnyObject?, NSError?) -> Void)
+// MARK: - protocols
 
-public let DefaultDownloader = NSURLSession.sharedSession()
-
-// MARK: - Javascript evaluator
 public protocol JavaScriptEvaluator {
      func evaluateJavaScript(javaScriptString: String, completionHandler: ((AnyObject?, NSError?) -> Void)?)
 }
+public protocol HTMLParser {
+    func parseHTML(html: String) -> HTMLDocument? // add callback instead of return ?
+}
+
+public protocol URLBrowser {
+    func browseURL(URL: NSURL, completionHandler: ((Any?, ErrorType?) -> Void)?)
+    var resources: Bool {get} // browser fetch all resources or not
+}
+
+public typealias LayoutEngine = protocol<URLBrowser,JavaScriptEvaluator>
+
+// MARK: - default impl
+public typealias Resources = [String]
+
 public extension JavaScriptEvaluator {
     func evaluateResources(resources: Resources) { // add callback or/and return
         for resource in resources {
             // download file
             if let url = NSURL(string: resource) {
-                DefaultDownloader.browseURL(url) { (object, error) -> Void in
+                NSURLSession.sharedSession().browseURL(url) { (object, error) -> Void in
                     guard let script = object as? String else {
                         // let error = NSError(domain: ErikErrorKey, code: 1, userInfo: ["message": "No resource content"])
                         // completionHandler?(object, error)
@@ -44,18 +54,6 @@ public extension JavaScriptEvaluator {
             }
         }
     }
-}
-
-
-// MARK: - HTML parser
-public protocol HTMLParser {
-    func parseHTML(html: String) -> HTMLDocument? // add callback or/and return
-}
-
-// MARK: - URL browser
-public protocol URLBrowser {
-    func browseURL(URL: NSURL, completionHandler: ((AnyObject?, NSError?) -> Void)?)
-    var resources: Bool {get}
 }
 
 public extension URLBrowser {
