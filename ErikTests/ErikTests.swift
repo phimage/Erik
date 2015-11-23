@@ -15,7 +15,6 @@ import XCTest
 #endif
 
 import WebKit
-import Kanna
 
 class ErikTests: XCTestCase {
     
@@ -48,38 +47,53 @@ class ErikTests: XCTestCase {
     
     func testExample() {
         let url = NSURL(string:"http://www.google.com")!
-        let jsString = "1;"
-
 
         let visitExpectation = self.expectationWithDescription("visit")
-        let javaScriptExpectation = self.expectationWithDescription("js")
+        let getContentExpectation = self.expectationWithDescription("getContent")
 
         Erik.visitURL(url) { (obj, err) -> Void in
-            visitExpectation.fulfill()
             if let error = err {
-               print(error)
+                print(error)
+                
+                XCTFail("\(error)")
             }
-            
-            if let doc = obj as? HTMLDocument {
-                print(doc)
-                for input in doc.xpath("input[@id='st-ib']") {
-                    print(input.text)
+            else if let doc = obj {
+                visitExpectation.fulfill()
+                
+                //print(doc)
+                for input in doc.querySelectorAll("input[name=\"q\"]") {
+                    print(input.innerHTML)
+                    
+                    input["value"] = "test"
                 }
-            }
-            // else this is an error ?
-            
-            Erik.evaluateJavaScript(jsString) { (obj, err) -> Void in
-                print(obj)
-                if let error = err {
-                    print(error)
+                
+                for input in doc.querySelectorAll("form[name=\"f\"]") {
+                    if let form = input as? Form {
+                        form.submit()
+                    }
+                    else {
+                         XCTFail("\(input) not a form")
+                    }
+                    
+                    
+                    Erik.visitURL(url) { (obj, err) -> Void in
+                        if let error = err {
+                            print(error)
+                            
+                            XCTFail("\(error)")
+                        }
+                        else if let doc = obj {
+                            getContentExpectation.fulfill()
+                            
+                            print(doc)
+                        }
+                    }
                 }
-                else {
-                     javaScriptExpectation.fulfill()
-                }
+                
             }
         }
         
-        self.waitForExpectationsWithTimeout(500, handler: { error in
+        self.waitForExpectationsWithTimeout(50, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }

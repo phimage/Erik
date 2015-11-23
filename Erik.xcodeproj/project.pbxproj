@@ -15,18 +15,14 @@
 		C42828F21BF9EE2B005EC7C3 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F11BF9EE2B005EC7C3 /* Browser.swift */; };
 		C42828F41BF9EE45005EC7C3 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F31BF9EE45005EC7C3 /* Protocol.swift */; };
 		C42828F61BF9EEAF005EC7C3 /* WebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F51BF9EEAF005EC7C3 /* WebKit.swift */; };
-		C43178771BFA2D7B00C04250 /* NSURLSession+Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43178761BFA2D7B00C04250 /* NSURLSession+Erik.swift */; };
-		C43178791BFA307F00C04250 /* JSContext+Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43178781BFA307F00C04250 /* JSContext+Erik.swift */; };
 		C43178821BFA3E1A00C04250 /* ErikOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = C43178811BFA3E1A00C04250 /* ErikOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C43178871BFA3E2200C04250 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F11BF9EE2B005EC7C3 /* Browser.swift */; };
 		C43178881BFA3E2200C04250 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F31BF9EE45005EC7C3 /* Protocol.swift */; };
 		C43178891BFA3E2200C04250 /* WebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F51BF9EEAF005EC7C3 /* WebKit.swift */; };
-		C431788B1BFA3E2200C04250 /* NSURLSession+Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43178761BFA2D7B00C04250 /* NSURLSession+Erik.swift */; };
-		C431788C1BFA3E2200C04250 /* JSContext+Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43178781BFA307F00C04250 /* JSContext+Erik.swift */; };
+		C463134C1BFCE3A50078FB9D /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463134B1BFCE3A50078FB9D /* HTML.swift */; };
+		C463134D1BFCE3FF0078FB9D /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463134B1BFCE3A50078FB9D /* HTML.swift */; };
 		C4D50DDD1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
 		C4D50DDE1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
-		C4D50DE11BFB52960053B624 /* WKUserContentController+Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DE01BFB52960053B624 /* WKUserContentController+Erik.swift */; };
-		C4D50DE21BFB52960053B624 /* WKUserContentController+Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DE01BFB52960053B624 /* WKUserContentController+Erik.swift */; };
 		C4D50DEC1BFB58EE0053B624 /* ErikOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C431787F1BFA3E1A00C04250 /* ErikOSX.framework */; };
 		C4D50DF21BFB59030053B624 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
 		E0D1B8CBEC687F5EE711EAC1 /* Pods_ErikOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A34CAB2D6E9C56DE435463C /* Pods_ErikOSX.framework */; };
@@ -69,13 +65,11 @@
 		C42828F11BF9EE2B005EC7C3 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
 		C42828F31BF9EE45005EC7C3 /* Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		C42828F51BF9EEAF005EC7C3 /* WebKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebKit.swift; sourceTree = "<group>"; };
-		C43178761BFA2D7B00C04250 /* NSURLSession+Erik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Erik.swift"; sourceTree = "<group>"; };
-		C43178781BFA307F00C04250 /* JSContext+Erik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSContext+Erik.swift"; sourceTree = "<group>"; };
 		C431787F1BFA3E1A00C04250 /* ErikOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ErikOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43178811BFA3E1A00C04250 /* ErikOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErikOSX.h; sourceTree = "<group>"; };
 		C43178831BFA3E1A00C04250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C463134B1BFCE3A50078FB9D /* HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTML.swift; sourceTree = "<group>"; };
 		C4D50DDC1BFB51130053B624 /* Erik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Erik.swift; sourceTree = "<group>"; };
-		C4D50DE01BFB52960053B624 /* WKUserContentController+Erik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+Erik.swift"; sourceTree = "<group>"; };
 		C4D50DE71BFB58EE0053B624 /* ErikOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErikOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D50DEB1BFB58EE0053B624 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C735044BB44C9D1E52EB9784 /* Pods-Erik.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Erik.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Erik/Pods-Erik.debug.xcconfig"; sourceTree = "<group>"; };
@@ -180,8 +174,7 @@
 				C42828F11BF9EE2B005EC7C3 /* Browser.swift */,
 				C42828F31BF9EE45005EC7C3 /* Protocol.swift */,
 				C42828F51BF9EEAF005EC7C3 /* WebKit.swift */,
-				C43178761BFA2D7B00C04250 /* NSURLSession+Erik.swift */,
-				C4D50DDF1BFB52460053B624 /* WIP */,
+				C463134B1BFCE3A50078FB9D /* HTML.swift */,
 			);
 			path = Erik;
 			sourceTree = "<group>";
@@ -202,15 +195,6 @@
 				C43178831BFA3E1A00C04250 /* Info.plist */,
 			);
 			path = ErikOSX;
-			sourceTree = "<group>";
-		};
-		C4D50DDF1BFB52460053B624 /* WIP */ = {
-			isa = PBXGroup;
-			children = (
-				C43178781BFA307F00C04250 /* JSContext+Erik.swift */,
-				C4D50DE01BFB52960053B624 /* WKUserContentController+Erik.swift */,
-			);
-			name = WIP;
 			sourceTree = "<group>";
 		};
 		C4D50DE81BFB58EE0053B624 /* ErikOSXTests */ = {
@@ -561,12 +545,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D50DDD1BFB51130053B624 /* Erik.swift in Sources */,
+				C463134C1BFCE3A50078FB9D /* HTML.swift in Sources */,
 				C42828F61BF9EEAF005EC7C3 /* WebKit.swift in Sources */,
 				C42828F21BF9EE2B005EC7C3 /* Browser.swift in Sources */,
 				C42828F41BF9EE45005EC7C3 /* Protocol.swift in Sources */,
-				C43178791BFA307F00C04250 /* JSContext+Erik.swift in Sources */,
-				C43178771BFA2D7B00C04250 /* NSURLSession+Erik.swift in Sources */,
-				C4D50DE11BFB52960053B624 /* WKUserContentController+Erik.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,12 +565,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D50DDE1BFB51130053B624 /* Erik.swift in Sources */,
+				C463134D1BFCE3FF0078FB9D /* HTML.swift in Sources */,
 				C43178891BFA3E2200C04250 /* WebKit.swift in Sources */,
 				C43178871BFA3E2200C04250 /* Browser.swift in Sources */,
 				C43178881BFA3E2200C04250 /* Protocol.swift in Sources */,
-				C431788B1BFA3E2200C04250 /* NSURLSession+Erik.swift in Sources */,
-				C431788C1BFA3E2200C04250 /* JSContext+Erik.swift in Sources */,
-				C4D50DE21BFB52960053B624 /* WKUserContentController+Erik.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
