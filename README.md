@@ -8,13 +8,13 @@
            )](https://github.com/phimage/Erik/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Erik.svg?style=flat)](http://cocoadocs.org/docsets/Erik/)
 
 
-[<img align="left" src="logo.png" hspace="20">](#logo) Erik (The Phantom of Opera) is an headless browser based on WebKit and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
+[<img align="left" src="logo.png" hspace="20">](#logo) Erik ([The Phantom of Opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera)) is an headless browser based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
 
-An headless browser allow to run functional tests, to access and manipulate webpages.
+An headless browser allow to run functional tests, to access and manipulate webpages using javascript.
 
 ```swift
 let browser = Erik.visitURL(url]) { document, error in
-    // browse HTML element, click, submit form
+    // browse HTML element, click, submit form and more
 }
 ```
 
@@ -41,7 +41,7 @@ browser.visitURL...
 ```
 
 ## HTML Inspection
-Search for nodes by CSS selector
+Search for nodes by [CSS selector](http://www.w3schools.com/cssref/css_selectors.asp)
 ```swift
 for link in doc.querySelectorAll("a, link") {
     print(link.text)

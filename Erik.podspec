@@ -31,4 +31,5 @@ Pod::Spec.new do |s|
     sp.source_files = "Erik/*.swift"
   end
 
+  s.dependency 'Kanna'
 end
