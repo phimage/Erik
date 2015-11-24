@@ -32,4 +32,6 @@ Pod::Spec.new do |s|
   end
 
   s.dependency 'Kanna'
+  s.dependency 'Eki'
+
 end
