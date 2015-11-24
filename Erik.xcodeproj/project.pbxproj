@@ -7,26 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41C7DCF16410DA47A7A58CF4 /* Pods_ErikOSXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE1913C2088579A7697D42A /* Pods_ErikOSXTests.framework */; };
 		434526165F1F0E7C54CDC84C /* Pods_Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111237125C2287474E6694C0 /* Pods_Erik.framework */; };
 		C42828DB1BF9EDE1005EC7C3 /* Erik.h in Headers */ = {isa = PBXBuildFile; fileRef = C42828DA1BF9EDE1005EC7C3 /* Erik.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42828E21BF9EDE1005EC7C3 /* Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42828D71BF9EDE1005EC7C3 /* Erik.framework */; };
 		C42828E71BF9EDE1005EC7C3 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
-		C42828F21BF9EE2B005EC7C3 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F11BF9EE2B005EC7C3 /* Browser.swift */; };
-		C42828F41BF9EE45005EC7C3 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F31BF9EE45005EC7C3 /* Protocol.swift */; };
-		C42828F61BF9EEAF005EC7C3 /* WebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F51BF9EEAF005EC7C3 /* WebKit.swift */; };
+		C42828F61BF9EEAF005EC7C3 /* LayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F51BF9EEAF005EC7C3 /* LayoutEngine.swift */; };
 		C43178821BFA3E1A00C04250 /* ErikOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = C43178811BFA3E1A00C04250 /* ErikOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C43178871BFA3E2200C04250 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F11BF9EE2B005EC7C3 /* Browser.swift */; };
-		C43178881BFA3E2200C04250 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F31BF9EE45005EC7C3 /* Protocol.swift */; };
-		C43178891BFA3E2200C04250 /* WebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F51BF9EEAF005EC7C3 /* WebKit.swift */; };
-		C463134C1BFCE3A50078FB9D /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463134B1BFCE3A50078FB9D /* HTML.swift */; };
-		C463134D1BFCE3FF0078FB9D /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463134B1BFCE3A50078FB9D /* HTML.swift */; };
+		C43178891BFA3E2200C04250 /* LayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F51BF9EEAF005EC7C3 /* LayoutEngine.swift */; };
+		C463134C1BFCE3A50078FB9D /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463134B1BFCE3A50078FB9D /* Document.swift */; };
+		C463134D1BFCE3FF0078FB9D /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463134B1BFCE3A50078FB9D /* Document.swift */; };
 		C4D50DDD1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
 		C4D50DDE1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
-		C4D50DEC1BFB58EE0053B624 /* ErikOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C431787F1BFA3E1A00C04250 /* ErikOSX.framework */; };
+		C4D50DEC1BFB58EE0053B624 /* Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C431787F1BFA3E1A00C04250 /* Erik.framework */; };
 		C4D50DF21BFB59030053B624 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
 		E0D1B8CBEC687F5EE711EAC1 /* Pods_ErikOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A34CAB2D6E9C56DE435463C /* Pods_ErikOSX.framework */; };
-		FAE6B08545F23042323B31B8 /* Pods_ErikTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FAAB81BB7A65CAF7BE2BBE /* Pods_ErikTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,16 +56,16 @@
 		C42828E11BF9EDE1005EC7C3 /* ErikTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErikTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErikTests.swift; path = ErikTests/ErikTests.swift; sourceTree = SOURCE_ROOT; };
 		C42828E81BF9EDE1005EC7C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C42828F11BF9EE2B005EC7C3 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
-		C42828F31BF9EE45005EC7C3 /* Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
-		C42828F51BF9EEAF005EC7C3 /* WebKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebKit.swift; sourceTree = "<group>"; };
-		C431787F1BFA3E1A00C04250 /* ErikOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ErikOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C42828F51BF9EEAF005EC7C3 /* LayoutEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEngine.swift; sourceTree = "<group>"; };
+		C431787F1BFA3E1A00C04250 /* Erik.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Erik.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43178811BFA3E1A00C04250 /* ErikOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErikOSX.h; sourceTree = "<group>"; };
 		C43178831BFA3E1A00C04250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C463134B1BFCE3A50078FB9D /* HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTML.swift; sourceTree = "<group>"; };
+		C463134B1BFCE3A50078FB9D /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		C4D50DDC1BFB51130053B624 /* Erik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Erik.swift; sourceTree = "<group>"; };
 		C4D50DE71BFB58EE0053B624 /* ErikOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErikOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D50DEB1BFB58EE0053B624 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4DF857E1C04AD0A0002E142 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../Eki/README.md; sourceTree = "<group>"; };
+		C4DF857F1C04ADDA0002E142 /* Erik.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Erik.podspec; sourceTree = "<group>"; };
 		C735044BB44C9D1E52EB9784 /* Pods-Erik.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Erik.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Erik/Pods-Erik.debug.xcconfig"; sourceTree = "<group>"; };
 		E64C9E85EE53CF0A28E97D7D /* Pods-Erik.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Erik.release.xcconfig"; path = "Pods/Target Support Files/Pods-Erik/Pods-Erik.release.xcconfig"; sourceTree = "<group>"; };
 		EEC248EA8E4AD2CD57F9011A /* Pods-ErikOSXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErikOSXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ErikOSXTests/Pods-ErikOSXTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,7 +85,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42828E21BF9EDE1005EC7C3 /* Erik.framework in Frameworks */,
-				FAE6B08545F23042323B31B8 /* Pods_ErikTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4D50DEC1BFB58EE0053B624 /* ErikOSX.framework in Frameworks */,
-				41C7DCF16410DA47A7A58CF4 /* Pods_ErikOSXTests.framework in Frameworks */,
+				C4D50DEC1BFB58EE0053B624 /* Erik.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +141,8 @@
 				C42828E51BF9EDE1005EC7C3 /* ErikTests */,
 				C4D50DE81BFB58EE0053B624 /* ErikOSXTests */,
 				C42828D81BF9EDE1005EC7C3 /* Products */,
+				C4DF857E1C04AD0A0002E142 /* README.md */,
+				C4DF857F1C04ADDA0002E142 /* Erik.podspec */,
 				1374356BE5091641C8AE3CDE /* Pods */,
 				630BA295A9583F1A0F53DE04 /* Frameworks */,
 			);
@@ -159,7 +153,7 @@
 			children = (
 				C42828D71BF9EDE1005EC7C3 /* Erik.framework */,
 				C42828E11BF9EDE1005EC7C3 /* ErikTests.xctest */,
-				C431787F1BFA3E1A00C04250 /* ErikOSX.framework */,
+				C431787F1BFA3E1A00C04250 /* Erik.framework */,
 				C4D50DE71BFB58EE0053B624 /* ErikOSXTests.xctest */,
 			);
 			name = Products;
@@ -171,10 +165,8 @@
 				C42828DA1BF9EDE1005EC7C3 /* Erik.h */,
 				C42828DC1BF9EDE1005EC7C3 /* Info.plist */,
 				C4D50DDC1BFB51130053B624 /* Erik.swift */,
-				C42828F11BF9EE2B005EC7C3 /* Browser.swift */,
-				C42828F31BF9EE45005EC7C3 /* Protocol.swift */,
-				C42828F51BF9EEAF005EC7C3 /* WebKit.swift */,
-				C463134B1BFCE3A50078FB9D /* HTML.swift */,
+				C42828F51BF9EEAF005EC7C3 /* LayoutEngine.swift */,
+				C463134B1BFCE3A50078FB9D /* Document.swift */,
 			);
 			path = Erik;
 			sourceTree = "<group>";
@@ -251,12 +243,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C42828EE1BF9EDE1005EC7C3 /* Build configuration list for PBXNativeTarget "ErikTests" */;
 			buildPhases = (
-				D5231ED9FD967BC475679DC9 /* Check Pods Manifest.lock */,
 				C42828DD1BF9EDE1005EC7C3 /* Sources */,
 				C42828DE1BF9EDE1005EC7C3 /* Frameworks */,
 				C42828DF1BF9EDE1005EC7C3 /* Resources */,
-				4B43CC8EDBF7F5FF797249DF /* Embed Pods Frameworks */,
-				B171CE3417A177D6A237E881 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -285,19 +274,16 @@
 			);
 			name = ErikOSX;
 			productName = ErikOSX;
-			productReference = C431787F1BFA3E1A00C04250 /* ErikOSX.framework */;
+			productReference = C431787F1BFA3E1A00C04250 /* Erik.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C4D50DE61BFB58EE0053B624 /* ErikOSXTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4D50DEF1BFB58EE0053B624 /* Build configuration list for PBXNativeTarget "ErikOSXTests" */;
 			buildPhases = (
-				DF78B4DA0E47F3EBFF44D415 /* Check Pods Manifest.lock */,
 				C4D50DE31BFB58EE0053B624 /* Sources */,
 				C4D50DE41BFB58EE0053B624 /* Frameworks */,
 				C4D50DE51BFB58EE0053B624 /* Resources */,
-				15406460783CA910E6265787 /* Embed Pods Frameworks */,
-				6BD77FCACCBDF93AEEAE4783 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -387,51 +373,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		15406460783CA910E6265787 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikOSXTests/Pods-ErikOSXTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4B43CC8EDBF7F5FF797249DF /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikTests/Pods-ErikTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6BD77FCACCBDF93AEEAE4783 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikOSXTests/Pods-ErikOSXTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		73264931D890451C857818B9 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -447,37 +388,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Erik/Pods-Erik-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B171CE3417A177D6A237E881 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikTests/Pods-ErikTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BF088855B5DAF2A7EA705BA7 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		D5231ED9FD967BC475679DC9 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -507,21 +418,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikOSX/Pods-ErikOSX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DF78B4DA0E47F3EBFF44D415 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		EA074855D0C7C0EB242B62F3 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -545,10 +441,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D50DDD1BFB51130053B624 /* Erik.swift in Sources */,
-				C463134C1BFCE3A50078FB9D /* HTML.swift in Sources */,
-				C42828F61BF9EEAF005EC7C3 /* WebKit.swift in Sources */,
-				C42828F21BF9EE2B005EC7C3 /* Browser.swift in Sources */,
-				C42828F41BF9EE45005EC7C3 /* Protocol.swift in Sources */,
+				C463134C1BFCE3A50078FB9D /* Document.swift in Sources */,
+				C42828F61BF9EEAF005EC7C3 /* LayoutEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,10 +459,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D50DDE1BFB51130053B624 /* Erik.swift in Sources */,
-				C463134D1BFCE3FF0078FB9D /* HTML.swift in Sources */,
-				C43178891BFA3E2200C04250 /* WebKit.swift in Sources */,
-				C43178871BFA3E2200C04250 /* Browser.swift in Sources */,
-				C43178881BFA3E2200C04250 /* Protocol.swift in Sources */,
+				C463134D1BFCE3FF0078FB9D /* Document.swift in Sources */,
+				C43178891BFA3E2200C04250 /* LayoutEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,8 +652,9 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"TEST\"";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikOSX;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Erik;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -782,7 +675,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikOSX;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Erik;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};

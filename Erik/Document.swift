@@ -7,9 +7,30 @@
 //
 
 import Foundation
+
+public protocol HTMLParser {
+    func parseHTML(html: String) -> Document?
+}
+
 import Kanna
+class KanaParser: HTMLParser {
+    static let instance = KanaParser()
+
+    func parseHTML(html: String) -> Document? {
+        if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding) {
+            return Document(rawValue: doc)
+        }
+        return nil
+    }
+    
+    static var escapeJavaScript: String -> String = {
+        return $0.stringByReplacingOccurrencesOfString("'", withString: "\\'")
+    }
+}
 
 public class Document : Node {
+    
+
     
     init(rawValue: HTMLDocument) {
         super.init(rawValue: rawValue, selectors: [])
@@ -130,9 +151,16 @@ public class Element: Node {
             return (self.rawValue as! XMLElement)[attr]
         }
         set {
-            let js = jsChangeAttribute(attr, value: newValue)
-            evaluateJavaScript(js)
+            self.setAttribute(attr, value: newValue)
         }
+    }
+    
+    public func setAttribute(attr: String, value: String?, completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
+        let js = jsChangeAttribute(attr, value: value)
+        #if TEST
+            print("js:\(js)")
+        #endif
+        evaluateJavaScript(js, completionHandler: completionHandler)
     }
     
     func jsSelector(varName: String = "erik") -> String {
@@ -143,10 +171,10 @@ public class Element: Node {
         return selectors.reduce("var \(varName) = document;\n") { result, selector in
             if selector.endsWith(":erik-child") {
                 let erikSelector = selector.stringByReplacingOccurrencesOfString(":erik-child", withString: "")
-                return result + "\(varName) = \(varName).querySelector('\(erikSelector)');\n"
+                return result + "\(varName) = \(varName).querySelector('\(KanaParser.escapeJavaScript(erikSelector))');\n"
             }
             else {
-                return result + "\(varName) = \(varName).querySelectorAll('\(selector)')[0];\n"
+                return result + "\(varName) = \(varName).querySelectorAll('\(KanaParser.escapeJavaScript(selector))')[0];\n"
             }
         }
     }
@@ -164,6 +192,9 @@ public class Element: Node {
     func jsFunction(name: String, varName: String = "erik") -> String {
         var js = jsSelector(varName) // TODO check undefined?
         js += "\(varName).\(name)();\n"
+        #if TEST
+            print("js:\(js)")
+        #endif
         return js
     }
     
@@ -171,20 +202,8 @@ public class Element: Node {
         evaluateJavaScript(jsFunction("click", varName: "testvar"))
     }
     
-    func evaluateJavaScript(js: String) {
-        print(js)
-        var source = "try {"
-        source +=  js
-        source += "}"
-        source +=  "catch(err) {"
-        source +=  "window.webkit.messageHandlers.\(JSENotificationKey).postMessage({error: err.message});"
-        source += "}"
-        
-        layoutEngine?.evaluateJavaScript(source, completionHandler: { (object, error) -> Void in
-            if let e = error {
-                print(e)
-            }
-        })
+    func evaluateJavaScript(js: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
+        layoutEngine?.evaluateJavaScript(js, completionHandler: completionHandler)
     }
     
 }

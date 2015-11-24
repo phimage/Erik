@@ -2,23 +2,23 @@
 
 use_frameworks!
 
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 target 'Erik' do
     pod 'Kanna'
+    pod 'Eki'
 end
 
 target 'ErikTests' do
-    pod 'Kanna'
 end
 
 
-platform :osx, '10.9'
+platform :osx, '10.10'
 
 target 'ErikOSX' do
     pod 'Kanna'
+    pod 'Eki'
 end
 
 target 'ErikOSXTests' do
-    pod 'Kanna'
 end
