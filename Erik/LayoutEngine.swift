@@ -16,6 +16,8 @@ public protocol URLBrowser {
     func browseURL(URL: NSURL, completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
     var currentURL: NSURL? {get}
     func currentContent(completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
+    
+    func clear()
 }
 public typealias LayoutEngine = protocol<URLBrowser,JavaScriptEvaluator>
 
@@ -79,6 +81,17 @@ extension WebKitLayoutEngine {
                 }
             }
         }
+    }
+    
+    public func clear() {
+        // try to remove all information
+        if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
+            for cookie in cookies {
+                NSHTTPCookieStorage.sharedHTTPCookieStorage().deleteCookie(cookie)
+            }
+        }
+        webView.configuration.processPool = WKProcessPool()
+        // maybe reset url?
     }
 }
 

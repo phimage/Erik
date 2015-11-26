@@ -165,7 +165,7 @@ public class Element: Node {
     
     func jsSelector(varName: String = "erik") -> String {
         if let id = self["id"] { // id must be unique
-            return "var \(varName) = document.querySelector('[id=\(id)]')"
+            return "var \(varName) = document.querySelector('[id=\"\(id)\"]');\n"
         }
         
         return selectors.reduce("var \(varName) = document;\n") { result, selector in
@@ -199,7 +199,7 @@ public class Element: Node {
     }
     
     public func click(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
-        evaluateJavaScript(jsFunction("click", varName: "testvar"), completionHandler: completionHandler)
+        evaluateJavaScript(jsFunction("click"), completionHandler: completionHandler)
     }
     
     func evaluateJavaScript(js: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {

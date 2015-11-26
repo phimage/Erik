@@ -11,8 +11,8 @@ import WebKit
 
 public class Erik {
     
-    var layoutEngine: LayoutEngine
-    var htmlParser: HTMLParser
+    public var layoutEngine: LayoutEngine
+    public var htmlParser: HTMLParser
     
     public init() {
         self.layoutEngine = WebKitLayoutEngine()
