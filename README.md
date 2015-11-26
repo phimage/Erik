@@ -29,9 +29,9 @@ Erik.visitURL(url]) { object, error in
    }
 }
 ```
-Host to get current url
+How to get current url?
 ```swift
-Erik.currentURL
+if let url = Erik.currentURL {..}
 ```
 
 For multiple browsing you can create an instance of headless browser and use same functions
@@ -120,7 +120,7 @@ Add `pod 'Erik'` to your `Podfile` and run `pod install`.
 
 A well known headless browser is named [PhantomJS](http://phantomjs.org/) and a very well known browser is [Opera](www.opera.com).
 
-As a tribute I use [Erik](https://en.wikipedia.org/wiki/Erik_(The_Phantom_of_the_Opera), firstname of the title character from Gaston Leroux's novel *Le Fantôme de l'Opéra* best known to English speakers as [The Phantom of Opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera). 
+As a tribute I use [Erik](https://en.wikipedia.org/wiki/Erik_(The_Phantom_of_the_Opera)), firstname of the title character from Gaston Leroux's novel *Le Fantôme de l'Opéra* best known to English speakers as [The Phantom of Opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera). 
 
 My name is also Erik. So egotistical to call a project using its firstname isn't it.
 
