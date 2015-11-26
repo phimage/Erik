@@ -109,20 +109,20 @@ extension Node: CustomStringConvertible {
 
 public class TextArea: Element {
     
-    public func select() {
-        evaluateJavaScript(jsFunction("select"))
+    public func select(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
+        evaluateJavaScript(jsFunction("select"), completionHandler: completionHandler)
     }
     
 }
 
 public class Form: Element {
     
-    public func submit() {
-        evaluateJavaScript(jsFunction("submit"))
+    public func submit(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
+        evaluateJavaScript(jsFunction("submit"), completionHandler: completionHandler)
     }
     
-    public func reset() {
-        evaluateJavaScript(jsFunction("reset"))
+    public func reset(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
+        evaluateJavaScript(jsFunction("reset"), completionHandler: completionHandler)
     }
 }
 
@@ -198,8 +198,8 @@ public class Element: Node {
         return js
     }
     
-    public func click() {
-        evaluateJavaScript(jsFunction("click", varName: "testvar"))
+    public func click(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
+        evaluateJavaScript(jsFunction("click", varName: "testvar"), completionHandler: completionHandler)
     }
     
     func evaluateJavaScript(js: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {

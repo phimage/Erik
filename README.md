@@ -8,7 +8,7 @@
            )](https://github.com/phimage/Erik/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Erik.svg?style=flat)](http://cocoadocs.org/docsets/Erik/)
 
 
-[<img align="left" src="logo.png" hspace="20">](#logo) Erik ([The Phantom of Opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera)) is an headless browser based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
+[<img align="left" src="logo.png" hspace="20">](#logo) Erik is an headless browser based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
 
 An headless browser allow to run functional tests, to access and manipulate webpages using javascript.
 
@@ -41,31 +41,57 @@ browser.visitURL...
 ```
 
 ## HTML Inspection
-Search for nodes by [CSS selector](http://www.w3schools.com/cssref/css_selectors.asp)
+### Search for nodes by [CSS selector](http://www.w3schools.com/cssref/css_selectors.asp)
 ```swift
 for link in doc.querySelectorAll("a, link") {
     print(link.text)
     print(link["href"])
  }
 ```
-Edit first input field with name "user"
+### Edit first input field with name "user"
 ```swift
 if let input = doc.querySelectorAll("input[name=\"user\"]").first {
     input["value"] = "Eric"
  }
 ```
 
-Submit a form
+### Submit a form
 ```swift
 if let form = doc.querySelector("form[id='search']") as? Form {
     form.submit()
  }
 ```
 
+### Evaluate some JavaScript
+```swift
+let javaScriptSource = "console.log("test");"
+Erik.evaluateJavaScript(javaScriptSource) { (obj, err) -> Void in
+  if let error = err {
+    switch error {
+      case ErikError.JavaScriptError(let message):
+        print(message)
+      default :
+        print("\(error)")
+    }
+  }
+  else if let capturedValue = obj {
+    // do something according to result
+  }
+}
+```
+`capturedValue` is the content of JavaScript variable `resultErik`
+Affect this variable in your JavaScript code.
+```swift
+let javaScriptSource = "console.log("test"); var resultErik = 1 + 1;"
+```
+
+### Warning about DOM change
 :warning: All action on Dom use JavaScript and do not modify the actual
 `Document` object and its children `Element`.
 
 You must use `currentContent` to get a refreshed `Document` object
+
+### Get current content
 ```swift
 Erik.currentContent { (obj, err) -> Void in
     if let error = err {
@@ -77,19 +103,28 @@ Erik.currentContent { (obj, err) -> Void in
 ```
 ## Links
 - [A list of (almost) all headless web browsers in existence](https://github.com/dhamaniasad/HeadlessBrowsers)
-- [Wikipédia](https://en.wikipedia.org/wiki/Headless_browser)
+- [Wikipedia](https://en.wikipedia.org/wiki/Headless_browser)
 
-# Setup #
+## Setup
 
-## Using [cocoapods](http://cocoapods.org/) ##
+### Using [cocoapods](http://cocoapods.org/) ##
 
 Add `pod 'Erik'` to your `Podfile` and run `pod install`.
 
 *Add `use_frameworks!` to the end of the `Podfile`.*
 
 ## Roadmap
-- [ ] Make javascript evaluation return the last result in callback
-- [ ] Refresh Dom element or give a new Document in function callback
+- [ ] (WIP) WebView screenshot (webkit view privates api)
+
+## Why Erik?
+
+A well known headless browser is named [PhantomJS](http://phantomjs.org/) and a very well known browser is [Opera](www.opera.com).
+
+As a tribute I use [Erik](https://en.wikipedia.org/wiki/Erik_(The_Phantom_of_the_Opera), firstname of the title character from Gaston Leroux's novel *Le Fantôme de l'Opéra* best known to English speakers as [The Phantom of Opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera). 
+
+My name is also Erik. So egotistical to call a project using its firstname isn't it.
+
+My only justification is that I was playing Metal Gear Solid *V* and the creator Hideo Kojima name appears over 100 times in the game. Coincidentally the full name of the game is Metal Gear Solid *V* : The  **Phantom** Pain.
 
 ## Lisense
 The MIT License. See the LICENSE file for more information.

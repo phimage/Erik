@@ -2,23 +2,25 @@
 
 use_frameworks!
 
-platform :ios, '9.0'
 
 target 'Erik' do
+    platform :ios, '9.0'
     pod 'Kanna'
     pod 'Eki'
 end
 
 target 'ErikTests' do
+    platform :ios, '9.0'
+    pod 'FileKit'
 end
 
-
-platform :osx, '10.10'
-
 target 'ErikOSX' do
+    platform :osx, '10.10'
     pod 'Kanna'
     pod 'Eki'
 end
 
 target 'ErikOSXTests' do
+    platform :osx, '10.10'
+    pod 'FileKit'
 end

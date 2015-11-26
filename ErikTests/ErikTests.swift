@@ -9,6 +9,7 @@
 import XCTest
 @testable import Erik
 import Eki
+import FileKit
 
 class ErikTests: XCTestCase {
     
@@ -32,7 +33,7 @@ class ErikTests: XCTestCase {
                 }
             }
         }
-        self.waitForExpectationsWithTimeout(2, handler: nil)
+        self.waitForExpectationsWithTimeout(5, handler: nil)
     }
     
     
@@ -106,7 +107,7 @@ class ErikTests: XCTestCase {
             }
         }
         
-        self.waitForExpectationsWithTimeout(100, handler: { error in
+        self.waitForExpectationsWithTimeout(20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
@@ -123,12 +124,12 @@ class ErikTests: XCTestCase {
                 Erik.evaluateJavaScript("zae;azeaze") { (obj, err) -> Void in
                     if let error = err {
                         switch error {
-                        case ErikError.JavaScriptError:
+                        case ErikError.JavaScriptError(let message):
+                            print(message)
                             visitExpectation.fulfill()
                         default :
-                            print(error)
-                            XCTFail("Wrong error type")
-                            break
+                            print("\(error)")
+                            XCTFail("Wrong error type \(error)")
                         }
                     }
                     else if let _ = obj {
@@ -138,10 +139,42 @@ class ErikTests: XCTestCase {
             }
         }
         
-        self.waitForExpectationsWithTimeout(100, handler: { error in
+        self.waitForExpectationsWithTimeout(5, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
+    
+    
+    func testJavascriptResult() {
+        let visitExpectation = self.expectationWithDescription("visit")
+
+        
+        Erik.visitURL(url) { (obj, err) -> Void in
+            if let error = err {
+                XCTFail("\(error)")
+            }
+            else if let _ = obj {
+                let source = "var resultErik = 1 + 1; 3 + 5;"
+                Erik.evaluateJavaScript(source) { (obj, err) -> Void in
+                    if let error = err {
+                        XCTFail("Unexpected error \(error)")
+                    }
+                    else if let result = obj as? Int {
+                        XCTAssertEqual(2, result)
+                        visitExpectation.fulfill()
+                    }
+                    else {
+                        XCTFail("no result returned")
+                    }
+                }
+            }
+        }
+
+        self.waitForExpectationsWithTimeout(5, handler: { error in
+            XCTAssertNil(error, "Oh, we got timeout")
+        })
+    }
+
     
     func testJavascriptTimeOut() {
         let visitExpectation = self.expectationWithDescription("visit")
@@ -172,13 +205,12 @@ class ErikTests: XCTestCase {
                         case ErikError.TimeOutError:
                             visitExpectation.fulfill()
                         default :
-                            print(error)
-                            XCTFail("Wrong error type")
-                            break
+                            print("\(error)")
+                            XCTFail("Wrong error type \(error)")
                         }
                     }
-                    else if let _ = obj {
-                        XCTFail("Object must not be returned")
+                    else if let result = obj {
+                        XCTFail("Object \(result) must not be returned")
                     }
                     else {
                         visitExpectation.fulfill() // Currently ErikError.TimeOutError could not occur
@@ -190,13 +222,11 @@ class ErikTests: XCTestCase {
         if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine {
             engine.javaScriptWaitTime = timeoutPrevious
         }
-        self.waitForExpectationsWithTimeout(100, handler: { error in
+        self.waitForExpectationsWithTimeout(20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
 
-    
-    
     func testContentAtStart() {
         let expectation = self.expectationWithDescription("start content")
         let erik = Erik()
@@ -221,6 +251,24 @@ class ErikTests: XCTestCase {
         self.waitForExpectationsWithTimeout(100, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
+    }
+    
+    
+    func testSnapShot() {
+        if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine,
+            data: ErikImage = engine.snapshot(CGSize(width: 600, height: 400)) {
+                
+                let path = Path.UserTemporary + "erik\(NSDate().timeIntervalSince1970).png"
+                
+                print("Write snapshot to \(path)")
+                
+                do {
+                    try data |> File<ErikImage>(path: path)
+                }
+                catch let e {
+                    XCTFail("\(e)")
+                }
+        }
     }
     
 }

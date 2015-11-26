@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		434526165F1F0E7C54CDC84C /* Pods_Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111237125C2287474E6694C0 /* Pods_Erik.framework */; };
+		5FEEAF2F3ABBD6B1C1DD5BE7 /* Pods_ErikOSXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE1913C2088579A7697D42A /* Pods_ErikOSXTests.framework */; };
+		92E4565B9B9BE1A3812B773E /* Pods_ErikTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FAAB81BB7A65CAF7BE2BBE /* Pods_ErikTests.framework */; };
 		C42828DB1BF9EDE1005EC7C3 /* Erik.h in Headers */ = {isa = PBXBuildFile; fileRef = C42828DA1BF9EDE1005EC7C3 /* Erik.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42828E21BF9EDE1005EC7C3 /* Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42828D71BF9EDE1005EC7C3 /* Erik.framework */; };
 		C42828E71BF9EDE1005EC7C3 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
@@ -85,6 +87,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42828E21BF9EDE1005EC7C3 /* Erik.framework in Frameworks */,
+				92E4565B9B9BE1A3812B773E /* Pods_ErikTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D50DEC1BFB58EE0053B624 /* Erik.framework in Frameworks */,
+				5FEEAF2F3ABBD6B1C1DD5BE7 /* Pods_ErikOSXTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,9 +247,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C42828EE1BF9EDE1005EC7C3 /* Build configuration list for PBXNativeTarget "ErikTests" */;
 			buildPhases = (
+				FBE78F4AB43A129B1FEC79DD /* Check Pods Manifest.lock */,
 				C42828DD1BF9EDE1005EC7C3 /* Sources */,
 				C42828DE1BF9EDE1005EC7C3 /* Frameworks */,
 				C42828DF1BF9EDE1005EC7C3 /* Resources */,
+				0FCD568CDAC88AC57710E176 /* Embed Pods Frameworks */,
+				62E60B9AE07D42A5E0ED97AE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -281,9 +288,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4D50DEF1BFB58EE0053B624 /* Build configuration list for PBXNativeTarget "ErikOSXTests" */;
 			buildPhases = (
+				6A78CCAB86D8196708AB81E9 /* Check Pods Manifest.lock */,
 				C4D50DE31BFB58EE0053B624 /* Sources */,
 				C4D50DE41BFB58EE0053B624 /* Frameworks */,
 				C4D50DE51BFB58EE0053B624 /* Resources */,
+				7138017D10AC0A7C8C7B29FF /* Embed Pods Frameworks */,
+				31AD1E205B85890FF10084EE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -373,6 +383,81 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0FCD568CDAC88AC57710E176 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikTests/Pods-ErikTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		31AD1E205B85890FF10084EE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikOSXTests/Pods-ErikOSXTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		62E60B9AE07D42A5E0ED97AE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikTests/Pods-ErikTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6A78CCAB86D8196708AB81E9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7138017D10AC0A7C8C7B29FF /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ErikOSXTests/Pods-ErikOSXTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		73264931D890451C857818B9 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -419,6 +504,21 @@
 			showEnvVarsInLog = 0;
 		};
 		EA074855D0C7C0EB242B62F3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FBE78F4AB43A129B1FEC79DD /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -589,6 +689,7 @@
 				INFOPLIST_FILE = Erik/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"TEST\"";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Erik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

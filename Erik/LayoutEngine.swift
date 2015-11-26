@@ -28,6 +28,7 @@ public class WebKitLayoutEngine: NSObject, LayoutEngine {
     public var javaScriptQueue: Queue = Queue(name: "ErikJavaScript", kind: .Serial)
     public var callBackQueue: Queue = Queue(name: "ErikCallBack", kind: .Serial)
     public var javaScriptWaitTime: NSTimeInterval = 20
+    public var javaScriptResultVarName: String = "resultErik"
 
     public let webView: WKWebView
     
@@ -81,6 +82,38 @@ extension WebKitLayoutEngine {
     }
 }
 
+#if os(iOS)
+    public typealias ErikImage = UIImage
+#elseif os(OSX)
+    public typealias ErikImage = NSImage
+#endif
+extension WebKitLayoutEngine {
+   public func snapshot(size: CGSize) -> ErikImage? {
+        #if os(iOS)
+            if let capturedView : UIView = self.webView.snapshotViewAfterScreenUpdates(false) {
+                UIGraphicsBeginImageContextWithOptions(size, true, 0)
+                let ctx = UIGraphicsGetCurrentContext()
+                let scale : CGFloat! = size.width / capturedView.layer.bounds.size.width
+                let transform = CGAffineTransformMakeScale(scale, scale)
+                CGContextConcatCTM(ctx, transform)
+                capturedView.drawViewHierarchyInRect(capturedView.bounds, afterScreenUpdates: true)
+                let  image : ErikImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext();
+                return image
+            }
+        #elseif os(OSX)
+            if let view = self.webView.subviews.first,
+                rep: NSBitmapImageRep = view.bitmapImageRepForCachingDisplayInRect(view.bounds) {
+                view.cacheDisplayInRect(view.bounds, toBitmapImageRep:rep)
+                let image = NSImage(size: size)
+                image.addRepresentation(rep)
+                return nil //image https://github.com/lemonmojo/WKWebView-Screenshot
+            }
+        #endif
+        return nil
+    }
+}
+
 // MARK: JavaScriptEvaluator
 import Eki
 extension WebKitLayoutEngine {
@@ -89,16 +122,18 @@ extension WebKitLayoutEngine {
         javaScriptQueue.async { [unowned self] in
             let key = NSUUID().UUIDString
             
-            var source = "try { "
+            
+            var source  = "var \(self.javaScriptResultVarName);"
+            source += " try { "
             source += javaScriptString
-            source += " } "
-            source += "catch(err) { "
+            source += " } catch(err) { "
             source += "window.webkit.messageHandlers.\(JavascriptErrorHandler).postMessage({error: err.message, key: '\(key)'});"
-            source += "}"
-            source += "finally { "
+            source += " } finally { "
             source += "window.webkit.messageHandlers.\(JavascriptEndHandler).postMessage({key: '\(key)'});"
-            source += "}"
+            source += " } "
             // TODO return last value computed by javaScriptString like $*
+            source +=  "if (\(self.javaScriptResultVarName) != undefined) { var tmpResult = \(self.javaScriptResultVarName); \(self.javaScriptResultVarName) = undefined; tmpResult; };"
+  
             
             self.expect(key)
             self.webView.evaluateJavaScript(source) {[unowned self] (object, error) -> Void in
@@ -116,6 +151,7 @@ extension WebKitLayoutEngine {
                         else {
                             completionHandler?(object, error)
                         }
+                        self.removebox(key)
                     }
                     else {
                         completionHandler?(object, ErikError.TimeOutError)
@@ -205,6 +241,9 @@ extension Semaphorable {
             return nil
         }
         return box.object
+    }
+    func removebox(key: String) {
+        self.semaphores[key] = nil
     }
     
     var semaphores: [SemaphorableKey: SemaphoreBox] {
