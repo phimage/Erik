@@ -10,10 +10,20 @@ import XCTest
 @testable import Erik
 import Eki
 import FileKit
+import BrightFutures
+
+
+
+
 
 class ErikTests: XCTestCase {
     
     let url = NSURL(string:"http://www.google.com")!
+    #if os(OSX)
+    let googleFormSelector = "f"
+    #elseif os(iOS)
+    let googleFormSelector = "gs"
+    #endif
     
     override func setUp() {
         super.setUp()
@@ -36,10 +46,11 @@ class ErikTests: XCTestCase {
         self.waitForExpectationsWithTimeout(5, handler: nil)
     }
     
-    
     func testSubmit() {
 
         let visitExpectation = self.expectationWithDescription("visit")
+        let inputExpectation = self.expectationWithDescription("getInput")
+        let submitExpectation = self.expectationWithDescription("submit")
         let currentContentExpectation = self.expectationWithDescription("currentContent")
 
         Erik.visitURL(url) { (obj, err) -> Void in
@@ -54,6 +65,7 @@ class ErikTests: XCTestCase {
                 //print(doc)
                 // do a google search
                 for input in doc.querySelectorAll("input[name='q']") {
+                    inputExpectation.fulfill()
                     print(input)
                     
                     let value: String? = "test"
@@ -75,7 +87,8 @@ class ErikTests: XCTestCase {
                             XCTFail("not parsable")
                         }
                         
-                        for input in doc.querySelectorAll("form[name=\"f\"]") {
+                        for input in doc.querySelectorAll("form[name='\(self.googleFormSelector)']") {
+                            submitExpectation.fulfill()
                             if let form = input as? Form {
                                 form.submit()
                             }
@@ -270,5 +283,49 @@ class ErikTests: XCTestCase {
                 }
         }
     }
+
+    func testFuture() {
+        let value: String? = "test"
+        
+        let visitExpectation = self.expectationWithDescription("visit")
+        let browser = Erik()
+  
+        var future: Future<Document, NSError> = browser.visitURLFuture(url)
+   
+        future = future.flatMap { document -> Future<Document, NSError> in
+            
+            if let input = document.querySelector("input[name='q']") {
+                input["value"] = value
+            }
+            return browser.currentContentFuture()
+        }
+        
+        future = future.flatMap { document -> Future<Document, NSError> in
+            
+            if let input2 = document.querySelector("input[name='q']") {
+                print(input2)
+                XCTAssertEqual(value, input2["value"])
+            }
+            
+            if let form = document.querySelector("form[name=\"\(self.googleFormSelector)\"]") as? Form {
+                form.submit()
+            }
+            
+            return browser.currentContentFuture()
+        }
+        
+        future.onSuccess { document in
+            visitExpectation.fulfill()
+        }
+        future.onFailure { error in
+            XCTFail("\(error)")
+        }
+        
+        self.waitForExpectationsWithTimeout(20, handler: { error in
+            XCTAssertNil(error, "Oh, we got timeout")
+        })
+        
+    }
+    
     
 }

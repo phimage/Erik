@@ -8,7 +8,7 @@
            )](https://github.com/phimage/Erik/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Erik.svg?style=flat)](http://cocoadocs.org/docsets/Erik/)
 
 
-[<img align="left" src="logo.png" hspace="20">](#logo) Erik is an headless browser based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
+[<img align="left" src="logo.png" hspace="20">](#logo) Erik is an [headless browser](https://en.wikipedia.org/wiki/Headless_browser) based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
 
 An headless browser allow to run functional tests, to access and manipulate webpages using javascript.
 
@@ -101,9 +101,44 @@ Erik.currentContent { (obj, err) -> Void in
     }
 }
 ```
+### Using Future
+As an optional feature, you can use [Future/Promise](https://en.wikipedia.org/wiki/Futures_and_promises) ( Erik use frameworks [BrightFutures](https://github.com/Thomvis/BrightFutures) & [Result](https://github.com/antitypical/Result))
+
+Example to submit a google search
+```swift
+let url = NSURL(string:"http://www.google.com")!
+let value = "Erik The Phantom of Opera"
+// visit
+var future: Future<Document, NSError> = Erik.visitURLFuture(url)
+// fill input field
+future = future.flatMap { document -> Future<Document, NSError> in
+  if let input = document.querySelector("input[name='q']") {
+    input["value"] = value
+  }
+  return Erik.currentContentFuture()
+}
+// optionally check value & submit form
+future = future.flatMap { document -> Future<Document, NSError> in
+  if let input = document.querySelector("input[name='q']") {
+      // value ==  input["value"]
+  }
+  if let form = document.querySelector("form[name=\"f\"]") as? Form {
+    form.submit()
+  }
+  return Erik.currentContentFuture()
+}
+// finally get final result as success or error
+future.onSuccess { document in
+  // parse result
+}
+future.onFailure { error in
+  print("\(error)")
+}
+```
+
 ## Links
 - [A list of (almost) all headless web browsers in existence](https://github.com/dhamaniasad/HeadlessBrowsers)
-- [Wikipedia](https://en.wikipedia.org/wiki/Headless_browser)
+- [Wikipedia Headless browser](https://en.wikipedia.org/wiki/Headless_browser)
 
 ## Setup
 
@@ -112,6 +147,9 @@ Erik.currentContent { (obj, err) -> Void in
 Add `pod 'Erik'` to your `Podfile` and run `pod install`.
 
 *Add `use_frameworks!` to the end of the `Podfile`.*
+
+#### Optional Future
+Add `pod 'Erik/Future'` to your `Podfile` and run `pod install`.
 
 ## Roadmap
 - [ ] (WIP) WebView screenshot (webkit view privates api)
