@@ -33,6 +33,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Future" do  |sp|
     sp.source_files = "Erik/Future/*.swift"
+    sp.dependency 'Erik/Core'
     sp.dependency 'BrightFutures'
   end
 
