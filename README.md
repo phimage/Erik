@@ -22,11 +22,11 @@ let browser = Erik.visitURL(url]) { document, error in
 Go to an url
 ```swift
 Erik.visitURL(url]) { object, error in
-   if let e = error {
+    if let e = error {
 
-   } else if let doc = object as? Document {
-     // HTML Inspection
-   }
+    } else if let doc = object as? Document {
+        // HTML Inspection
+    }
 }
 ```
 How to get current url?
@@ -46,37 +46,37 @@ browser.visitURL...
 for link in doc.querySelectorAll("a, link") {
     print(link.text)
     print(link["href"])
- }
+}
 ```
 ### Edit first input field with name "user"
 ```swift
 if let input = doc.querySelectorAll("input[name=\"user\"]").first {
     input["value"] = "Eric"
- }
+}
 ```
 
 ### Submit a form
 ```swift
 if let form = doc.querySelector("form[id='search']") as? Form {
     form.submit()
- }
+}
 ```
 
 ### Evaluate some JavaScript
 ```swift
 let javaScriptSource = "console.log("test");"
 Erik.evaluateJavaScript(javaScriptSource) { (obj, err) -> Void in
-  if let error = err {
-    switch error {
-      case ErikError.JavaScriptError(let message):
-        print(message)
-      default :
-        print("\(error)")
+    if let error = err {
+        switch error {
+            case ErikError.JavaScriptError(let message):
+            print(message)
+            default :
+            print("\(error)")
+        }
     }
-  }
-  else if let capturedValue = obj {
-    // do something according to result
-  }
+    else if let capturedValue = obj {
+        // do something according to result
+    }
 }
 ```
 `capturedValue` is the content of JavaScript variable `resultErik`
@@ -112,27 +112,20 @@ let value = "Erik The Phantom of Opera"
 var future: Future<Document, NSError> = Erik.visitURLFuture(url)
 // fill input field
 future = future.flatMap { document -> Future<Document, NSError> in
-  if let input = document.querySelector("input[name='q']") {
-    input["value"] = value
-  }
-  return Erik.currentContentFuture()
-}
-// optionally check value & submit form
-future = future.flatMap { document -> Future<Document, NSError> in
-  if let input = document.querySelector("input[name='q']") {
-      // value ==  input["value"]
-  }
-  if let form = document.querySelector("form[name=\"f\"]") as? Form {
-    form.submit()
-  }
-  return Erik.currentContentFuture()
+    if let input = document.querySelector("input[name='q']") {
+        input["value"] = value
+    }
+    if let form = document.querySelector("form[name=\"f\"]") as? Form {
+        form.submit()
+    }
+    return Erik.currentContentFuture()
 }
 // finally get final result as success or error
 future.onSuccess { document in
-  // parse result
+    // parse result
 }
 future.onFailure { error in
-  print("\(error)")
+    print("\(error)")
 }
 ```
 
@@ -152,7 +145,8 @@ Add `pod 'Erik'` to your `Podfile` and run `pod install`.
 Add `pod 'Erik/Future'` to your `Podfile` and run `pod install`.
 
 ## Roadmap
-- [ ] (WIP) WebView screenshot (webkit view privates api)
+- [ ] (WIP) WKWebView screenshot (webkit view privates api)
+- [ ] Allow to set a previously created WKWebView
 
 ## Why Erik?
 
