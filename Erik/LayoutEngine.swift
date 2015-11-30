@@ -48,11 +48,15 @@ public class WebKitLayoutEngine: NSObject, LayoutEngine {
 
     public let webView: WKWebView
     
-    init(frame: CGRect = CGRect(x: 0, y: 0, width: 1024, height: 768)) {
-        self.webView = WKWebView(frame: frame, configuration:  WKWebViewConfiguration())
+    init(webView: WKWebView) {
+        self.webView = webView
         super.init()
         self.webView.configuration.userContentController.addScriptMessageHandler(self, name: JavascriptErrorHandler)
         self.webView.configuration.userContentController.addScriptMessageHandler(self, name: JavascriptEndHandler)
+    }
+
+    convenience init(frame: CGRect = CGRect(x: 0, y: 0, width: 1024, height: 768)) {
+        self.init(webView: WKWebView(frame: frame, configuration:  WKWebViewConfiguration()))
     }
 }
 

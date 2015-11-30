@@ -29,8 +29,12 @@ public class Erik {
     public var layoutEngine: LayoutEngine
     public var htmlParser: HTMLParser
     
-    public init() {
-        self.layoutEngine = WebKitLayoutEngine()
+    public init(webView: WKWebView? = nil) {
+        if let view = webView {
+            self.layoutEngine = WebKitLayoutEngine(webView: view)
+        } else {
+            self.layoutEngine = WebKitLayoutEngine()
+        }
         self.htmlParser = KanaParser.instance
     }
 
