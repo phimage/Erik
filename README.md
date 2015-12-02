@@ -82,7 +82,7 @@ Erik.evaluateJavaScript(javaScriptSource) { (obj, err) -> Void in
 `capturedValue` is the content of JavaScript variable `resultErik`
 Affect this variable in your JavaScript code.
 ```swift
-let javaScriptSource = "console.log("test"); var resultErik = 1 + 1;"
+let javaScriptSource = "console.log('test'); var resultErik = 1 + 1;"
 ```
 
 ### Warning about DOM change
@@ -136,17 +136,31 @@ future.onFailure { error in
 ## Setup
 
 ### Using [cocoapods](http://cocoapods.org/) ##
+[CocoaPods](https://cocoapods.org/) is a centralized dependency manager for
+Objective-C and Swift. Go [here](https://guides.cocoapods.org/using/index.html)
+to learn more.
 
-Add `pod 'Erik'` to your `Podfile` and run `pod install`.
+1. Add the project to your [Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
-*Add `use_frameworks!` to the end of the `Podfile`.*
+    ```ruby
+    use_frameworks!
+
+    pod 'Erik'
+    // or specific target
+    target :test do
+       pod 'Erik'
+    end
+    ```
+
+2. Run `pod install` and open the `.xcworkspace` file to launch Xcode.
+
 
 #### Optional Future
 Add `pod 'Erik/Future'` to your `Podfile` and run `pod install`.
 
 ## Roadmap
-- [ ] (WIP) WKWebView screenshot (webkit view privates api)
-- [ ] Allow to set a previously created WKWebView
+
+- [ ] (WIP) WKWebView screenshot (webkit view privates api?)
 
 ## Why Erik?
 
