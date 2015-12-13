@@ -21,10 +21,10 @@ let browser = Erik.visitURL(url]) { document, error in
 ## Navigation
 Go to an url
 ```swift
-Erik.visitURL(url]) { object, error in
+Erik.visitURL(url) { object, error in
     if let e = error {
 
-    } else if let doc = object as? Document {
+    } else if let doc = object {
         // HTML Inspection
     }
 }
@@ -106,7 +106,7 @@ As an optional feature, you can use [Future/Promise](https://en.wikipedia.org/wi
 
 Example to submit a google search
 ```swift
-let url = NSURL(string:"http://www.google.com")!
+let url = NSURL(string:"https://www.google.com")!
 let value = "Erik The Phantom of Opera"
 // visit
 var future: Future<Document, NSError> = Erik.visitURLFuture(url)
@@ -128,6 +128,9 @@ future.onFailure { error in
     print("\(error)")
 }
 ```
+
+## Limitation
+On iOS 9, you need to ensure you use https://, because iOS 9 does not like apps sending or receiving data insecurely. If this something you want to override, click here to read about [App Transport Security in iOS 9](https://www.hackingwithswift.com/example-code/system/how-to-handle-the-https-requirements-in-ios-9-with-app-transport-security).
 
 ## Links
 - [A list of (almost) all headless web browsers in existence](https://github.com/dhamaniasad/HeadlessBrowsers)

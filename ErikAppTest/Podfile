@@ -1,0 +1,13 @@
+
+use_frameworks!
+
+target 'TestErik' do
+  platform :ios, '9.0'
+pod 'Erik'
+end
+
+target 'TestErikOSX' do
+  platform :osx, '10.10'
+    pod 'Erik'
+end
+

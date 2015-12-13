@@ -4,35 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Erik.xcscheme_^#shared#^_</key>
+		<key>TestErik.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>ErikOSX.xcscheme_^#shared#^_</key>
+		<key>TestErikOSX.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>C42828D61BF9EDE1005EC7C3</key>
+		<key>C4E90D4C1C1DC61100715C0C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C42828E01BF9EDE1005EC7C3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C431787E1BFA3E1A00C04250</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C4D50DE61BFB58EE0053B624</key>
+		<key>C4E90D691C1DD22E00715C0C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
