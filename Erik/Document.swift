@@ -183,7 +183,7 @@ public class Element: Node {
         }
         
         return selectors.reduce("var \(varName) = document;\n") { result, selector in
-            if selector.endsWith(":erik-child") {
+            if selector.hasSuffix(":erik-child") {
                 let erikSelector = selector.stringByReplacingOccurrencesOfString(":erik-child", withString: "")
                 return result + "\(varName) = \(varName).querySelector('\(KanaParser.escapeJavaScript(erikSelector))');\n"
             }
@@ -221,23 +221,6 @@ public class Element: Node {
     }
     
 }
-
-extension String {
-    func beginsWith (str: String) -> Bool {
-        if let range = self.rangeOfString(str) {
-            return range.startIndex == self.startIndex
-        }
-        return false
-    }
-    
-    func endsWith (str: String) -> Bool {
-        if let range = self.rangeOfString(str, options:NSStringCompareOptions.BackwardsSearch) {
-            return range.endIndex == self.endIndex
-        }
-        return false
-    }
-}
-
 
 public extension Array where Element: Node {
     
