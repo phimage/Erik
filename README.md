@@ -8,7 +8,7 @@
            )](https://github.com/phimage/Erik/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Erik.svg?style=flat)](http://cocoadocs.org/docsets/Erik/)
 
 
-[<img align="left" src="logo.png" hspace="20">](#logo) Erik is an [headless browser](https://en.wikipedia.org/wiki/Headless_browser) based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
+[<img align="left" src="logo.png" hspace="20">](#logo) Erik is a [headless browser](https://en.wikipedia.org/wiki/Headless_browser) based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
 
 An headless browser allow to run functional tests, to access and manipulate webpages using javascript.
 
