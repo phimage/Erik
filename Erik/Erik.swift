@@ -92,12 +92,7 @@ public enum ErikError: ErrorType {
 
 // MARK: static
 extension Erik {
-    public static var sharedInstance: Erik {
-        struct Static {
-            static let instance: Erik = Erik()
-        }
-        return Static.instance
-    }
+    public static let sharedInstance = Erik()
     
     public static func visitURL(URL: NSURL, completionHandler: ((Document?, ErrorType?) -> Void)?) {
         Erik.sharedInstance.visitURL(URL, completionHandler: completionHandler)
