@@ -13,7 +13,7 @@
 An headless browser allow to run functional tests, to access and manipulate webpages using javascript.
 
 ```swift
-let browser = Erik.visitURL(url]) { document, error in
+let browser = Erik.visitURL(url) { document, error in
     // browse HTML element, click, submit form and more
 }
 ```
