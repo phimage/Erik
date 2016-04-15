@@ -175,5 +175,5 @@ My name is also Erik. So egotistical to call a project using its firstname isn't
 
 My only justification is that I was playing Metal Gear Solid *V* and the creator Hideo Kojima name appears over 100 times in the game. Coincidentally the full name of the game is Metal Gear Solid *V* : The  **Phantom** Pain.
 
-## Lisense
+## License
 The MIT License. See the LICENSE file for more information.
