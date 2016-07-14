@@ -167,7 +167,7 @@ Add `pod 'Erik/Future'` to your `Podfile` and run `pod install`.
 
 ## Why Erik?
 
-A well known headless browser is named [PhantomJS](http://phantomjs.org/) and a very well known browser is [Opera](www.opera.com).
+A well known headless browser is named [PhantomJS](http://phantomjs.org/) and a very well known browser is [Opera](http://www.opera.com).
 
 As a tribute I use [Erik](https://en.wikipedia.org/wiki/Erik_(The_Phantom_of_the_Opera)), firstname of the title character from Gaston Leroux's novel *Le Fantôme de l'Opéra* best known to English speakers as [The Phantom of Opera](https://en.wikipedia.org/wiki/The_Phantom_of_the_Opera). 
 
