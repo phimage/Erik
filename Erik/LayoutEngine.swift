@@ -28,8 +28,17 @@ public protocol JavaScriptEvaluator {
 
 public protocol URLBrowser {
     func browseURL(URL: NSURL, completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
-    var currentURL: NSURL? {get}
+    func browseURL(URLRequest: NSURLRequest, completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
+    var url: NSURL? {get}
+    var title: String? {get}
     func currentContent(completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
+    
+    func goBack()
+    func goForward()
+    
+    var canGoBack: Bool { get }
+    var canGoForward: Bool { get }
+    func reload()
     
     func clear()
 }
@@ -66,14 +75,46 @@ extension WebKitLayoutEngine {
 
     public func browseURL(URL: NSURL, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
         let request = NSURLRequest(URL: URL)
-        webView.loadRequest(request)
+        self.browseURL(request, completionHandler: completionHandler)
+    }
+    
+    public func browseURL(URLRequest: NSURLRequest, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
+        webView.loadRequest(URLRequest)
         self.currentContent(completionHandler)
     }
-
+    
+    @available(*, deprecated=1.1, obsoleted=2.0, message="Use url")
     public var currentURL: NSURL? {
         return self.webView.URL
     }
     
+    public var url: NSURL? {
+        return self.webView.URL
+    }
+    
+    public var title: String? {
+        return self.webView.title
+    }
+
+    public func goBack() {
+        self.webView.goBack()
+    }
+    public func goForward() {
+        self.webView.goForward()
+    }
+    
+    public var canGoBack: Bool {
+        return self.webView.canGoBack
+    }
+
+    public var canGoForward: Bool {
+        return self.webView.canGoForward
+    }
+
+    public func reload() {
+        self.webView.reload()
+    }
+
     public func currentContent(completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
         handleLoadRequestCompletion {
             self.handleHTML(completionHandler)

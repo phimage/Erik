@@ -50,14 +50,14 @@ public class Document : Node {
         super.init(rawValue: rawValue, selectors: [])
     }
 
-    var title: String? { return (rawValue as? HTMLDocument)?.title }
-    var head: Element? {
+    public var title: String? { return (rawValue as? HTMLDocument)?.title }
+    public var head: Element? {
         guard let doc = self.rawValue as? HTMLDocument, element = doc.head else {
             return nil
         }
         return Element(rawValue: element, selectors: ["head"])
     }
-    var body: Element? {
+    public var body: Element? {
         guard let doc = self.rawValue as? HTMLDocument, element = doc.body else {
             return nil
         }
@@ -65,6 +65,7 @@ public class Document : Node {
     }
 }
 
+// HTML Node
 public class Node {
     var layoutEngine: LayoutEngine?
     
@@ -82,6 +83,7 @@ public class Node {
         self.rawValue = rawValue
     }
     
+    // Select elements using css selector
     public func querySelectorAll(selector: String) -> [Element] {
         let selectors = self.selectors + [selector]
         return rawValue.css(selector).map {
@@ -91,6 +93,7 @@ public class Node {
         }
     }
     
+    // Select an element using css selector
     public func querySelector(selector: String) -> Element? {
         guard let element = rawValue.at_css(selector) else {
             return nil
@@ -101,18 +104,43 @@ public class Node {
         return elem
     }
     
+    // Get all children element
     public var elements: [Element] {
         return querySelectorAll("*")
     }
     
+    // Get first child element
     public var firstChild: Element? {
         return querySelectorAll(":first-child").first
     }
     
+    // Get last child element
     public var lastChild: Element? {
         return querySelectorAll(":last-child").first
     }
     
+}
+
+extension Node {
+    
+    // Fill value of selected child
+    public func type(selector: String, value: String, key: String = "value") -> Element? {
+        if let element = self.querySelector(selector) {
+            element[key] = value
+            return element
+        }
+        return nil
+    }
+
+    // Click on selected child
+    public func click(selector: String) -> Element? {
+        if let element = self.querySelector(selector) {
+            element.click()
+            return element
+        }
+        return nil
+    }
+
 }
 
 extension Node: CustomStringConvertible {

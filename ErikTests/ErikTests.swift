@@ -15,10 +15,10 @@ import BrightFutures
 
 
 
+let url = NSURL(string:"https://www.google.com")!
 
 class ErikTests: XCTestCase {
     
-    let url = NSURL(string:"http://www.google.com")!
     #if os(OSX)
     let googleFormSelector = "f"
     #elseif os(iOS)
@@ -31,6 +31,27 @@ class ErikTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+    }
+    
+    func testVisit() {
+        
+        let visitExpectation = self.expectationWithDescription("visit")
+        
+        Erik.visitURL(url) { (obj, err) -> Void in
+            if let error = err {
+                print(error)
+                
+                XCTFail("\(error)")
+            }
+            else if let _ = obj {
+                XCTAssertNotNil(Erik.title)
+                visitExpectation.fulfill()
+                
+                // XCTAssertEqual(Erik.url?.host ?? "dummy", url.host) // failed is redirected to google.XXX TODO how to force lang (request header?)
+                XCTAssertEqual(Erik.url?.scheme ?? "dummy", url.scheme)
+            }
+        }
+        self.waitForExpectationsWithTimeout(5, handler: nil)
     }
     
     func testAsync() {
@@ -97,7 +118,7 @@ class ErikTests: XCTestCase {
                             }
                             
                             
-                            Erik.currentContent {[unowned self] (obj, err) -> Void in
+                            Erik.currentContent { (obj, err) -> Void in
                                 if let error = err {
                                     print(error)
                                     XCTFail("\(error)")
@@ -106,9 +127,9 @@ class ErikTests: XCTestCase {
                                     print(doc)
                                     currentContentExpectation.fulfill()
                                     
-                                    XCTAssertNotEqual(self.url, Erik.currentURL)
+                                    XCTAssertNotEqual(url, Erik.url)
                                     
-                                    XCTAssertNotNil("\(Erik.currentURL)".rangeOfString(value!))
+                                    XCTAssertNotNil("\(Erik.url)".rangeOfString(value!))
                                 }
                             }
                         }
