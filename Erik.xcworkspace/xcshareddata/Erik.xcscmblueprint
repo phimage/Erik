@@ -4,10 +4,10 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "3EC61B136E79A46BFD74001E38830CC5F860F5F8" : 0,
-    "BEA8B1EA35BA11118ED989F288CDE32CD4DA95C6" : 0
+    "3EC61B136E79A46BFD74001E38830CC5F860F5F8" : 9223372036854775807,
+    "BEA8B1EA35BA11118ED989F288CDE32CD4DA95C6" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0AC5E7BA-69FA-478E-A6AC-F0EFF3D3E9F3",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "17BFC1F4-58A1-4300-9484-DB635485DBDC",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "3EC61B136E79A46BFD74001E38830CC5F860F5F8" : "Eki\/",
     "BEA8B1EA35BA11118ED989F288CDE32CD4DA95C6" : "Erik\/"
@@ -17,7 +17,7 @@
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Erik.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/phimage\/Eki.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kodlian\/Eki.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3EC61B136E79A46BFD74001E38830CC5F860F5F8"
     },

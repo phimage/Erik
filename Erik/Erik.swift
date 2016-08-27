@@ -24,27 +24,29 @@ SOFTWARE.
 import Foundation
 import WebKit
 
+public typealias DocumentCompletionHandler = ((Document?, Error?) -> Void)
+
 // MARK: Error
-public enum ErikError: ErrorType {
+public enum ErikError: Error {
     // Error provided by javascript
-    case JavaScriptError(message: String)
+    case javaScriptError(message: String)
     // A timeout occurs
-    case TimeOutError
+    case timeOutError
     // No content returned
-    case NoContent
+    case noContent
     // HTML is not parsable
-    case HTMLNotParsable(html: String)
+    case htmlNotParsable(html: String)
     // Invalid url submited (NSURL init failed)
-    case InvalidURL(urlString: String)
+    case invalidURL(urlString: String)
 }
 
 // MARK: Erik class
 
 // Instance of headless browser
-public class Erik {
+open class Erik {
     
-    public var layoutEngine: LayoutEngine
-    public var htmlParser: HTMLParser
+    open var layoutEngine: LayoutEngine
+    open var htmlParser: HTMLParser
     
     // Init the headless browser
     public init(webView: WKWebView? = nil) {
@@ -56,80 +58,75 @@ public class Erik {
         self.htmlParser = KanaParser.instance
     }
 
-    @available(*, deprecated=1.1, obsoleted=2.0, message="Use url")
-    public var currentURL: NSURL? {
-        return layoutEngine.url
-    }
-
     // Get current url
-    public var url: NSURL? {
+    open var url: URL? {
         return layoutEngine.url
     }
     
     // Get current title
-    public var title: String? {
+    open var title: String? {
         return layoutEngine.title
     }
 
     // Go to specific url
-    public func visitURL(URL: NSURL, completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        layoutEngine.browseURL(URL) {[unowned self] (object, error) -> Void in
-            self.publishContent(object, error: error, completionHandler: completionHandler)
+    open func visit(url: Foundation.URL, completionHandler: DocumentCompletionHandler?) {
+        layoutEngine.browse(url: url) {[unowned self] (object, error) -> Void in
+            self.publish(content: object, error: error, completionHandler: completionHandler)
         }
     }
     
     // Go to specific url
-    public func visitURL(urlString: String, completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        if let url = NSURL(string: urlString) {
-            visitURL(url, completionHandler: completionHandler)
+    open func visit(urlString: String, completionHandler: DocumentCompletionHandler?) {
+        if let url = URL(string: urlString) {
+            visit(url: url, completionHandler: completionHandler)
         } else {
-            completionHandler?(nil, ErikError.InvalidURL(urlString: urlString))
+            completionHandler?(nil, ErikError.invalidURL(urlString: urlString))
         }
     }
     
     // Go to specific url using url request
-    public func loadURLRequest(URLRequest: NSURLRequest, completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        layoutEngine.browseURL(URLRequest) {[unowned self] (object, error) -> Void in
-            self.publishContent(object, error: error, completionHandler: completionHandler)
+    open func load(urlRequest: Foundation.URLRequest, completionHandler: DocumentCompletionHandler?) {
+        layoutEngine.browse(urlRequest: urlRequest) {[unowned self] (object, error) -> Void in
+            self.publish(content: object, error: error, completionHandler: completionHandler)
         }
     }
 
     // Get current content
-    public func currentContent(completionHandler: ((Document?, ErrorType?) -> Void)?) {
+    open func currentContent(completionHandler: DocumentCompletionHandler?) {
         layoutEngine.currentContent {[unowned self] (object, error) -> Void in
-            self.publishContent(object, error: error, completionHandler: completionHandler)
+            self.publish(content: object, error: error, completionHandler: completionHandler)
         }
     }
     
     // Navigates to the previous loaded page.
-    public func goBack() {
+    open func goBack() {
         layoutEngine.goBack()
     }
     
     // Navigates to the next page ie. the one loaded before `goBack`
-    public func goForward() {
+    open func goForward() {
         layoutEngine.goForward()
     }
     
     // A Boolean value indicating whether browser can go back
-    public var canGoBack: Bool {
+    open var canGoBack: Bool {
         return layoutEngine.canGoBack
     }
 
     // A Boolean value indicating whether browser can go forward
-    public var canGoForward: Bool {
+    open var canGoForward: Bool {
         return layoutEngine.canGoForward
     }
 
     // Reloads the current page
-    public func reload() {
+    open func reload() {
         layoutEngine.reload()
     }
 
     // MARK: private
-    private func publishContent(object: AnyObject?, error: ErrorType?, completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        guard let html = object as? String else {
-            completionHandler?(nil, ErikError.NoContent)
+    fileprivate func publish(content: Any?, error: Error?, completionHandler: DocumentCompletionHandler?) {
+        guard let html = content as? String else {
+            completionHandler?(nil, ErikError.noContent)
             return
         }
         
@@ -138,8 +135,8 @@ public class Erik {
             return
         }
         
-        guard let doc = self.htmlParser.parseHTML(html) else {
-            completionHandler?(nil, ErikError.HTMLNotParsable(html: html))
+        guard let doc = self.htmlParser.parse(html) else {
+            completionHandler?(nil, ErikError.htmlNotParsable(html: html))
             return
         }
         
@@ -152,8 +149,8 @@ public class Erik {
 // MARK: javascript
 extension Erik: JavaScriptEvaluator {
     
-    public func evaluateJavaScript(javaScriptString: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
-        self.layoutEngine.evaluateJavaScript(javaScriptString, completionHandler: completionHandler)
+    public func evaluate(javaScript: String, completionHandler: CompletionHandler?) {
+        self.layoutEngine.evaluate(javaScript: javaScript, completionHandler: completionHandler)
     }
 }
 
@@ -163,24 +160,24 @@ extension Erik {
     // Shared instance used for static functions
     public static let sharedInstance = Erik()
     
-    public static func visitURL(URL: NSURL, completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        Erik.sharedInstance.visitURL(URL, completionHandler: completionHandler)
+    public static func visit(url: Foundation.URL, completionHandler: DocumentCompletionHandler?) {
+        Erik.sharedInstance.visit(url: url, completionHandler: completionHandler)
     }
 
-    public static func visitURL(urlString: String, completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        Erik.sharedInstance.visitURL(urlString, completionHandler: completionHandler)
+    public static func visit(urlString: String, completionHandler: DocumentCompletionHandler?) {
+        Erik.sharedInstance.visit(urlString: urlString, completionHandler: completionHandler)
     }
 
-    public static func loadURLRequest(URLRequest: NSURLRequest, completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        Erik.sharedInstance.loadURLRequest(URLRequest, completionHandler: completionHandler)
+    public static func load(urlRequest: Foundation.URLRequest, completionHandler: DocumentCompletionHandler?) {
+        Erik.sharedInstance.load(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
-    @available(*, deprecated=1.1, obsoleted=1.2, message="Use url")
-    public static var currentURL: NSURL? {
+    @available(*, deprecated: 1.1, obsoleted: 1.2, message: "Use url")
+    public static var currentURL: URL? {
         return Erik.sharedInstance.url
     }
     
-    public static var url: NSURL? {
+    public static var url: URL? {
         return Erik.sharedInstance.url
     }
  
@@ -188,12 +185,12 @@ extension Erik {
         return Erik.sharedInstance.title
     }
 
-    public static func currentContent(completionHandler: ((Document?, ErrorType?) -> Void)?) {
-        Erik.sharedInstance.currentContent(completionHandler)
+    public static func currentContent(completionHandler: DocumentCompletionHandler?) {
+        Erik.sharedInstance.currentContent(completionHandler: completionHandler)
     }
     
-    public static func evaluateJavaScript(javaScriptString: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
-        Erik.sharedInstance.evaluateJavaScript(javaScriptString, completionHandler: completionHandler)
+    public static func evaluate(javaScript: String, completionHandler: CompletionHandler?) {
+        Erik.sharedInstance.evaluate(javaScript: javaScript, completionHandler: completionHandler)
     }
     
     public static func goBack() {

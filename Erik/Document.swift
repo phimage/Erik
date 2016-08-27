@@ -23,42 +23,40 @@ SOFTWARE.
 import Foundation
 
 public protocol HTMLParser {
-    func parseHTML(html: String) -> Document?
+    func parse(_ html: String) -> Document?
 }
 
 import Kanna
 class KanaParser: HTMLParser {
     static let instance = KanaParser()
 
-    func parseHTML(html: String) -> Document? {
-        if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding) {
+    func parse(_ html: String) -> Document? {
+        if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
             return Document(rawValue: doc)
         }
         return nil
     }
     
-    static var escapeJavaScript: String -> String = {
-        return $0.stringByReplacingOccurrencesOfString("'", withString: "\\'")
+    static var escapeJavaScript: (String) -> String = {
+        return $0.replacingOccurrences(of: "'", with: "\\'")
     }
 }
 
-public class Document : Node {
-    
+open class Document : Node {
 
-    
     init(rawValue: HTMLDocument) {
         super.init(rawValue: rawValue, selectors: [])
     }
 
-    public var title: String? { return (rawValue as? HTMLDocument)?.title }
-    public var head: Element? {
-        guard let doc = self.rawValue as? HTMLDocument, element = doc.head else {
+    open var title: String? { return (rawValue as? HTMLDocument)?.title }
+    open var head: Element? {
+        guard let doc = self.rawValue as? HTMLDocument, let element = doc.head else {
             return nil
         }
         return Element(rawValue: element, selectors: ["head"])
     }
-    public var body: Element? {
-        guard let doc = self.rawValue as? HTMLDocument, element = doc.body else {
+    open var body: Element? {
+        guard let doc = self.rawValue as? HTMLDocument, let element = doc.body else {
             return nil
         }
         return Element(rawValue: element, selectors: ["body"])
@@ -66,17 +64,17 @@ public class Document : Node {
 }
 
 // HTML Node
-public class Node {
+open class Node {
     var layoutEngine: LayoutEngine?
     
     var rawValue: SearchableNode
     var selectors = [String]()
     
-    public var text: String? { return rawValue.text }
-    public var toHTML: String? { return rawValue.toHTML }
-    public var innerHTML: String? { return rawValue.innerHTML }
-    public var className: String? { return rawValue.className }
-    public var tagName:   String? { return rawValue.tagName }
+    open var text: String? { return rawValue.text }
+    open var toHTML: String? { return rawValue.toHTML }
+    open var innerHTML: String? { return rawValue.innerHTML }
+    open var className: String? { return rawValue.className }
+    open var tagName:   String? { return rawValue.tagName }
     
     init(rawValue: SearchableNode, selectors: [String]) {
         self.selectors = selectors
@@ -84,7 +82,7 @@ public class Node {
     }
     
     // Select elements using css selector
-    public func querySelectorAll(selector: String) -> [Element] {
+    open func querySelectorAll(_ selector: String) -> [Element] {
         let selectors = self.selectors + [selector]
         return rawValue.css(selector).map {
             let elem = Element.build($0, selectors: selectors)
@@ -94,7 +92,7 @@ public class Node {
     }
     
     // Select an element using css selector
-    public func querySelector(selector: String) -> Element? {
+    open func querySelector(_ selector: String) -> Element? {
         guard let element = rawValue.at_css(selector) else {
             return nil
         }
@@ -105,17 +103,17 @@ public class Node {
     }
     
     // Get all children element
-    public var elements: [Element] {
+    open var elements: [Element] {
         return querySelectorAll("*")
     }
     
     // Get first child element
-    public var firstChild: Element? {
+    open var firstChild: Element? {
         return querySelectorAll(":first-child").first
     }
     
     // Get last child element
-    public var lastChild: Element? {
+    open var lastChild: Element? {
         return querySelectorAll(":last-child").first
     }
     
@@ -124,7 +122,7 @@ public class Node {
 extension Node {
     
     // Fill value of selected child
-    public func type(selector: String, value: String, key: String = "value") -> Element? {
+    public func type(_ selector: String, value: String, key: String = "value") -> Element? {
         if let element = self.querySelector(selector) {
             element[key] = value
             return element
@@ -133,7 +131,7 @@ extension Node {
     }
 
     // Click on selected child
-    public func click(selector: String) -> Element? {
+    public func click(_ selector: String) -> Element? {
         if let element = self.querySelector(selector) {
             element.click()
             return element
@@ -149,28 +147,28 @@ extension Node: CustomStringConvertible {
     }
 }
 
-public class TextArea: Element {
+open class TextArea: Element {
     
-    public func select(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
-        evaluateJavaScript(jsFunction("select"), completionHandler: completionHandler)
+    open func select(_ completionHandler: CompletionHandler? = nil) {
+        evaluate(javaScript: jsFunction("select"), completionHandler: completionHandler)
     }
     
 }
 
-public class Form: Element {
+open class Form: Element {
     
-    public func submit(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
-        evaluateJavaScript(jsFunction("submit"), completionHandler: completionHandler)
+    open func submit(completionHandler: CompletionHandler? = nil) {
+        evaluate(javaScript: jsFunction("submit"), completionHandler: completionHandler)
     }
     
-    public func reset(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
-        evaluateJavaScript(jsFunction("reset"), completionHandler: completionHandler)
+    open func reset(completionHandler: CompletionHandler? = nil) {
+        evaluate(javaScript: jsFunction("reset"), completionHandler: completionHandler)
     }
 }
 
-public class Element: Node {
+open class Element: Node {
     
-    static func build(rawValue: XMLElement, selectors: [String]) -> Element {
+    static func build(_ rawValue: XMLElement, selectors: [String]) -> Element {
         if let tagName = rawValue.tagName {
             switch (tagName) {
             case "form":
@@ -188,31 +186,35 @@ public class Element: Node {
         super.init(rawValue: rawValue, selectors: selectors)
     }
     
-    public subscript(attr: String) -> String? {
+    open subscript(attribute: String) -> String? {
         get {
-            return (self.rawValue as! XMLElement)[attr]
+            return (self.rawValue as! XMLElement)[attribute]
         }
         set {
-            self.setAttribute(attr, value: newValue)
+            self.set(attribute: attribute, value: newValue)
         }
     }
     
-    public func setAttribute(attr: String, value: String?, completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
-        let js = jsChangeAttribute(attr, value: value)
+    open func set(attribute: String, value: String?, completionHandler: CompletionHandler? = nil) {
+        let js = jsChangeAttribute(attribute, value: value)
         #if TEST
             print("js:\(js)")
         #endif
-        evaluateJavaScript(js, completionHandler: completionHandler)
+        evaluate(javaScript: js, completionHandler: completionHandler)
     }
-    
-    func jsSelector(varName: String = "erik") -> String {
+
+    open func click(completionHandler: CompletionHandler? = nil) {
+        evaluate(javaScript: jsFunction("click"), completionHandler: completionHandler)
+    }
+
+    func jsSelector(_ varName: String = "erik") -> String {
         if let id = self["id"] { // id must be unique
             return "var \(varName) = document.querySelector('[id=\"\(id)\"]');\n"
         }
         
         return selectors.reduce("var \(varName) = document;\n") { result, selector in
             if selector.hasSuffix(":erik-child") {
-                let erikSelector = selector.stringByReplacingOccurrencesOfString(":erik-child", withString: "")
+                let erikSelector = selector.replacingOccurrences(of: ":erik-child", with: "")
                 return result + "\(varName) = \(varName).querySelector('\(KanaParser.escapeJavaScript(erikSelector))');\n"
             }
             else {
@@ -221,7 +223,7 @@ public class Element: Node {
         }
     }
     
-    func jsChangeAttribute(attr: String, value: String?, varName: String = "erik") -> String {
+    func jsChangeAttribute(_ attr: String, value: String?, varName: String = "erik") -> String {
         var js = jsSelector(varName)
         if let v = value {
             js += "\(varName).setAttribute('\(attr)', '\(v)');\n"
@@ -231,7 +233,7 @@ public class Element: Node {
         return js
     }
     
-    func jsFunction(name: String, varName: String = "erik") -> String {
+    func jsFunction(_ name: String, varName: String = "erik") -> String {
         var js = jsSelector(varName) // TODO check undefined?
         js += "\(varName).\(name)();\n"
         #if TEST
@@ -239,15 +241,11 @@ public class Element: Node {
         #endif
         return js
     }
-    
-    public func click(completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
-        evaluateJavaScript(jsFunction("click"), completionHandler: completionHandler)
+
+    func evaluate(javaScript: String, completionHandler: CompletionHandler? = nil) {
+        layoutEngine?.evaluate(javaScript: javaScript, completionHandler: completionHandler)
     }
-    
-    func evaluateJavaScript(js: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)? = nil) {
-        layoutEngine?.evaluateJavaScript(js, completionHandler: completionHandler)
-    }
-    
+
 }
 
 public extension Array where Element: Node {

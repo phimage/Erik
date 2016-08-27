@@ -28,10 +28,10 @@ import Result
 
 extension Erik {
 
-    public func visitURLFuture(url: NSURL) -> Future<Document, NSError> {
+    public func visitURLFuture(_ url: URL) -> Future<Document, NSError> {
         let promise = Promise<Document, NSError>()
         
-        self.visitURL(url) { (obj, err) -> Void in
+        self.visit(url: url) { (obj, err) -> Void in
             if let document = obj {
                 promise.success(document)
             }
@@ -58,10 +58,10 @@ extension Erik {
         return promise.future
     }
 
-    public func evaluateJavaScriptFuture(javaScriptString: String) -> Future<AnyObject?, NSError> {
-        let promise = Promise<AnyObject?, NSError>()
+    public func evaluateFuture(javaScript: String) -> Future<Any?, NSError> {
+        let promise = Promise<Any?, NSError>()
         
-        self.evaluateJavaScript(javaScriptString) { (obj, err) -> Void in
+        self.evaluate(javaScript: javaScript) { (obj, err) -> Void in
             if let error = err {
                 promise.failure(error as NSError)
             }
@@ -73,7 +73,7 @@ extension Erik {
         return promise.future
     }
 
-    public static func visitURLFuture(url: NSURL) -> Future<Document, NSError> {
+    public static func visitFuture(url: URL) -> Future<Document, NSError> {
         return Erik.sharedInstance.visitURLFuture(url)
     }
 
@@ -81,7 +81,7 @@ extension Erik {
         return Erik.sharedInstance.currentContentFuture()
     }
     
-    public static func evaluateJavaScriptFuture(javaScriptString: String) -> Future<AnyObject?, NSError>  {
-        return Erik.sharedInstance.evaluateJavaScriptFuture(javaScriptString)
+    public static func evaluateFuture(javaScript: String) -> Future<Any?, NSError>  {
+        return Erik.sharedInstance.evaluateFuture(javaScript: javaScript)
     }
 }
