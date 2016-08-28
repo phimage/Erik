@@ -177,8 +177,8 @@ extension WebKitLayoutEngine {
             }
         #elseif os(OSX)
             if let view = self.webView.subviews.first,
-                let rep: NSBitmapImageRep = view.bitmapImageRepForCachingDisplayInRect(view.bounds) {
-                view.cacheDisplayInRect(view.bounds, toBitmapImageRep:rep)
+                let rep: NSBitmapImageRep = view.bitmapImageRepForCachingDisplay(in: view.bounds) {
+                view.cacheDisplay(in: view.bounds, to:rep)
                 let image = NSImage(size: size)
                 image.addRepresentation(rep)
                 return nil //image https://github.com/lemonmojo/WKWebView-Screenshot
@@ -217,8 +217,8 @@ extension WebKitLayoutEngine {
                         completionHandler?(object, e) // must not be called
                         return
                     }
-                    
-                    let result = self.wait(key, timeout: DispatchTimeInterval.seconds(self.javaScriptWaitTime).fromNow)
+                  
+                    let result = self.wait(key, timeout: DispatchTime.now() + DispatchTimeInterval.seconds(self.javaScriptWaitTime))
                     
                     if case DispatchTimeoutResult.success = result {
                         if let errorMessage = self.getbox(key) {

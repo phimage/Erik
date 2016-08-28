@@ -168,7 +168,7 @@ open class Form: Element {
 
 open class Element: Node {
     
-    static func build(_ rawValue: XMLElement, selectors: [String]) -> Element {
+    static func build(_ rawValue: Kanna.XMLElement, selectors: [String]) -> Element {
         if let tagName = rawValue.tagName {
             switch (tagName) {
             case "form":
@@ -182,13 +182,13 @@ open class Element: Node {
         return Element(rawValue: rawValue, selectors: selectors)
     }
     
-    init(rawValue: XMLElement, selectors: [String]) {
+    init(rawValue: Kanna.XMLElement, selectors: [String]) {
         super.init(rawValue: rawValue, selectors: selectors)
     }
     
     open subscript(attribute: String) -> String? {
         get {
-            return (self.rawValue as! XMLElement)[attribute]
+            return (self.rawValue as! Kanna.XMLElement)[attribute]
         }
         set {
             self.set(attribute: attribute, value: newValue)
@@ -281,8 +281,3 @@ public extension Array where Element: Node {
     }
     
 }
-
-
-
-
-
