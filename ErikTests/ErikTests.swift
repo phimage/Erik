@@ -12,21 +12,22 @@ import Eki
 import FileKit
 import BrightFutures
 
-
-
-
 let url = NSURL(string:"https://www.google.com")!
+let PageLoadedPolicy = WebKitLayoutEngine.PageLoadedPolicy.navigationDelegate
+
+#if os(OSX)
+let googleFormSelector = "f"
+#elseif os(iOS)
+let googleFormSelector = "gs"
+#endif
 
 class ErikTests: XCTestCase {
-    
-    #if os(OSX)
-    let googleFormSelector = "f"
-    #elseif os(iOS)
-    let googleFormSelector = "gs"
-    #endif
+
     
     override func setUp() {
         super.setUp()
+        
+        (Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
     }
     
     override func tearDown() {
@@ -80,12 +81,12 @@ class ErikTests: XCTestCase {
                 
                 XCTFail("\(error)")
             }
-            else if let doc = obj {
+            else if let docVisit = obj {
                 visitExpectation.fulfill()
                 
                 //print(doc)
                 // do a google search
-                for input in doc.querySelectorAll("input[name='q']") {
+                if let input = docVisit.querySelector("input[name='q']") {
                     inputExpectation.fulfill()
                     print(input)
                     
@@ -95,58 +96,69 @@ class ErikTests: XCTestCase {
                     Erik.currentContent { (obj, err) -> Void in
                         if let error = err {
                             print(error)
-                            
                             XCTFail("\(error)")
                         }
                         else if let doc = obj {
                             if let input2 = doc.querySelector("input[name='q']") {
                                 print(input2)
-                                XCTAssertEqual(value, input2["value"])
-                            }
-                        }
-                        else {
-                            XCTFail("not parsable")
-                        }
-                        
-                        for input in doc.querySelectorAll("form[name='\(self.googleFormSelector)']") {
-                            submitExpectation.fulfill()
-                            if let form = input as? Form {
-                                form.submit()
+                                let currentValue = input2["value"]
+                                XCTAssertEqual(value, currentValue)
                             }
                             else {
-                                XCTFail("\(input) not a form")
+                                XCTFail("input not found ")
+                            }
+                            let gSelector = "form[name='\(googleFormSelector)']"
+                            if let form = doc.querySelector(gSelector) as? Form {
+                                submitExpectation.fulfill()
+                                
+                                form.submit()
+                                
+                                Erik.currentContent { (obj, err) -> Void in
+                                    if let error = err {
+                                        print(error)
+                                        XCTFail("\(error)")
+                                    }
+                                    else if let docSubmit = obj {
+                                        print(docSubmit)
+                                        currentContentExpectation.fulfill()
+                                        
+                                        XCTAssertNotEqual(url, Erik.url)
+                                        
+                                        XCTAssertNotNil("\(Erik.url)".rangeOfString(value!))
+                                    }
+                                }
+                                
+                                
+                            } else {
+                                if let _ = docVisit.querySelector("form[name='\(googleFormSelector)']") as? Form {
+                                    
+                                    XCTFail("Form found before js, not after ")
+                                } else {
+                                    
+                                    XCTFail("Form not found ")
+                                }
                             }
                             
-                            
-                            Erik.currentContent { (obj, err) -> Void in
-                                if let error = err {
-                                    print(error)
-                                    XCTFail("\(error)")
-                                }
-                                else if let doc = obj {
-                                    print(doc)
-                                    currentContentExpectation.fulfill()
-                                    
-                                    XCTAssertNotEqual(url, Erik.url)
-                                    
-                                    XCTAssertNotNil("\(Erik.url)".rangeOfString(value!))
-                                }
-                            }
                         }
-
+                        else {
+                            XCTFail("no doc")
+                        }
                     }
+                    
+                } else {
+                    print(docVisit)
+                    XCTFail("not input")
                 }
-                
-                
             }
+            
         }
         
-        self.waitForExpectationsWithTimeout(20, handler: { error in
+        self.waitForExpectationsWithTimeout(30, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
     
- 
+    
     func testJavascriptError() {
         let visitExpectation = self.expectationWithDescription("visit")
         
@@ -263,26 +275,46 @@ class ErikTests: XCTestCase {
 
     func testContentAtStart() {
         let expectation = self.expectationWithDescription("start content")
-        let erik = Erik()
-        erik.currentContent {(obj, err) -> Void in
+        let browser = Erik()
+        (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
+        browser.noContentPattern = nil
+        browser.currentContent {(obj, err) -> Void in
             if let _ = obj {
-                expectation.fulfill() // currently there is always a content
+                expectation.fulfill() // there is content
+            }
+            else if let error = err {
+                XCTFail("\(error)")
+            }
+        }
+        
+        self.waitForExpectationsWithTimeout(20, handler: { error in
+            XCTAssertNil(error, "Oh, we got timeout")
+        })
+    }
+    
+    func testContentAtStartNoContent() {
+        let expectation = self.expectationWithDescription("start content")
+        let browser = Erik()
+        (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
+        browser.currentContent {(obj, err) -> Void in
+            if let _ = obj {
+                XCTFail("Must have no content")
             }
             else if let error = err {
                 switch error {
                 case ErikError.NoContent:
-                    // expectation.fulfill()
+                    expectation.fulfill()
                     break
                 default :
                     print(error)
+                    XCTFail("Wrong error type \(error)")
                     break
                 }
-                XCTFail("Wrong error type \(error)")
             }
-
+            
         }
         
-        self.waitForExpectationsWithTimeout(100, handler: { error in
+        self.waitForExpectationsWithTimeout(20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
@@ -310,6 +342,7 @@ class ErikTests: XCTestCase {
         
         let visitExpectation = self.expectationWithDescription("visit")
         let browser = Erik()
+        (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
   
         var future: Future<Document, NSError> = browser.visitURLFuture(url)
    
@@ -328,7 +361,7 @@ class ErikTests: XCTestCase {
                 XCTAssertEqual(value, input2["value"])
             }
             
-            if let form = document.querySelector("form[name=\"\(self.googleFormSelector)\"]") as? Form {
+            if let form = document.querySelector("form[name=\"\(googleFormSelector)\"]") as? Form {
                 form.submit()
             }
             

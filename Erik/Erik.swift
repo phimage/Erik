@@ -29,7 +29,7 @@ public enum ErikError: ErrorType {
     // Error provided by javascript
     case JavaScriptError(message: String)
     // A timeout occurs
-    case TimeOutError
+    case TimeOutError(time: NSTimeInterval)
     // No content returned
     case NoContent
     // HTML is not parsable
@@ -45,6 +45,8 @@ public class Erik {
     
     public var layoutEngine: LayoutEngine
     public var htmlParser: HTMLParser
+    
+    public var noContentPattern: String? = "<html><head></head><body></body></html>"
     
     // Init the headless browser
     public init(webView: WKWebView? = nil) {
@@ -133,6 +135,11 @@ public class Erik {
             return
         }
         
+        if let pattern = noContentPattern where html.rangeOfString(pattern, options: .RegularExpressionSearch) != nil {
+            completionHandler?(nil, ErikError.NoContent)
+            return
+        }
+
         guard error == nil else {
             completionHandler?(nil, error)
             return
@@ -216,4 +223,3 @@ extension Erik {
     }
 
 }
- 

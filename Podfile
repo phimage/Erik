@@ -7,11 +7,12 @@ def dependency_pods
     pod 'Kanna'
     pod 'Eki'
     pod 'BrightFutures'
+    pod 'Result', '2.1.2'
 end
 
 def testing_pods
     dependency_pods
-    pod 'FileKit'
+    pod 'FileKit', '2.0.0'
 end
 
 target 'Erik' do

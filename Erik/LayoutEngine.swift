@@ -47,8 +47,57 @@ public typealias LayoutEngine = protocol<URLBrowser,JavaScriptEvaluator>
 let JavascriptErrorHandler = "erikError"
 let JavascriptEndHandler = "erikEnd"
 
+public protocol Navigable {
+    var navigate: Bool {get set}
+}
+
 import WebKit
 public class WebKitLayoutEngine: NSObject, LayoutEngine {
+
+    public enum PageLoadedPolicy {
+        // `webView.loading`
+        case loading
+        // `webView.estimatedProgress`
+        case estimatedProgress
+        // `webView.estimatedProgress`
+        case navigationDelegate
+        // `navigationDelegate`
+
+        var continueCondition: (WebKitLayoutEngine) -> Bool {
+            switch self {
+            case .loading:
+                return { return $0.webView.loading }
+            case .estimatedProgress:
+                return { engine in
+                    let estimatedProgress = engine.webView.estimatedProgress
+                    if engine.firstPageLoaded {
+                         return estimatedProgress != 1.0
+                    }
+                    return estimatedProgress != 1.0 && estimatedProgress != 0.0
+                }
+            case .navigationDelegate:
+                return { engine in
+                    if let delegate = engine.navigable {
+                        assert(engine.navigable as? WKNavigationDelegate === engine.webView.navigationDelegate)
+                        return delegate.navigate
+                    }
+                    assertionFailure("No navigation deletage found")
+                    return false
+                }
+            }
+        }
+    }
+
+    public var pageLoadedPolicy: PageLoadedPolicy = .loading {
+        didSet {
+            if self.pageLoadedPolicy == .navigationDelegate {
+                assert(navigable != nil) // a delegate is already set in webview, cannot use this method
+            }
+        }
+    }
+    private var navigable: Navigable?
+    public var pageLoadTimeout: NSTimeInterval = 20
+    public private(set) var firstPageLoaded = false
     
     public var javaScriptQueue: Queue = Queue(name: "ErikJavaScript", kind: .Serial)
     public var callBackQueue: Queue = Queue(name: "ErikCallBack", kind: .Serial)
@@ -62,6 +111,16 @@ public class WebKitLayoutEngine: NSObject, LayoutEngine {
         super.init()
         self.webView.configuration.userContentController.addScriptMessageHandler(self, name: JavascriptErrorHandler)
         self.webView.configuration.userContentController.addScriptMessageHandler(self, name: JavascriptEndHandler)
+        
+        if self.webView.navigationDelegate == nil {
+            let delegate = LayoutEngineNavigationDelegate()
+            self.webView.navigationDelegate = delegate
+            self.navigable = delegate
+            self.pageLoadedPolicy = .navigationDelegate
+        } else if let navigable = webView.navigationDelegate as? Navigable {
+            self.navigable = navigable
+            self.pageLoadedPolicy = .navigationDelegate
+        }
     }
 
     convenience init(frame: CGRect = CGRect(x: 0, y: 0, width: 1024, height: 768)) {
@@ -69,6 +128,35 @@ public class WebKitLayoutEngine: NSObject, LayoutEngine {
     }
 }
 
+// MARK: WKNavigationDelegate
+public class LayoutEngineNavigationDelegate: NSObject, WKNavigationDelegate, Navigable {
+    
+    public var navigate: Bool = false
+    public var lastError: ErrorType?
+    
+    public func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        //self.navigate = true
+        decisionHandler(WKNavigationActionPolicy.Allow)
+    }
+    
+    public func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation) {
+       // self.navigate = true
+    }
+    
+    public func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        self.navigate = false
+    }
+    
+    public func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
+        self.navigate = false
+        self.lastError = error
+    }
+    
+    @available(OSX 10.11, *)
+    public func webViewWebContentProcessDidTerminate(webView: WKWebView) {
+        self.navigate = false
+    }
+}
 
 // MARK: URLBrowser
 extension WebKitLayoutEngine {
@@ -76,9 +164,12 @@ extension WebKitLayoutEngine {
     public func browseURL(URL: NSURL, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
         let request = NSURLRequest(URL: URL)
         self.browseURL(request, completionHandler: completionHandler)
+        
     }
     
     public func browseURL(URLRequest: NSURLRequest, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
+        firstPageLoaded = true
+        navigable?.navigate = true
         webView.loadRequest(URLRequest)
         self.currentContent(completionHandler)
     }
@@ -116,19 +207,29 @@ extension WebKitLayoutEngine {
     }
 
     public func currentContent(completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
-        handleLoadRequestCompletion {
-            self.handleHTML(completionHandler)
+        handleLoadRequestCompletion { error in
+            if let error = error  {
+                self.callBackQueue.asyncOrCurrent {
+                    completionHandler?(nil, error)
+                }
+            } else {
+                self.handleHTML(completionHandler)
+            }
         }
     }
-    
-    private func handleLoadRequestCompletion(completionHandler: () -> Void) {
+
+    private func handleLoadRequestCompletion(completionHandler: (ErrorType?) -> Void) {
         // wait load finish
-        while(webView.loading) {
+        let condition = pageLoadedPolicy.continueCondition
+        let max = NSDate().timeIntervalSince1970 + pageLoadTimeout
+        while(condition(self)) {
+            if pageLoadTimeout > 0 && NSDate().timeIntervalSince1970 > max  {
+                completionHandler(ErikError.TimeOutError(time: pageLoadTimeout))
+                return
+            }
             NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
         }
-        // XXX maybe use instead WKNavigationDelegate#webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!)
-        // or notification on loading
-        completionHandler()
+        completionHandler(nil)
     }
     
     private func handleHTML(completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
@@ -215,8 +316,8 @@ extension WebKitLayoutEngine {
                         completionHandler?(object, e) // must not be called
                         return
                     }
-                    
-                    if self.wait(key, time: self.javaScriptWaitTime) {
+                    let timeout = self.javaScriptWaitTime
+                    if self.wait(key, time: timeout) {
                         if let errorMessage = self.getbox(key) {
                             completionHandler?(object, ErikError.JavaScriptError(message: "\(errorMessage)"))
                         }
@@ -226,7 +327,7 @@ extension WebKitLayoutEngine {
                         self.removebox(key)
                     }
                     else {
-                        completionHandler?(object, ErikError.TimeOutError)
+                        completionHandler?(object, ErikError.TimeOutError(time: timeout))
                     }
                 }
             }
