@@ -7,7 +7,7 @@ inhibit_all_warnings!
 def dependency_pods
     # pod 'Result', :git => 'http://github.com/antitypical/Result.git', :branch => 'master'
     pod 'Kanna', :git => 'http://github.com/tid-kijyun/Kanna.git', :branch => 'swift3.0'
-    pod 'BrightFutures', :git => 'http://github.com/oysta/BrightFutures.git', :branch => 'xcode8b6'
+    pod 'BrightFutures', '~> 5.0.0'
 end
 
 def testing_pods

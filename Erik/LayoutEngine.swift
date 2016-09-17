@@ -278,7 +278,7 @@ class SemaphoreBox: AnyObject  {
 typealias SemaphorableKey = String
 
 private struct SemaphorableKeys {
-    static let semaphores = UnsafeRawPointer(bitPattern: Selector("semaphores").hashValue)
+    static let semaphores = UnsafeRawPointer(bitPattern: Selector(("semaphores")).hashValue)
 }
 extension Semaphorable {
     
