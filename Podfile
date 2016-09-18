@@ -2,12 +2,12 @@
 
 use_frameworks!
 inhibit_all_warnings!
+# compute_swift_version_from_targets!
 
 def dependency_pods
-    pod 'Kanna'
-    pod 'Eki'
-    pod 'BrightFutures'
-    pod 'Result', '2.1.2'
+    pod 'Kanna', :git => 'http://github.com/tid-kijyun/Kanna.git', :branch => 'swift3.0'
+    pod 'BrightFutures', '~> 5.0.0'
+    # pod 'Result', '~> 3.0.0’
 end
 
 def testing_pods
@@ -33,4 +33,12 @@ end
 target 'ErikOSXTests' do
     platform :osx, '10.10'
     testing_pods
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '3.0'
+    end
+  end
 end

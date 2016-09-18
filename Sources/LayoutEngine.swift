@@ -3,7 +3,7 @@
 //  Erik
 /*
 The MIT License (MIT)
-Copyright (c) 2015 Eric Marchand (phimage)
+Copyright (c) 2015-2016 Eric Marchand (phimage)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -22,16 +22,18 @@ SOFTWARE.
 */
 import Foundation
 
+public typealias CompletionHandler = ((Any?, Error?) -> Void)
+
 public protocol JavaScriptEvaluator {
-    func evaluateJavaScript(javaScriptString: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
+    func evaluate(javaScript: String, completionHandler: CompletionHandler?)
 }
 
 public protocol URLBrowser {
-    func browseURL(URL: NSURL, completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
-    func browseURL(URLRequest: NSURLRequest, completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
-    var url: NSURL? {get}
+    func browse(url: URL, completionHandler: CompletionHandler?)
+    func browse(urlRequest: URLRequest, completionHandler: CompletionHandler?)
+    var url: URL? {get}
     var title: String? {get}
-    func currentContent(completionHandler: ((AnyObject?, ErrorType?) -> Void)?)
+    func currentContent(completionHandler: CompletionHandler?)
     
     func goBack()
     func goForward()
@@ -42,7 +44,7 @@ public protocol URLBrowser {
     
     func clear()
 }
-public typealias LayoutEngine = protocol<URLBrowser,JavaScriptEvaluator>
+public typealias LayoutEngine = URLBrowser & JavaScriptEvaluator
 
 let JavascriptErrorHandler = "erikError"
 let JavascriptEndHandler = "erikEnd"
@@ -52,11 +54,11 @@ public protocol Navigable {
 }
 
 import WebKit
-public class WebKitLayoutEngine: NSObject, LayoutEngine {
+open class WebKitLayoutEngine: NSObject, LayoutEngine {
 
     public enum PageLoadedPolicy {
-        // `webView.loading`
-        case loading
+        // `webView.isLoading`
+        case isLoading
         // `webView.estimatedProgress`
         case estimatedProgress
         // `webView.estimatedProgress`
@@ -65,8 +67,8 @@ public class WebKitLayoutEngine: NSObject, LayoutEngine {
 
         var continueCondition: (WebKitLayoutEngine) -> Bool {
             switch self {
-            case .loading:
-                return { return $0.webView.loading }
+            case .isLoading:
+                return { return $0.webView.isLoading }
             case .estimatedProgress:
                 return { engine in
                     let estimatedProgress = engine.webView.estimatedProgress
@@ -88,29 +90,30 @@ public class WebKitLayoutEngine: NSObject, LayoutEngine {
         }
     }
 
-    public var pageLoadedPolicy: PageLoadedPolicy = .loading {
+    public var pageLoadedPolicy: PageLoadedPolicy = .isLoading {
         didSet {
             if self.pageLoadedPolicy == .navigationDelegate {
                 assert(navigable != nil) // a delegate is already set in webview, cannot use this method
             }
         }
     }
-    private var navigable: Navigable?
-    public var pageLoadTimeout: NSTimeInterval = 20
-    public private(set) var firstPageLoaded = false
-    
-    public var javaScriptQueue: Queue = Queue(name: "ErikJavaScript", kind: .Serial)
-    public var callBackQueue: Queue = Queue(name: "ErikCallBack", kind: .Serial)
-    public var javaScriptWaitTime: NSTimeInterval = 20
-    public var javaScriptResultVarName: String = "resultErik"
+    fileprivate var navigable: Navigable?
+    open var pageLoadTimeout: TimeInterval = 20
+    open fileprivate(set) var firstPageLoaded = false
 
-    public let webView: WKWebView
+    
+    open var javaScriptQueue: DispatchQueue = DispatchQueue(label: "ErikJavaScript") // TODO check serial
+    open var callBackQueue: DispatchQueue = DispatchQueue(label: "ErikCallBack")
+    open var javaScriptWaitTime: TimeInterval = 20
+    open var javaScriptResultVarName: String = "resultErik"
+
+    open let webView: WKWebView
     
     init(webView: WKWebView) {
         self.webView = webView
         super.init()
-        self.webView.configuration.userContentController.addScriptMessageHandler(self, name: JavascriptErrorHandler)
-        self.webView.configuration.userContentController.addScriptMessageHandler(self, name: JavascriptEndHandler)
+        self.webView.configuration.userContentController.add(self, name: JavascriptErrorHandler)
+        self.webView.configuration.userContentController.add(self, name: JavascriptEndHandler)
         
         if self.webView.navigationDelegate == nil {
             let delegate = LayoutEngineNavigationDelegate()
@@ -132,28 +135,28 @@ public class WebKitLayoutEngine: NSObject, LayoutEngine {
 public class LayoutEngineNavigationDelegate: NSObject, WKNavigationDelegate, Navigable {
     
     public var navigate: Bool = false
-    public var lastError: ErrorType?
+    public var lastError: Error?
     
-    public func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Swift.Void) {
         //self.navigate = true
-        decisionHandler(WKNavigationActionPolicy.Allow)
+        decisionHandler(WKNavigationActionPolicy.allow)
     }
     
-    public func webView(webView: WKWebView, didCommitNavigation navigation: WKNavigation) {
+    public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
        // self.navigate = true
     }
     
-    public func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.navigate = false
     }
     
-    public func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.navigate = false
         self.lastError = error
     }
     
     @available(OSX 10.11, *)
-    public func webViewWebContentProcessDidTerminate(webView: WKWebView) {
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         self.navigate = false
     }
 }
@@ -161,32 +164,26 @@ public class LayoutEngineNavigationDelegate: NSObject, WKNavigationDelegate, Nav
 // MARK: URLBrowser
 extension WebKitLayoutEngine {
 
-    public func browseURL(URL: NSURL, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
-        let request = NSURLRequest(URL: URL)
-        self.browseURL(request, completionHandler: completionHandler)
-        
+   @nonobjc public func browse(url: Foundation.URL, completionHandler: CompletionHandler?) {
+        let request = URLRequest(url: url)
+        self.browse(urlRequest: request, completionHandler: completionHandler)
     }
     
-    public func browseURL(URLRequest: NSURLRequest, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
-        firstPageLoaded = true
-        navigable?.navigate = true
-        webView.loadRequest(URLRequest)
-        self.currentContent(completionHandler)
+    @nonobjc public func browse(urlRequest: Foundation.URLRequest, completionHandler: CompletionHandler?) {
+        self.firstPageLoaded = true
+        self.navigable?.navigate = true
+        webView.load(urlRequest)
+        self.currentContent(completionHandler: completionHandler)
     }
-    
-    @available(*, deprecated=1.1, obsoleted=2.0, message="Use url")
-    public var currentURL: NSURL? {
-        return self.webView.URL
-    }
-    
-    public var url: NSURL? {
-        return self.webView.URL
+   
+    public var url: URL? {
+        return self.webView.url
     }
     
     public var title: String? {
         return self.webView.title
     }
-
+    
     public func goBack() {
         self.webView.goBack()
     }
@@ -206,7 +203,7 @@ extension WebKitLayoutEngine {
         self.webView.reload()
     }
 
-    public func currentContent(completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
+    public func currentContent(completionHandler: CompletionHandler?) {
         handleLoadRequestCompletion { error in
             if let error = error  {
                 self.callBackQueue.asyncOrCurrent {
@@ -218,25 +215,25 @@ extension WebKitLayoutEngine {
         }
     }
 
-    private func handleLoadRequestCompletion(completionHandler: (ErrorType?) -> Void) {
+    fileprivate func handleLoadRequestCompletion(completionHandler: (Error?) -> Void) {
         // wait load finish
         let condition = pageLoadedPolicy.continueCondition
         let max = NSDate().timeIntervalSince1970 + pageLoadTimeout
         while(condition(self)) {
             if pageLoadTimeout > 0 && NSDate().timeIntervalSince1970 > max  {
-                completionHandler(ErikError.TimeOutError(time: pageLoadTimeout))
+                completionHandler(ErikError.timeOutError(time: pageLoadTimeout))
                 return
             }
-            NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture())
+            RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date.distantFuture)
         }
         completionHandler(nil)
     }
     
-    private func handleHTML(completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
+    fileprivate func handleHTML(_ completionHandler: CompletionHandler?) {
         javaScriptQueue.async { [unowned self] in
             let js_getDocumentHTML = "document.documentElement.outerHTML"
             self.webView.evaluateJavaScript(js_getDocumentHTML) { [unowned self] (obj, error) -> Void in
-                self.callBackQueue.asyncOrCurrent {
+                self.callBackQueue.async {
                     completionHandler?(obj, error)
                 }
             }
@@ -245,9 +242,9 @@ extension WebKitLayoutEngine {
     
     public func clear() {
         // try to remove all information
-        if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
+        if let cookies = HTTPCookieStorage.shared.cookies {
             for cookie in cookies {
-                NSHTTPCookieStorage.sharedHTTPCookieStorage().deleteCookie(cookie)
+                HTTPCookieStorage.shared.deleteCookie(cookie)
             }
         }
         webView.configuration.processPool = WKProcessPool()
@@ -261,23 +258,23 @@ extension WebKitLayoutEngine {
     public typealias ErikImage = NSImage
 #endif
 extension WebKitLayoutEngine {
-   public func snapshot(size: CGSize) -> ErikImage? {
+   public func snapshot(_ size: CGSize) -> ErikImage? {
         #if os(iOS)
-            if let capturedView : UIView = self.webView.snapshotViewAfterScreenUpdates(false) {
+            if let capturedView : UIView = self.webView.snapshotView(afterScreenUpdates: false) {
                 UIGraphicsBeginImageContextWithOptions(size, true, 0)
                 let ctx = UIGraphicsGetCurrentContext()
                 let scale : CGFloat! = size.width / capturedView.layer.bounds.size.width
-                let transform = CGAffineTransformMakeScale(scale, scale)
-                CGContextConcatCTM(ctx, transform)
-                capturedView.drawViewHierarchyInRect(capturedView.bounds, afterScreenUpdates: true)
-                let  image : ErikImage = UIGraphicsGetImageFromCurrentImageContext()
+                let transform = CGAffineTransform(scaleX: scale, y: scale)
+                ctx?.concatenate(transform)
+                capturedView.drawHierarchy(in: capturedView.bounds, afterScreenUpdates: true)
+                let  image : ErikImage = UIGraphicsGetImageFromCurrentImageContext()!
                 UIGraphicsEndImageContext();
                 return image
             }
         #elseif os(OSX)
             if let view = self.webView.subviews.first,
-                rep: NSBitmapImageRep = view.bitmapImageRepForCachingDisplayInRect(view.bounds) {
-                view.cacheDisplayInRect(view.bounds, toBitmapImageRep:rep)
+                let rep: NSBitmapImageRep = view.bitmapImageRepForCachingDisplay(in: view.bounds) {
+                view.cacheDisplay(in: view.bounds, to:rep)
                 let image = NSImage(size: size)
                 image.addRepresentation(rep)
                 return nil //image https://github.com/lemonmojo/WKWebView-Screenshot
@@ -288,17 +285,17 @@ extension WebKitLayoutEngine {
 }
 
 // MARK: JavaScriptEvaluator
-import Eki
+
 extension WebKitLayoutEngine {
     
-    public func evaluateJavaScript(javaScriptString: String, completionHandler: ((AnyObject?, ErrorType?) -> Void)?) {
+    public func evaluate(javaScript: String, completionHandler: CompletionHandler?) {
         javaScriptQueue.async { [unowned self] in
-            let key = NSUUID().UUIDString
+            let key = UUID().uuidString
             
             
             var source  = "var \(self.javaScriptResultVarName);"
             source += " try { "
-            source += javaScriptString
+            source += javaScript
             source += " } catch(err) { "
             source += "window.webkit.messageHandlers.\(JavascriptErrorHandler).postMessage({error: err.message, key: '\(key)'});"
             source += " } finally { "
@@ -317,9 +314,11 @@ extension WebKitLayoutEngine {
                         return
                     }
                     let timeout = self.javaScriptWaitTime
-                    if self.wait(key, time: timeout) {
+                    let result = self.wait(key, timeout: DispatchTime.now() + DispatchTimeInterval.seconds(Int(timeout)))
+                    
+                    if case DispatchTimeoutResult.success = result {
                         if let errorMessage = self.getbox(key) {
-                            completionHandler?(object, ErikError.JavaScriptError(message: "\(errorMessage)"))
+                            completionHandler?(object, ErikError.javaScriptError(message: "\(errorMessage)"))
                         }
                         else {
                             completionHandler?(object, error)
@@ -327,7 +326,7 @@ extension WebKitLayoutEngine {
                         self.removebox(key)
                     }
                     else {
-                        completionHandler?(object, ErikError.TimeOutError(time: timeout))
+                        completionHandler?(object, ErikError.timeOutError(time: timeout))
                     }
                 }
             }
@@ -335,29 +334,25 @@ extension WebKitLayoutEngine {
     }
 }
 
-extension Queue {
+extension DispatchQueue {
 
-    func asyncOrCurrent(block: () -> Void) {
-        if self.isCurrent { // ASK Eki to add this function
-            block()
-        } else {
-            self.async(block)
-        }
+    func asyncOrCurrent(_ block: @escaping () -> Void) {
+        self.async(execute: block)
     }
 
 }
 
 
 extension WebKitLayoutEngine: WKScriptMessageHandler {
-    public func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
         if message.name == JavascriptErrorHandler {
-            if let dico = message.body as? [String: String], key = dico["key"]{
-                self.setbox(key, object: message.body)
+            if let dico = message.body as? [String: String], let key = dico["key"]{
+                self.setbox(key, object: message.body as AnyObject)
             }
         }
         else if message.name == JavascriptEndHandler {
-            if let dico = message.body as? [String: String], key = dico["key"]{
+            if let dico = message.body as? [String: String], let key = dico["key"]{
                 self.signal(key)
             }
         }
@@ -372,50 +367,50 @@ extension WebKitLayoutEngine: Semaphorable {}
 protocol Semaphorable: AnyObject {}
 
 class SemaphoreBox: AnyObject  {
-    let semaphore = Semaphore(.Barrier)
+    let semaphore = DispatchSemaphore(value: 0)
     var object: AnyObject?
 }
 
 typealias SemaphorableKey = String
 
 private struct SemaphorableKeys {
-    static let semaphores = UnsafePointer<Void>(bitPattern: Selector("semaphores").hashValue)
+    static let semaphores = UnsafeRawPointer(bitPattern: Selector(("semaphores")).hashValue)
 }
 extension Semaphorable {
     
-    func expect(key: SemaphorableKey) {
+    func expect(_ key: SemaphorableKey) {
         if (self.semaphores[key] != nil) {
             return /// XXX throw?
         }
         self.semaphores[key] = SemaphoreBox()
     }
 
-    func wait(key: SemaphorableKey, time:NSTimeInterval? = nil) -> Bool {
+    func wait(_ key: SemaphorableKey, timeout: DispatchTime) -> DispatchTimeoutResult {
         guard let box = self.semaphores[key] else {
-            return true
+            return DispatchTimeoutResult.success
         }
-        return box.semaphore.wait(time)
+        return box.semaphore.wait(timeout: timeout)
     }
-    func signal(key: SemaphorableKey) {
+    func signal(_ key: SemaphorableKey) {
         guard let box = self.semaphores[key] else {
             return
         }
         box.semaphore.signal()
     }
 
-    func setbox(key: SemaphorableKey, object: AnyObject) {
+    func setbox(_ key: SemaphorableKey, object: AnyObject) {
         guard let box = self.semaphores[key] else {
             return
         }
         box.object = object
     }
-    func getbox(key: SemaphorableKey) -> AnyObject? {
+    func getbox(_ key: SemaphorableKey) -> AnyObject? {
         guard let box = self.semaphores[key] else {
             return nil
         }
         return box.object
     }
-    func removebox(key: String) {
+    func removebox(_ key: String) {
         self.semaphores[key] = nil
     }
     

@@ -1,3 +1,2 @@
-github "tid-kijyun/Kanna" ~> 1.1.0
-github "kodlian/Eki"
-github "Thomvis/BrightFutures"
+github "tid-kijyun/Kanna" ~> 2.0.0
+github "Thomvis/BrightFutures" ~> 5.0.0

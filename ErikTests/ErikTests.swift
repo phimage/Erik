@@ -8,11 +8,10 @@
 
 import XCTest
 @testable import Erik
-import Eki
 import FileKit
 import BrightFutures
 
-let url = NSURL(string:"https://www.google.com")!
+let url = URL(string:"https://www.google.com")!
 let PageLoadedPolicy = WebKitLayoutEngine.PageLoadedPolicy.navigationDelegate
 
 #if os(OSX)
@@ -36,9 +35,9 @@ class ErikTests: XCTestCase {
     
     func testVisit() {
         
-        let visitExpectation = self.expectationWithDescription("visit")
+        let visitExpectation = self.expectation(description: "visit")
         
-        Erik.visitURL(url) { (obj, err) -> Void in
+        Erik.visit(url: url) { (obj, err) -> Void in
             if let error = err {
                 print(error)
                 
@@ -52,30 +51,30 @@ class ErikTests: XCTestCase {
                 XCTAssertEqual(Erik.url?.scheme ?? "dummy", url.scheme)
             }
         }
-        self.waitForExpectationsWithTimeout(5, handler: nil)
+        self.waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testAsync() {
-        let expt = self.expectationWithDescription("Dispatch")
+        let expt = self.expectation(description: "Dispatch")
         
         if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine {
-            engine.javaScriptQueue <<< {
-                engine.callBackQueue <<< {
+            engine.javaScriptQueue.async {
+                engine.callBackQueue.async {
                     expt.fulfill()
                 }
             }
         }
-        self.waitForExpectationsWithTimeout(5, handler: nil)
+        self.waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testSubmit() {
 
-        let visitExpectation = self.expectationWithDescription("visit")
-        let inputExpectation = self.expectationWithDescription("getInput")
-        let submitExpectation = self.expectationWithDescription("submit")
-        let currentContentExpectation = self.expectationWithDescription("currentContent")
+        let visitExpectation = self.expectation(description: "visit")
+        let inputExpectation = self.expectation(description: "getInput")
+        let submitExpectation = self.expectation(description: "submit")
+        let currentContentExpectation = self.expectation(description: "currentContent")
 
-        Erik.visitURL(url) { (obj, err) -> Void in
+        Erik.visit(url: url) { (obj, err) -> Void in
             if let error = err {
                 print(error)
                 
@@ -107,8 +106,9 @@ class ErikTests: XCTestCase {
                             else {
                                 XCTFail("input not found ")
                             }
-                            let gSelector = "form[name='\(googleFormSelector)']"
-                            if let form = doc.querySelector(gSelector) as? Form {
+                            
+                            print(doc.toHTML)
+                            if let form = doc.querySelector(googleFormSelector) as? Form {
                                 submitExpectation.fulfill()
                                 
                                 form.submit()
@@ -123,18 +123,14 @@ class ErikTests: XCTestCase {
                                         currentContentExpectation.fulfill()
                                         
                                         XCTAssertNotEqual(url, Erik.url)
-                                        
-                                        XCTAssertNotNil("\(Erik.url)".rangeOfString(value!))
                                     }
                                 }
                                 
                                 
                             } else {
                                 if let _ = docVisit.querySelector("form[name='\(googleFormSelector)']") as? Form {
-                                    
                                     XCTFail("Form found before js, not after ")
                                 } else {
-                                    
                                     XCTFail("Form not found ")
                                 }
                             }
@@ -153,24 +149,24 @@ class ErikTests: XCTestCase {
             
         }
         
-        self.waitForExpectationsWithTimeout(30, handler: { error in
+        self.waitForExpectations(timeout: 20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
     
     
     func testJavascriptError() {
-        let visitExpectation = self.expectationWithDescription("visit")
+        let visitExpectation = self.expectation(description: "visit")
         
-        Erik.visitURL(url) { (obj, err) -> Void in
+        Erik.visit(url: url) { (obj, err) -> Void in
             if let error = err {
                 XCTFail("\(error)")
             }
             else if let _ = obj {
-                Erik.evaluateJavaScript("zae;azeaze") { (obj, err) -> Void in
+                Erik.evaluate(javaScript: "zae;azeaze") { (obj, err) -> Void in
                     if let error = err {
                         switch error {
-                        case ErikError.JavaScriptError(let message):
+                        case ErikError.javaScriptError(let message):
                             print(message)
                             visitExpectation.fulfill()
                         default :
@@ -185,23 +181,23 @@ class ErikTests: XCTestCase {
             }
         }
         
-        self.waitForExpectationsWithTimeout(5, handler: { error in
+        self.waitForExpectations(timeout: 5, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
     
     
     func testJavascriptResult() {
-        let visitExpectation = self.expectationWithDescription("visit")
+        let visitExpectation = self.expectation(description: "visit")
 
         
-        Erik.visitURL(url) { (obj, err) -> Void in
+        Erik.visit(url: url) { (obj, err) -> Void in
             if let error = err {
                 XCTFail("\(error)")
             }
             else if let _ = obj {
                 let source = "var resultErik = 1 + 1; 3 + 5;"
-                Erik.evaluateJavaScript(source) { (obj, err) -> Void in
+                Erik.evaluate(javaScript: source) { (obj, err) -> Void in
                     if let error = err {
                         XCTFail("Unexpected error \(error)")
                     }
@@ -216,22 +212,22 @@ class ErikTests: XCTestCase {
             }
         }
 
-        self.waitForExpectationsWithTimeout(5, handler: { error in
+        self.waitForExpectations(timeout: 5, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
 
     
     func testJavascriptTimeOut() {
-        let visitExpectation = self.expectationWithDescription("visit")
+        let visitExpectation = self.expectation(description: "visit")
         
-        var timeoutPrevious: NSTimeInterval = 20
+        var timeoutPrevious: TimeInterval = 20
         if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine {
             timeoutPrevious = engine.javaScriptWaitTime
             engine.javaScriptWaitTime = 1
         }
         
-        Erik.visitURL(url) { (obj, err) -> Void in
+        Erik.visit(url: url) { (obj, err) -> Void in
             if let error = err {
                 XCTFail("\(error)")
             }
@@ -245,10 +241,10 @@ class ErikTests: XCTestCase {
                 source +=      "}"
                 source +=    "}"
                 source +=    "sleep(10);"
-                Erik.evaluateJavaScript(source) { (obj, err) -> Void in
+                Erik.evaluate(javaScript: source) { (obj, err) -> Void in
                     if let error = err {
                         switch error {
-                        case ErikError.TimeOutError:
+                        case ErikError.timeOutError:
                             visitExpectation.fulfill()
                         default :
                             print("\(error)")
@@ -268,13 +264,13 @@ class ErikTests: XCTestCase {
         if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine {
             engine.javaScriptWaitTime = timeoutPrevious
         }
-        self.waitForExpectationsWithTimeout(20, handler: { error in
+        self.waitForExpectations(timeout: 20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
 
     func testContentAtStart() {
-        let expectation = self.expectationWithDescription("start content")
+        let expectation = self.expectation(description: "start content")
         let browser = Erik()
         (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
         browser.noContentPattern = nil
@@ -287,23 +283,25 @@ class ErikTests: XCTestCase {
             }
         }
         
-        self.waitForExpectationsWithTimeout(20, handler: { error in
+        self.waitForExpectations(timeout: 20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
     
     func testContentAtStartNoContent() {
-        let expectation = self.expectationWithDescription("start content")
+        let expectation = self.expectation(description: "start content")
         let browser = Erik()
         (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
         browser.currentContent {(obj, err) -> Void in
+
             if let _ = obj {
                 XCTFail("Must have no content")
             }
             else if let error = err {
                 switch error {
-                case ErikError.NoContent:
+                case ErikError.noContent:
                     expectation.fulfill()
+
                     break
                 default :
                     print(error)
@@ -313,8 +311,8 @@ class ErikTests: XCTestCase {
             }
             
         }
-        
-        self.waitForExpectationsWithTimeout(20, handler: { error in
+
+        self.waitForExpectations(timeout: 20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
@@ -322,25 +320,25 @@ class ErikTests: XCTestCase {
     
     func testSnapShot() {
         if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine,
-            data: ErikImage = engine.snapshot(CGSize(width: 600, height: 400)) {
-                
-                let path = Path.UserTemporary + "erik\(NSDate().timeIntervalSince1970).png"
-                
-                print("Write snapshot to \(path)")
-                
-                do {
-                    try data |> File<ErikImage>(path: path)
-                }
-                catch let e {
-                    XCTFail("\(e)")
-                }
+            let data: ErikImage = engine.snapshot(CGSize(width: 600, height: 400)) {
+            
+            let path = Path.UserTemporary + "erik\(Date().timeIntervalSince1970).png"
+            
+            print("Write snapshot to \(path)")
+            
+            do {
+                try data |> File<ErikImage>(path: path)
+            }
+            catch let e {
+                XCTFail("\(e)")
+            }
         }
     }
 
     func testFuture() {
         let value: String? = "test"
         
-        let visitExpectation = self.expectationWithDescription("visit")
+        let visitExpectation = self.expectation(description: "visit")
         let browser = Erik()
         (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
   
@@ -375,7 +373,7 @@ class ErikTests: XCTestCase {
             XCTFail("\(error)")
         }
         
-        self.waitForExpectationsWithTimeout(20, handler: { error in
+        self.waitForExpectations(timeout: 20, handler: { error in
             XCTAssertNil(error, "Oh, we got timeout")
         })
         

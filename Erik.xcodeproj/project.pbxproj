@@ -10,7 +10,6 @@
 		434526165F1F0E7C54CDC84C /* Pods_Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111237125C2287474E6694C0 /* Pods_Erik.framework */; };
 		5FEEAF2F3ABBD6B1C1DD5BE7 /* Pods_ErikOSXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE1913C2088579A7697D42A /* Pods_ErikOSXTests.framework */; };
 		92E4565B9B9BE1A3812B773E /* Pods_ErikTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FAAB81BB7A65CAF7BE2BBE /* Pods_ErikTests.framework */; };
-		C42828DB1BF9EDE1005EC7C3 /* Erik.h in Headers */ = {isa = PBXBuildFile; fileRef = C42828DA1BF9EDE1005EC7C3 /* Erik.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42828E21BF9EDE1005EC7C3 /* Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42828D71BF9EDE1005EC7C3 /* Erik.framework */; };
 		C42828E71BF9EDE1005EC7C3 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
 		C42828F61BF9EEAF005EC7C3 /* LayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828F51BF9EEAF005EC7C3 /* LayoutEngine.swift */; };
@@ -22,6 +21,7 @@
 		C4D50DDE1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
 		C4D50DEC1BFB58EE0053B624 /* Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C431787F1BFA3E1A00C04250 /* Erik.framework */; };
 		C4D50DF21BFB59030053B624 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
+		C4E4B2751D8EE60A009D8AA7 /* Erik.h in Headers */ = {isa = PBXBuildFile; fileRef = C4E4B2731D8EE60A009D8AA7 /* Erik.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4F7D01C1C088A0100EF359B /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7D01B1C088A0100EF359B /* Future.swift */; };
 		C4F7D01D1C088A0100EF359B /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7D01B1C088A0100EF359B /* Future.swift */; };
 		E0D1B8CBEC687F5EE711EAC1 /* Pods_ErikOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A34CAB2D6E9C56DE435463C /* Pods_ErikOSX.framework */; };
@@ -55,8 +55,6 @@
 		A0C37CB37C7CE1F12318AA8F /* Pods-ErikOSXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErikOSXTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ErikOSXTests/Pods-ErikOSXTests.release.xcconfig"; sourceTree = "<group>"; };
 		ACE1913C2088579A7697D42A /* Pods_ErikOSXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ErikOSXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42828D71BF9EDE1005EC7C3 /* Erik.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Erik.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C42828DA1BF9EDE1005EC7C3 /* Erik.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Erik.h; sourceTree = "<group>"; };
-		C42828DC1BF9EDE1005EC7C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42828E11BF9EDE1005EC7C3 /* ErikTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErikTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErikTests.swift; path = ErikTests/ErikTests.swift; sourceTree = SOURCE_ROOT; };
 		C42828E81BF9EDE1005EC7C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,8 +66,9 @@
 		C4D50DDC1BFB51130053B624 /* Erik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Erik.swift; sourceTree = "<group>"; };
 		C4D50DE71BFB58EE0053B624 /* ErikOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErikOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D50DEB1BFB58EE0053B624 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C4DF857E1C04AD0A0002E142 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../Eki/README.md; sourceTree = "<group>"; };
 		C4DF857F1C04ADDA0002E142 /* Erik.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Erik.podspec; sourceTree = "<group>"; };
+		C4E4B2731D8EE60A009D8AA7 /* Erik.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Erik.h; sourceTree = "<group>"; };
+		C4E4B2741D8EE60A009D8AA7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4F7D01B1C088A0100EF359B /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Future.swift; path = Future/Future.swift; sourceTree = "<group>"; };
 		C735044BB44C9D1E52EB9784 /* Pods-Erik.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Erik.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Erik/Pods-Erik.debug.xcconfig"; sourceTree = "<group>"; };
 		E64C9E85EE53CF0A28E97D7D /* Pods-Erik.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Erik.release.xcconfig"; path = "Pods/Target Support Files/Pods-Erik/Pods-Erik.release.xcconfig"; sourceTree = "<group>"; };
@@ -143,12 +142,12 @@
 		C42828CD1BF9EDE1005EC7C3 = {
 			isa = PBXGroup;
 			children = (
-				C42828D91BF9EDE1005EC7C3 /* Erik */,
+				C42828D91BF9EDE1005EC7C3 /* Sources */,
+				C4E4B2721D8EE60A009D8AA7 /* Erik */,
 				C43178801BFA3E1A00C04250 /* ErikOSX */,
 				C42828E51BF9EDE1005EC7C3 /* ErikTests */,
 				C4D50DE81BFB58EE0053B624 /* ErikOSXTests */,
 				C42828D81BF9EDE1005EC7C3 /* Products */,
-				C4DF857E1C04AD0A0002E142 /* README.md */,
 				C4DF857F1C04ADDA0002E142 /* Erik.podspec */,
 				1374356BE5091641C8AE3CDE /* Pods */,
 				630BA295A9583F1A0F53DE04 /* Frameworks */,
@@ -166,17 +165,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C42828D91BF9EDE1005EC7C3 /* Erik */ = {
+		C42828D91BF9EDE1005EC7C3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C42828DA1BF9EDE1005EC7C3 /* Erik.h */,
-				C42828DC1BF9EDE1005EC7C3 /* Info.plist */,
 				C4D50DDC1BFB51130053B624 /* Erik.swift */,
 				C42828F51BF9EEAF005EC7C3 /* LayoutEngine.swift */,
 				C463134B1BFCE3A50078FB9D /* Document.swift */,
 				C4F7D01A1C0889A700EF359B /* Future */,
 			);
-			path = Erik;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		C42828E51BF9EDE1005EC7C3 /* ErikTests */ = {
@@ -205,6 +202,15 @@
 			path = ErikOSXTests;
 			sourceTree = "<group>";
 		};
+		C4E4B2721D8EE60A009D8AA7 /* Erik */ = {
+			isa = PBXGroup;
+			children = (
+				C4E4B2731D8EE60A009D8AA7 /* Erik.h */,
+				C4E4B2741D8EE60A009D8AA7 /* Info.plist */,
+			);
+			path = Erik;
+			sourceTree = "<group>";
+		};
 		C4F7D01A1C0889A700EF359B /* Future */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,7 +226,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C42828DB1BF9EDE1005EC7C3 /* Erik.h in Headers */,
+				C4E4B2751D8EE60A009D8AA7 /* Erik.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,16 +330,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = phimage;
 				TargetAttributes = {
 					C42828D61BF9EDE1005EC7C3 = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = GGU39CDBL2;
+						LastSwiftMigration = 0800;
 					};
 					C42828E01BF9EDE1005EC7C3 = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = GGU39CDBL2;
+						LastSwiftMigration = 0800;
 					};
 					C431787E1BFA3E1A00C04250 = {
 						CreatedOnToolsVersion = 7.1;
@@ -615,8 +623,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -663,8 +673,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -684,6 +696,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -696,6 +709,7 @@
 			baseConfigurationReference = C735044BB44C9D1E52EB9784 /* Pods-Erik.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -708,6 +722,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -716,6 +731,7 @@
 			baseConfigurationReference = E64C9E85EE53CF0A28E97D7D /* Pods-Erik.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -726,6 +742,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Erik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -733,11 +750,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CCDDC6D3631E54598D9AE78 /* Pods-ErikTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = ErikTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -745,11 +764,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87D7EF32BF7E307FD04718CA /* Pods-ErikTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = ErikTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -772,6 +793,7 @@
 				PRODUCT_NAME = Erik;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -793,6 +815,7 @@
 				PRODUCT_NAME = Erik;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -800,6 +823,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EEC248EA8E4AD2CD57F9011A /* Pods-ErikOSXTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ErikOSXTests/Info.plist;
@@ -808,6 +832,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -815,6 +840,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A0C37CB37C7CE1F12318AA8F /* Pods-ErikOSXTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ErikOSXTests/Info.plist;
@@ -823,6 +849,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
