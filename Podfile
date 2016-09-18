@@ -5,14 +5,14 @@ inhibit_all_warnings!
 # compute_swift_version_from_targets!
 
 def dependency_pods
-    # pod 'Result', :git => 'http://github.com/antitypical/Result.git', :branch => 'master'
     pod 'Kanna', :git => 'http://github.com/tid-kijyun/Kanna.git', :branch => 'swift3.0'
     pod 'BrightFutures', '~> 5.0.0'
+    # pod 'Result', '~> 3.0.0’
 end
 
 def testing_pods
     dependency_pods
-    pod 'FileKit', :git => 'http://github.com/nvzqz/FileKit.git', :branch => 'develop'
+    pod 'FileKit'
 end
 
 target 'Erik' do
