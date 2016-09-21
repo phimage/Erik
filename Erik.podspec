@@ -28,11 +28,11 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Core'
 
   s.subspec "Core" do  |sp|
-    sp.source_files = "Erik/*.swift"
+    sp.source_files = "Sources/*.swift"
   end
 
   s.subspec "Future" do  |sp|
-    sp.source_files = "Erik/Future/*.swift"
+    sp.source_files = "Sources/Future/*.swift"
     sp.dependency 'Erik/Core'
     sp.dependency 'BrightFutures'
   end
