@@ -28,7 +28,7 @@ import Result
 
 extension Erik {
 
-    public func visitURLFuture(_ url: URL) -> Future<Document, NSError> {
+    public func visitFuture(url: URL) -> Future<Document, NSError> {
         let promise = Promise<Document, NSError>()
         
         self.visit(url: url) { (obj, err) -> Void in
@@ -74,7 +74,7 @@ extension Erik {
     }
 
     public static func visitFuture(url: URL) -> Future<Document, NSError> {
-        return Erik.sharedInstance.visitURLFuture(url)
+        return Erik.sharedInstance.visitFuture(url: url)
     }
 
     public static func currentContentFuture() -> Future<Document, NSError> {

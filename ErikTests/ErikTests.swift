@@ -342,7 +342,7 @@ class ErikTests: XCTestCase {
         let browser = Erik()
         (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
   
-        var future: Future<Document, NSError> = browser.visitURLFuture(url)
+        var future: Future<Document, NSError> = browser.visitFuture(url: url)
    
         future = future.flatMap { document -> Future<Document, NSError> in
             
