@@ -13,7 +13,7 @@
 An headless browser allow to run functional tests, to access and manipulate webpages using javascript.
 
 ```swift
-let browser = Erik.visitURL(url) { document, error in
+let browser = Erik.visit(url: url) { document, error in
     // browse HTML element, click, submit form and more
 }
 ```
@@ -21,7 +21,7 @@ let browser = Erik.visitURL(url) { document, error in
 ## Navigation
 Go to an url
 ```swift
-Erik.visitURL(url) { object, error in
+Erik.visit(url: url) { object, error in
     if let e = error {
 
     } else if let doc = object {
@@ -65,10 +65,10 @@ if let form = doc.querySelector("form[id='search']") as? Form {
 ### Evaluate some JavaScript
 ```swift
 let javaScriptSource = "console.log("test");"
-Erik.evaluateJavaScript(javaScriptSource) { (obj, err) -> Void in
+Erik.evaluate(javaScript:javaScriptSource) { (obj, err) -> Void in
     if let error = err {
         switch error {
-            case ErikError.JavaScriptError(let message):
+            case ErikError.javaScriptError(let message):
             print(message)
             default :
             print("\(error)")
@@ -109,7 +109,7 @@ Example to submit a google search
 let url = NSURL(string:"https://www.google.com")!
 let value = "Erik The Phantom of Opera"
 // visit
-var future: Future<Document, NSError> = Erik.visitURLFuture(url)
+var future: Future<Document, NSError> = Erik.visitFuture(url: url)
 // fill input field
 future = future.flatMap { document -> Future<Document, NSError> in
     if let input = document.querySelector("input[name='q']") {
