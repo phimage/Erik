@@ -132,31 +132,31 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
 }
 
 // MARK: WKNavigationDelegate
-public class LayoutEngineNavigationDelegate: NSObject, WKNavigationDelegate, Navigable {
+open class LayoutEngineNavigationDelegate: NSObject, WKNavigationDelegate, Navigable {
     
     public var navigate: Bool = false
     public var lastError: Error?
     
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Swift.Void) {
+    open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Swift.Void) {
         //self.navigate = true
         decisionHandler(WKNavigationActionPolicy.allow)
     }
     
-    public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+    open func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
        // self.navigate = true
     }
     
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.navigate = false
     }
     
-    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.navigate = false
         self.lastError = error
     }
     
     @available(OSX 10.11, *)
-    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+    open func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         self.navigate = false
     }
 }
