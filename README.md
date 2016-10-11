@@ -5,7 +5,7 @@
             )](http://mit-license.org) [![Platform](http://img.shields.io/badge/platform-ios_osx-lightgrey.svg?style=flat
              )](https://developer.apple.com/resources/) [![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
              )](https://developer.apple.com/swift) [![Issues](https://img.shields.io/github/issues/phimage/Erik.svg?style=flat
-           )](https://github.com/phimage/Erik/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Erik.svg?style=flat)](http://cocoadocs.org/docsets/Erik/)
+           )](https://github.com/phimage/Erik/issues) [![Cocoapod](http://img.shields.io/cocoapods/v/Erik.svg?style=flat)](http://cocoadocs.org/docsets/Erik/)[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 
 [<img align="left" src="logo.png" hspace="20">](#logo) Erik is a [headless browser](https://en.wikipedia.org/wiki/Headless_browser) based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
@@ -160,6 +160,15 @@ to learn more.
 
 #### Optional Future
 Add `pod 'Erik/Future'` to your `Podfile` and run `pod install`.
+
+## Using carthage ##
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager for Objective-C and Swift.
+
+1. Add the project to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
+
+    ```
+    github "phimage/Erik"
+    ```
 
 ## Roadmap
 

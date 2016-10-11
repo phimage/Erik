@@ -316,13 +316,13 @@ class ErikTests: XCTestCase {
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
-    
+
     
     func testSnapShot() {
         if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine,
             let data: ErikImage = engine.snapshot(CGSize(width: 600, height: 400)) {
             
-            let path = Path.UserTemporary + "erik\(Date().timeIntervalSince1970).png"
+            let path = Path.userTemporary + "erik\(Date().timeIntervalSince1970).png"
             
             print("Write snapshot to \(path)")
             
