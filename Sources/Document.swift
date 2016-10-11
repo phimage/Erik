@@ -47,6 +47,8 @@ open class Document : Node {
     init(rawValue: HTMLDocument) {
         super.init(rawValue: rawValue, selectors: [])
     }
+    
+    open override var document: Document? { get {return self} set {} }
 
     open var title: String? { return (rawValue as? HTMLDocument)?.title }
     open var head: Element? {
@@ -66,15 +68,37 @@ open class Document : Node {
 // HTML Node
 open class Node {
     var layoutEngine: LayoutEngine?
+    open var document: Document?
+    
+    open var parent: Node? {
+        didSet {
+            self.layoutEngine = parent?.layoutEngine
+            self.document = parent?.document
+        }
+    }
     
     var rawValue: SearchableNode
     var selectors = [String]()
     
     open var text: String? { return rawValue.text }
     open var toHTML: String? { return rawValue.toHTML }
+    open var toXML: String? { return rawValue.toXML }
     open var innerHTML: String? { return rawValue.innerHTML }
     open var className: String? { return rawValue.className }
-    open var tagName:   String? { return rawValue.tagName }
+    open var tagName: String? { return rawValue.tagName }
+    open var content: String? {
+        get { return rawValue.content}
+        set {
+            rawValue.content = newValue
+
+            if let html = document?.text {
+                layoutEngine?.load(htmlString: html, baseURL: layoutEngine?.url)
+            }
+            else {
+                assertionFailure("unable to update html")
+            }
+        }
+    }
     
     init(rawValue: SearchableNode, selectors: [String]) {
         self.selectors = selectors
@@ -86,7 +110,7 @@ open class Node {
         let selectors = self.selectors + [selector]
         return rawValue.css(selector).map {
             let elem = Element.build($0, selectors: selectors)
-            elem.layoutEngine = self.layoutEngine
+            elem.parent = self
             return elem
         }
     }
@@ -98,7 +122,7 @@ open class Node {
         }
         let selectors = self.selectors + ["\(selector):erik-child"]
         let elem = Element.build(element, selectors: selectors)
-        elem.layoutEngine = self.layoutEngine
+        elem.parent = self
         return elem
     }
     
@@ -117,6 +141,18 @@ open class Node {
         return querySelectorAll(":last-child").first
     }
     
+    open subscript(index: Int) -> Element? {
+        let e = elements
+        guard index < e.count else {
+            return nil
+        }
+        return e[index]
+    }
+
+    open func forEach(body: (Element) throws -> Void) throws {
+        try elements.forEach(body)
+    }
+
 }
 
 extension Node {

@@ -28,42 +28,47 @@ import Result
 
 extension Erik {
 
-    public func visitFuture(url: URL) -> Future<Document, NSError> {
-        let promise = Promise<Document, NSError>()
+    public typealias FutureError = NSError // TODO AnyError?
+    fileprivate static func toFutureError(_ error: Error) -> FutureError {
+        return error as FutureError
+    }
+
+    public func visitFuture(url: URL) -> Future<Document, FutureError> {
+        let promise = Promise<Document, FutureError>()
         
         self.visit(url: url) { (obj, err) -> Void in
             if let document = obj {
                 promise.success(document)
             }
             else if let error = err {
-                promise.failure(error as NSError)
+                promise.failure(Erik.toFutureError(error))
             }
         }
         
         return promise.future
     }
 
-    public func currentContentFuture() -> Future<Document, NSError> {
-        let promise = Promise<Document, NSError>()
+    public func currentContentFuture() -> Future<Document, FutureError> {
+        let promise = Promise<Document, FutureError>()
         
         self.currentContent { (obj, err) -> Void in
             if let document = obj {
                 promise.success(document)
             }
             else if let error = err {
-                promise.failure(error as NSError)
+                promise.failure(Erik.toFutureError(error))
             }
         }
 
         return promise.future
     }
 
-    public func evaluateFuture(javaScript: String) -> Future<Any?, NSError> {
-        let promise = Promise<Any?, NSError>()
+    public func evaluateFuture(javaScript: String) -> Future<Any?, FutureError> {
+        let promise = Promise<Any?, FutureError>()
         
         self.evaluate(javaScript: javaScript) { (obj, err) -> Void in
             if let error = err {
-                promise.failure(error as NSError)
+                promise.failure(Erik.toFutureError(error))
             }
             else {
                 promise.success(obj)
@@ -73,15 +78,15 @@ extension Erik {
         return promise.future
     }
 
-    public static func visitFuture(url: URL) -> Future<Document, NSError> {
+    public static func visitFuture(url: URL) -> Future<Document, FutureError> {
         return Erik.sharedInstance.visitFuture(url: url)
     }
 
-    public static func currentContentFuture() -> Future<Document, NSError> {
+    public static func currentContentFuture() -> Future<Document, FutureError> {
         return Erik.sharedInstance.currentContentFuture()
     }
     
-    public static func evaluateFuture(javaScript: String) -> Future<Any?, NSError>  {
+    public static func evaluateFuture(javaScript: String) -> Future<Any?, FutureError>  {
         return Erik.sharedInstance.evaluateFuture(javaScript: javaScript)
     }
 }

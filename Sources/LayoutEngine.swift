@@ -31,6 +31,9 @@ public protocol JavaScriptEvaluator {
 public protocol URLBrowser {
     func browse(url: URL, completionHandler: CompletionHandler?)
     func browse(urlRequest: URLRequest, completionHandler: CompletionHandler?)
+    
+    func load(htmlString: String, baseURL: URL?)
+    
     var url: URL? {get}
     var title: String? {get}
     func currentContent(completionHandler: CompletionHandler?)
@@ -174,6 +177,10 @@ extension WebKitLayoutEngine {
         self.navigable?.navigate = true
         webView.load(urlRequest)
         self.currentContent(completionHandler: completionHandler)
+    }
+
+    public func load(htmlString: String, baseURL: URL?) {
+        webView.loadHTMLString(htmlString, baseURL: baseURL)
     }
    
     public var url: URL? {
