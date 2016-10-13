@@ -23,15 +23,15 @@ SOFTWARE.
 import Foundation
 
 public protocol HTMLParser {
-    func parse(_ html: String) -> Document?
+    func parse(_ html: String, encoding: String.Encoding) -> Document?
 }
 
 import Kanna
 class KanaParser: HTMLParser {
     static let instance = KanaParser()
 
-    func parse(_ html: String) -> Document? {
-        if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
+    func parse(_ html: String, encoding: String.Encoding) -> Document? {
+        if let doc = Kanna.HTML(html: html, encoding: encoding) {
             return Document(rawValue: doc)
         }
         return nil

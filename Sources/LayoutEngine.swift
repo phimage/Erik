@@ -92,6 +92,25 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
             }
         }
     }
+    
+    public enum JavascriptToGetContent {
+        case outerHTML
+        case innerHTML
+        case custom(javascript: String)
+        
+        var javascript: String {
+            switch self {
+            case .outerHTML:
+                return "document.documentElement.outerHTML.toString()"
+            case .innerHTML:
+                return  "document.documentElement.innerHTML"
+            case .custom(let js):
+                return js
+            }
+        }
+        
+    }
+    
 
     public var pageLoadedPolicy: PageLoadedPolicy = .isLoading {
         didSet {
@@ -100,6 +119,8 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
             }
         }
     }
+    public var javascriptToGetContent: JavascriptToGetContent = .outerHTML
+    
     fileprivate var navigable: Navigable?
     open var pageLoadTimeout: TimeInterval = 20
     open fileprivate(set) var firstPageLoaded = false
@@ -238,8 +259,8 @@ extension WebKitLayoutEngine {
     
     fileprivate func handleHTML(_ completionHandler: CompletionHandler?) {
         javaScriptQueue.async { [unowned self] in
-            let js_getDocumentHTML = "document.documentElement.outerHTML"
-            self.webView.evaluateJavaScript(js_getDocumentHTML) { [unowned self] (obj, error) -> Void in
+         
+            self.webView.evaluateJavaScript(self.javascriptToGetContent.javascript) { [unowned self] (obj, error) -> Void in
                 self.callBackQueue.async {
                     completionHandler?(obj, error)
                 }

@@ -47,6 +47,7 @@ open class Erik {
     
     open var layoutEngine: LayoutEngine
     open var htmlParser: HTMLParser
+    open var encoding: String.Encoding = .utf8
     
     public var noContentPattern: String? = "<html><head></head><body></body></html>"
     
@@ -142,7 +143,7 @@ open class Erik {
             return
         }
         
-        guard let doc = self.htmlParser.parse(html) else {
+        guard let doc = self.htmlParser.parse(html, encoding: encoding) else {
             completionHandler?(nil, ErikError.htmlNotParsable(html: html))
             return
         }

@@ -10,11 +10,8 @@ import UIKit
 import Erik
 import Kanna
 import WebKit
-import Eki
 
 class ViewController: UIViewController, WKNavigationDelegate {
-    let url = NSURL(string: "https://www.google.com")!
-
     @IBOutlet var redView: UIView!
 
     var browser: Erik!
@@ -24,7 +21,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         self.navigationItem.title = "Erik"
 
 
-        let frame = UIScreen.mainScreen().bounds
+        let frame = UIScreen.main.bounds
         webView = WKWebView(frame: frame, configuration:  WKWebViewConfiguration())
         webView.allowsBackForwardNavigationGestures = true
        redView.addSubview(webView)
@@ -32,14 +29,15 @@ class ViewController: UIViewController, WKNavigationDelegate {
         webView.navigationDelegate = self
 
         browser = Erik(webView: webView)
-        browser.visitURL(url) { object, error in
+        browser.visit(url: googleURL) { object, error in
             if let e = error {
 
-                print(String(e))
+                print(String(describing: e))
             } else if let doc = object {
                 // HTML Inspection
-                print(String(doc))
+                print(String(describing: doc))
             }
+          
         }
 
 

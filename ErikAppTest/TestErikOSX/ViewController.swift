@@ -10,41 +10,64 @@ import Cocoa
 import Erik
 import Kanna
 import WebKit
-import Eki
 
 
 class ViewController: NSViewController {
     var browser: Erik!
     var webView: WKWebView!
-    let url = NSURL(string: "http://www.google.com")!
+    @IBOutlet weak var mainView: NSView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        webView = WKWebView(frame:  self.view.bounds, configuration:  WKWebViewConfiguration())
-        self.webView.frame = self.view.bounds
-
-         self.webView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.webView)
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-0-[view]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view":self.webView]))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[view]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view":self.webView]))
+        
+        webView = WKWebView(frame: self.mainView.bounds, configuration:  WKWebViewConfiguration())
+        self.webView.frame = self.mainView.bounds
+        
+        self.webView.translatesAutoresizingMaskIntoConstraints = false
+        self.mainView.addSubview(self.webView)
+        self.mainView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-0-[view]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view":self.webView]))
+        self.mainView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view":self.webView]))
 
         browser = Erik(webView: webView)
-        browser.visitURL(url) { object, error in
+        browser.visit(url: googleURL) { object, error in
             if let e = error {
-                print(String(e))
+                print(String(describing: e))
             } else if let doc = object {
-                print(String(doc))
+                print(String(describing: doc))
             }
         }
     }
 
-    override var representedObject: AnyObject? {
-        didSet {
-        // Update the view, if already loaded.
+    @IBAction func testAction(_ sender: AnyObject) {
+        
+        browser.currentContent { (d, r) in
+            if let error = r {
+                NSAlert(error: error).runModal()
+            }
+            else if let doc = d {
+                if let input = doc.querySelector("input[name='q']") {
+                    print(input)
+                    input["value"] = "Erik swift"
+                   
+                }
+                if let form = doc.querySelector("form") as? Form {
+                    print(form)
+                    form.submit()
+                }
+                
+            }
         }
     }
 
+    @IBAction func reload(_ sender: AnyObject) {
+        browser.visit(url: browser.url ?? googleURL) { (object, error) in
+            if let e = error {
+                print(String(describing: e))
+            } else if let doc = object {
+                print(String(describing: doc))
+            }
+        }
+    }
 
 }
 

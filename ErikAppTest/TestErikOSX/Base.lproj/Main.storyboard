@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6198" systemVersion="14A297b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6198"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -641,12 +641,12 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TestErikOSX" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
-        <!--Window Controller - Window-->
+        <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
@@ -667,11 +667,60 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="TestErikOSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="pfT-wQ-Ns1">
+                                <rect key="frame" x="0.0" y="235" width="480" height="35"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ieA-5f-v8E">
+                                        <rect key="frame" x="8" y="0.0" width="66" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BnF-mP-oO3">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="testAction:" target="XfG-lQ-9wD" id="2CA-jX-AEw"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dPF-Mo-HPh">
+                                        <rect key="frame" x="74" y="0.0" width="82" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Reload" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6SA-qQ-E3N">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="reload:" target="XfG-lQ-9wD" id="8kd-xK-eSF"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="dPF-Mo-HPh" firstAttribute="top" secondItem="pfT-wQ-Ns1" secondAttribute="top" constant="7" id="QVf-3h-dRV"/>
+                                    <constraint firstItem="ieA-5f-v8E" firstAttribute="top" secondItem="pfT-wQ-Ns1" secondAttribute="top" constant="7" id="Rez-f8-FvG"/>
+                                    <constraint firstAttribute="height" constant="35" id="TFf-Od-cYY"/>
+                                    <constraint firstItem="dPF-Mo-HPh" firstAttribute="leading" secondItem="ieA-5f-v8E" secondAttribute="trailing" constant="12" id="Vs5-Io-NGA"/>
+                                    <constraint firstItem="ieA-5f-v8E" firstAttribute="leading" secondItem="pfT-wQ-Ns1" secondAttribute="leading" constant="14" id="XnU-CQ-b1m"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="o8u-3D-Q04">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="235"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="o8u-3D-Q04" firstAttribute="top" secondItem="pfT-wQ-Ns1" secondAttribute="bottom" id="1DX-4E-sub"/>
+                            <constraint firstAttribute="trailing" secondItem="pfT-wQ-Ns1" secondAttribute="trailing" id="6nA-bC-XBB"/>
+                            <constraint firstItem="o8u-3D-Q04" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="AHK-xg-5Kr"/>
+                            <constraint firstItem="pfT-wQ-Ns1" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="OXh-rx-lSB"/>
+                            <constraint firstAttribute="bottom" secondItem="o8u-3D-Q04" secondAttribute="bottom" id="YIs-fG-DSw"/>
+                            <constraint firstAttribute="trailing" secondItem="o8u-3D-Q04" secondAttribute="trailing" id="kta-Ya-zsO"/>
+                            <constraint firstItem="pfT-wQ-Ns1" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="ofd-mH-swh"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mainView" destination="o8u-3D-Q04" id="6bB-Hb-AfX"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

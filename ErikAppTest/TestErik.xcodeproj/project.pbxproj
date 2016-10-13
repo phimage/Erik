@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3FCCCE07FE74E1312D364DAB /* Pods_TestErikOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF87629469CBF83CBD62FF71 /* Pods_TestErikOSX.framework */; };
 		925BF0D0BD8C7920DA1E8349 /* Pods_TestErik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D33B7BF9020C92DBF6EA0E9 /* Pods_TestErik.framework */; };
+		C4301D261DAFE257006C7730 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4301D251DAFE257006C7730 /* Common.swift */; };
+		C4301D271DAFE257006C7730 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4301D251DAFE257006C7730 /* Common.swift */; };
 		C4E90D511C1DC61100715C0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E90D501C1DC61100715C0C /* AppDelegate.swift */; };
 		C4E90D531C1DC61100715C0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E90D521C1DC61100715C0C /* ViewController.swift */; };
 		C4E90D561C1DC61100715C0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E90D541C1DC61100715C0C /* Main.storyboard */; };
@@ -27,6 +29,7 @@
 		5B1E1051AE242569B39DBFE2 /* Pods-TestErikOSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestErikOSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestErikOSX/Pods-TestErikOSX.release.xcconfig"; sourceTree = "<group>"; };
 		7D33B7BF9020C92DBF6EA0E9 /* Pods_TestErik.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestErik.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A69ED0C9C545456430111A9 /* Pods-TestErikOSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestErikOSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestErikOSX/Pods-TestErikOSX.debug.xcconfig"; sourceTree = "<group>"; };
+		C4301D251DAFE257006C7730 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		C4E90D4D1C1DC61100715C0C /* TestErik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestErik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E90D501C1DC61100715C0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4E90D521C1DC61100715C0C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +115,7 @@
 		C4E90D4F1C1DC61100715C0C /* TestErik */ = {
 			isa = PBXGroup;
 			children = (
+				C4301D251DAFE257006C7730 /* Common.swift */,
 				C4E90D501C1DC61100715C0C /* AppDelegate.swift */,
 				C4E90D521C1DC61100715C0C /* ViewController.swift */,
 				C4E90D541C1DC61100715C0C /* Main.storyboard */,
@@ -141,12 +145,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4E90D5F1C1DC61200715C0C /* Build configuration list for PBXNativeTarget "TestErik" */;
 			buildPhases = (
-				AE3196E211CCD41414A90C1A /* Check Pods Manifest.lock */,
+				AE3196E211CCD41414A90C1A /* [CP] Check Pods Manifest.lock */,
 				C4E90D491C1DC61100715C0C /* Sources */,
 				C4E90D4A1C1DC61100715C0C /* Frameworks */,
 				C4E90D4B1C1DC61100715C0C /* Resources */,
-				345599BFADB7FB36ED82348C /* Embed Pods Frameworks */,
-				1DF0EBFC130DB2C18531C39F /* Copy Pods Resources */,
+				345599BFADB7FB36ED82348C /* [CP] Embed Pods Frameworks */,
+				1DF0EBFC130DB2C18531C39F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -161,12 +165,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4E90D761C1DD22E00715C0C /* Build configuration list for PBXNativeTarget "TestErikOSX" */;
 			buildPhases = (
-				0FEAFA9006BCD1E82070901E /* Check Pods Manifest.lock */,
+				0FEAFA9006BCD1E82070901E /* [CP] Check Pods Manifest.lock */,
 				C4E90D661C1DD22E00715C0C /* Sources */,
 				C4E90D671C1DD22E00715C0C /* Frameworks */,
 				C4E90D681C1DD22E00715C0C /* Resources */,
-				2B959C471B08007F054A14FD /* Embed Pods Frameworks */,
-				9A9D86954E631BB8FD69AF09 /* Copy Pods Resources */,
+				2B959C471B08007F054A14FD /* [CP] Embed Pods Frameworks */,
+				9A9D86954E631BB8FD69AF09 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -184,12 +188,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = phimage;
 				TargetAttributes = {
 					C4E90D4C1C1DC61100715C0C = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = GGU39CDBL2;
+						LastSwiftMigration = 0800;
 					};
 					C4E90D691C1DD22E00715C0C = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -239,29 +244,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0FEAFA9006BCD1E82070901E /* Check Pods Manifest.lock */ = {
+		0FEAFA9006BCD1E82070901E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		1DF0EBFC130DB2C18531C39F /* Copy Pods Resources */ = {
+		1DF0EBFC130DB2C18531C39F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,14 +274,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestErik/Pods-TestErik-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2B959C471B08007F054A14FD /* Embed Pods Frameworks */ = {
+		2B959C471B08007F054A14FD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,14 +289,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestErikOSX/Pods-TestErikOSX-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		345599BFADB7FB36ED82348C /* Embed Pods Frameworks */ = {
+		345599BFADB7FB36ED82348C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,14 +304,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestErik/Pods-TestErik-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9A9D86954E631BB8FD69AF09 /* Copy Pods Resources */ = {
+		9A9D86954E631BB8FD69AF09 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,19 +319,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestErikOSX/Pods-TestErikOSX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AE3196E211CCD41414A90C1A /* Check Pods Manifest.lock */ = {
+		AE3196E211CCD41414A90C1A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -337,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4E90D531C1DC61100715C0C /* ViewController.swift in Sources */,
+				C4301D261DAFE257006C7730 /* Common.swift in Sources */,
 				C4E90D511C1DC61100715C0C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4E90D6F1C1DD22E00715C0C /* ViewController.swift in Sources */,
+				C4301D271DAFE257006C7730 /* Common.swift in Sources */,
 				C4E90D6D1C1DD22E00715C0C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,8 +400,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -438,8 +447,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -458,6 +469,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -467,11 +479,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC63F539FEEAD4CB5A2893C9 /* Pods-TestErik.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TestErik/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.TestErik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -479,11 +493,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 29527B178D5BBE1447B68F21 /* Pods-TestErik.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TestErik/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.TestErik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -491,6 +507,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8A69ED0C9C545456430111A9 /* Pods-TestErikOSX.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -500,6 +517,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.TestErikOSX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -507,6 +525,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B1E1051AE242569B39DBFE2 /* Pods-TestErikOSX.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -516,6 +535,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.TestErikOSX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
