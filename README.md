@@ -130,7 +130,7 @@ future.onFailure { error in
 ```
 
 ## Limitation
-On iOS 9, you need to ensure you use https://, because iOS 9 does not like apps sending or receiving data insecurely. If this something you want to override, click here to read about [App Transport Security in iOS 9](https://www.hackingwithswift.com/example-code/system/how-to-handle-the-https-requirements-in-ios-9-with-app-transport-security).
+On iOS 9 and macOS 10.11, you need to ensure you use https://, because iOS 9 and macOS 10.11 do not like apps sending or receiving data insecurely. If this something you want to override, click here to read about [App Transport Security](https://github.com/OAuthSwift/OAuthSwift/wiki/App-Transport-Security).
 
 ## Links
 - [A list of (almost) all headless web browsers in existence](https://github.com/dhamaniasad/HeadlessBrowsers)
