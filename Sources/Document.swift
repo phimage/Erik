@@ -239,6 +239,14 @@ open class Element: Node {
         evaluate(javaScript: js, completionHandler: completionHandler)
     }
 
+    open func set(value: String?, completionHandler: CompletionHandler? = nil) {
+        let js = jsValue(value)
+        #if TEST
+            print("js:\(js)")
+        #endif
+        evaluate(javaScript: js, completionHandler: completionHandler)
+    }
+
     open func click(completionHandler: CompletionHandler? = nil) {
         evaluate(javaScript: jsFunction("click"), completionHandler: completionHandler)
     }
@@ -265,6 +273,16 @@ open class Element: Node {
             js += "\(varName).setAttribute('\(attr)', '\(v)');\n"
         } else {
             js += "\(varName).removeAttribute('\(attr)');\n"
+        }
+        return js
+    }
+
+    func jsValue(_ value: String?, varName: String = "erik") -> String {
+        var js = jsSelector(varName)
+        if let v = value {
+            js += "\(varName).value = '\(v)';"
+        } else {
+            js += "\(varName).value = '';"
         }
         return js
     }
