@@ -262,9 +262,9 @@ open class Element: Node {
 
     open func set(value: String?, completionHandler: CompletionHandler? = nil) {
         let js = jsValue(value)
-        //#if TEST
+        #if TEST
             print("js:\(js)")
-        //#endif
+        #endif
         evaluate(javaScript: js, completionHandler: completionHandler)
     }
 
@@ -311,9 +311,9 @@ open class Element: Node {
     func jsFunction(_ name: String, varName: String = "erik") -> String {
         var js = jsSelector(varName) // TODO check undefined?
         js += "\(varName).\(name)();\n"
-        //#if TEST
+        #if TEST
             print("js:\(js)")
-        //#endif
+        #endif
         return js
     }
 
