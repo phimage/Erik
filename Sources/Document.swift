@@ -202,6 +202,22 @@ open class Form: Element {
     }
 }
 
+open class Select: Element {
+    open func set(selectedIndex index: Int, completionHandler: CompletionHandler? = nil) {
+        let js = jsSelectedIndex(index)
+        #if TEST
+            print("js:\(js)")
+        #endif
+        evaluate(javaScript: js, completionHandler: completionHandler)
+    }
+
+    func jsSelectedIndex(_ index: Int, varName: String = "erik") -> String {
+        var js = jsSelector(varName)
+        js += "\(varName).selectedIndex = '\(index)';"
+        return js
+    }
+}
+
 open class Element: Node {
     
     static func build(_ rawValue: Kanna.XMLElement, selectors: [String]) -> Element {
@@ -211,6 +227,8 @@ open class Element: Node {
                 return Form(rawValue: rawValue, selectors: selectors)
             case "textarea":
                 return TextArea(rawValue: rawValue, selectors: selectors)
+            case "select":
+                return Select(rawValue: rawValue, selectors: selectors)
             default:
                 break
             }
