@@ -79,6 +79,7 @@ open class Node {
     
     var rawValue: SearchableNode
     var selectors = [String]()
+    var index: Int
     
     open var text: String? { return rawValue.text }
     open var toHTML: String? { return rawValue.toHTML }
@@ -100,19 +101,22 @@ open class Node {
         }
     }
     
-    init(rawValue: SearchableNode, selectors: [String]) {
+    init(rawValue: SearchableNode, selectors: [String], index: Int = 0) {
         self.selectors = selectors
         self.rawValue = rawValue
+        self.index = index
     }
     
     // Select elements using css selector
     open func querySelectorAll(_ selector: String) -> [Element] {
         let selectors = self.selectors + [selector]
-        return rawValue.css(selector).map {
-            let elem = Element.build($0, selectors: selectors)
+        var elements = [Element]()
+        for (index, value) in rawValue.css(selector).enumerated() {
+            let elem = Element.build(value, selectors: selectors, index: index)
             elem.parent = self
-            return elem
+            elements.append(elem)
         }
+        return elements
     }
     
     // Select an element using css selector
@@ -121,7 +125,7 @@ open class Node {
             return nil
         }
         let selectors = self.selectors + ["\(selector):erik-child"]
-        let elem = Element.build(element, selectors: selectors)
+        let elem = Element.build(element, selectors: selectors, index: 0)
         elem.parent = self
         return elem
     }
@@ -217,27 +221,26 @@ open class Select: Element {
         return js
     }
 }
-
 open class Element: Node {
     
-    static func build(_ rawValue: Kanna.XMLElement, selectors: [String]) -> Element {
+    static func build(_ rawValue: Kanna.XMLElement, selectors: [String], index: Int) -> Element {
         if let tagName = rawValue.tagName {
             switch (tagName) {
             case "form":
-                return Form(rawValue: rawValue, selectors: selectors)
+                return Form(rawValue: rawValue, selectors: selectors, index: index)
             case "textarea":
-                return TextArea(rawValue: rawValue, selectors: selectors)
+                return TextArea(rawValue: rawValue, selectors: selectors, index: index)
             case "select":
-                return Select(rawValue: rawValue, selectors: selectors)
+                return Select(rawValue: rawValue, selectors: selectors, index: index)
             default:
                 break
             }
         }
-        return Element(rawValue: rawValue, selectors: selectors)
+        return Element(rawValue: rawValue, selectors: selectors, index: index)
     }
     
-    init(rawValue: Kanna.XMLElement, selectors: [String]) {
-        super.init(rawValue: rawValue, selectors: selectors)
+    init(rawValue: Kanna.XMLElement, selectors: [String], index: Int = 0) {
+        super.init(rawValue: rawValue, selectors: selectors, index: index)
     }
     
     open subscript(attribute: String) -> String? {
@@ -259,9 +262,9 @@ open class Element: Node {
 
     open func set(value: String?, completionHandler: CompletionHandler? = nil) {
         let js = jsValue(value)
-        #if TEST
+        //#if TEST
             print("js:\(js)")
-        #endif
+        //#endif
         evaluate(javaScript: js, completionHandler: completionHandler)
     }
 
@@ -273,14 +276,14 @@ open class Element: Node {
         if let id = self["id"] { // id must be unique
             return "var \(varName) = document.querySelector('[id=\"\(id)\"]');\n"
         }
-        
+
         return selectors.reduce("var \(varName) = document;\n") { result, selector in
             if selector.hasSuffix(":erik-child") {
                 let erikSelector = selector.replacingOccurrences(of: ":erik-child", with: "")
                 return result + "\(varName) = \(varName).querySelector('\(KanaParser.escapeJavaScript(erikSelector))');\n"
             }
             else {
-                return result + "\(varName) = \(varName).querySelectorAll('\(KanaParser.escapeJavaScript(selector))')[0];\n"
+                return result + "\(varName) = \(varName).querySelectorAll('\(KanaParser.escapeJavaScript(selector))')[\(index)];\n"
             }
         }
     }
@@ -308,9 +311,9 @@ open class Element: Node {
     func jsFunction(_ name: String, varName: String = "erik") -> String {
         var js = jsSelector(varName) // TODO check undefined?
         js += "\(varName).\(name)();\n"
-        #if TEST
+        //#if TEST
             print("js:\(js)")
-        #endif
+        //#endif
         return js
     }
 
