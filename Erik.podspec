@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.name         = "Erik"
-  s.version      = "2.0.0"
+  s.version      = "2.0.1"
   s.summary      = "A headless browser written in Swift"
   s.description  = <<-DESC
                     Erik is an headless browser based on WebKit and HTML parser Kanna.
@@ -16,6 +16,11 @@ Pod::Spec.new do |s|
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.author             = { "phimage" => "eric.marchand.n7@gmail.com" }
 
+  # ――― xcconfig ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+  s.xcconfig      = {
+                        'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2',
+                        'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Kanna/Modules'
+                      }
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
