@@ -42,7 +42,7 @@ class KanaParser: HTMLParser {
     }
 }
 
-open class Document : Node {
+open class Document: Node {
 
     init(rawValue: HTMLDocument) {
         super.init(rawValue: rawValue, selectors: [])

@@ -126,8 +126,9 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
     open fileprivate(set) var firstPageLoaded = false
 
     
-    open var javaScriptQueue: DispatchQueue = DispatchQueue(label: "ErikJavaScript") // TODO check serial
-    open var callBackQueue: DispatchQueue = DispatchQueue(label: "ErikCallBack")
+    open var javaScriptQueue = DispatchQueue(label: "ErikJavaScript")
+    open var callBackQueue = DispatchQueue(label: "ErikCallBack")
+    open var waitLoadingQueue = DispatchQueue(label: "ErikLoading")
     open var javaScriptWaitTime: TimeInterval = 20
     open var javaScriptResultVarName: String = "resultErik"
 
@@ -232,13 +233,15 @@ extension WebKitLayoutEngine {
     }
 
     public func currentContent(completionHandler: CompletionHandler?) {
-        handleLoadRequestCompletion { error in
-            if let error = error  {
-                self.callBackQueue.asyncOrCurrent {
-                    completionHandler?(nil, error)
+        waitLoadingQueue.async { [unowned self] in
+            self.handleLoadRequestCompletion { error in
+                if let error = error  {
+                    self.callBackQueue.asyncOrCurrent {
+                        completionHandler?(nil, error)
+                    }
+                } else {
+                    self.handleHTML(completionHandler)
                 }
-            } else {
-                self.handleHTML(completionHandler)
             }
         }
     }
@@ -288,14 +291,14 @@ extension WebKitLayoutEngine {
 extension WebKitLayoutEngine {
    public func snapshot(_ size: CGSize) -> ErikImage? {
         #if os(iOS)
-            if let capturedView : UIView = self.webView.snapshotView(afterScreenUpdates: false) {
+            if let capturedView: UIView = self.webView.snapshotView(afterScreenUpdates: false) {
                 UIGraphicsBeginImageContextWithOptions(size, true, 0)
                 let ctx = UIGraphicsGetCurrentContext()
-                let scale : CGFloat! = size.width / capturedView.layer.bounds.size.width
+                let scale: CGFloat! = size.width / capturedView.layer.bounds.size.width
                 let transform = CGAffineTransform(scaleX: scale, y: scale)
                 ctx?.concatenate(transform)
                 capturedView.drawHierarchy(in: capturedView.bounds, afterScreenUpdates: true)
-                let  image : ErikImage = UIGraphicsGetImageFromCurrentImageContext()!
+                let image: ErikImage = UIGraphicsGetImageFromCurrentImageContext()!
                 UIGraphicsEndImageContext();
                 return image
             }

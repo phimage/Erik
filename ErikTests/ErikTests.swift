@@ -10,6 +10,7 @@ import XCTest
 @testable import Erik
 import FileKit
 import BrightFutures
+import Result
 
 let url = URL(string:"https://www.google.com")!
 let PageLoadedPolicy = WebKitLayoutEngine.PageLoadedPolicy.navigationDelegate
@@ -22,7 +23,6 @@ let googleFormSelector = "gs"
 
 class ErikTests: XCTestCase {
 
-    
     override func setUp() {
         super.setUp()
         
@@ -53,7 +53,7 @@ class ErikTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 5, handler: nil)
     }
-    
+
     func testAsync() {
         let expt = self.expectation(description: "Dispatch")
         
@@ -66,7 +66,7 @@ class ErikTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 5, handler: nil)
     }
-    
+
     func testSubmit() {
 
         let visitExpectation = self.expectation(description: "visit")
@@ -133,8 +133,7 @@ class ErikTests: XCTestCase {
                                 } else {
                                     XCTFail("Form not found ")
                                 }
-                            }
-                            
+                            }  
                         }
                         else {
                             XCTFail("no doc")
@@ -185,8 +184,7 @@ class ErikTests: XCTestCase {
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
-    
-    
+
     func testJavascriptResult() {
         let visitExpectation = self.expectation(description: "visit")
 
@@ -217,7 +215,6 @@ class ErikTests: XCTestCase {
         })
     }
 
-    
     func testJavascriptTimeOut() {
         let visitExpectation = self.expectation(description: "visit")
         
@@ -287,7 +284,7 @@ class ErikTests: XCTestCase {
             XCTAssertNil(error, "Oh, we got timeout")
         })
     }
-    
+
     func testContentAtStartNoContent() {
         let expectation = self.expectation(description: "start content")
         let browser = Erik()
@@ -317,7 +314,6 @@ class ErikTests: XCTestCase {
         })
     }
 
-    
     func testSnapShot() {
         if let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine,
             let data: ErikImage = engine.snapshot(CGSize(width: 600, height: 400)) {
@@ -378,6 +374,32 @@ class ErikTests: XCTestCase {
         })
         
     }
-    
-    
+
+    func testInFuture() {
+        let visitExpectation = self.expectation(description: "visit")
+        let promise = Promise<Bool, NSError>()
+        promise.success(true)
+        let future = promise.future
+
+        let _ = future.andThen { result in
+            
+            Erik.visit(url: url) { (obj, err) -> Void in
+                if let error = err {
+                    print(error)
+                    
+                    XCTFail("\(error)")
+                }
+                else if let _ = obj {
+                    XCTAssertNotNil(Erik.title)
+                    visitExpectation.fulfill()
+                    
+                    // XCTAssertEqual(Erik.url?.host ?? "dummy", url.host) // failed is redirected to google.XXX TODO how to force lang (request header?)
+                    XCTAssertEqual(Erik.url?.scheme ?? "dummy", url.scheme)
+                }
+            }
+ 
+        }
+        self.waitForExpectations(timeout: 5, handler: nil)
+    }
+
 }
