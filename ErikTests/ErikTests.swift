@@ -107,7 +107,7 @@ class ErikTests: XCTestCase {
                                 XCTFail("input not found ")
                             }
                             
-                            print(doc.toHTML)
+                            print("HTML: \(doc.toHTML)")
                             if let form = doc.querySelector(googleFormSelector) as? Form {
                                 submitExpectation.fulfill()
                                 

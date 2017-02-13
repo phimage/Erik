@@ -18,19 +18,27 @@
 		C46F2E151DACF200006A036D /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E101DACF200006A036D /* BrightFutures.framework */; };
 		C46F2E171DACF200006A036D /* FileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E111DACF200006A036D /* FileKit.framework */; };
 		C46F2E181DACF200006A036D /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E121DACF200006A036D /* Kanna.framework */; };
-		C46F2E191DACF200006A036D /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E121DACF200006A036D /* Kanna.framework */; };
+		C46F2E191DACF200006A036D /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E121DACF200006A036D /* Kanna.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C46F2E1A1DACF200006A036D /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E131DACF200006A036D /* Result.framework */; };
 		C46F2E1B1DACF200006A036D /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E131DACF200006A036D /* Result.framework */; };
 		C46F2E201DACF210006A036D /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1C1DACF210006A036D /* BrightFutures.framework */; };
-		C46F2E211DACF210006A036D /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1C1DACF210006A036D /* BrightFutures.framework */; };
-		C46F2E231DACF210006A036D /* FileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1D1DACF210006A036D /* FileKit.framework */; };
+		C46F2E211DACF210006A036D /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1C1DACF210006A036D /* BrightFutures.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C46F2E231DACF210006A036D /* FileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1D1DACF210006A036D /* FileKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C46F2E241DACF210006A036D /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1E1DACF210006A036D /* Kanna.framework */; };
-		C46F2E251DACF210006A036D /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1E1DACF210006A036D /* Kanna.framework */; };
+		C46F2E251DACF210006A036D /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1E1DACF210006A036D /* Kanna.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C46F2E261DACF210006A036D /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1F1DACF210006A036D /* Result.framework */; };
-		C46F2E271DACF210006A036D /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1F1DACF210006A036D /* Result.framework */; };
+		C46F2E271DACF210006A036D /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46F2E1F1DACF210006A036D /* Result.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C48B18ED1E525BAB000ED799 /* Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C431787F1BFA3E1A00C04250 /* Erik.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C48B18F81E5266B4000ED799 /* BrightFutures.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E1C1DACF210006A036D /* BrightFutures.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C48B18F91E5266B4000ED799 /* FileKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E1D1DACF210006A036D /* FileKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C48B18FA1E5266B4000ED799 /* Kanna.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E1E1DACF210006A036D /* Kanna.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C48B18FB1E5266B4000ED799 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E1F1DACF210006A036D /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C48B18FD1E5266D1000ED799 /* BrightFutures.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E101DACF200006A036D /* BrightFutures.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C48B18FE1E5266D1000ED799 /* FileKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E111DACF200006A036D /* FileKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C48B18FF1E5266D1000ED799 /* Kanna.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E121DACF200006A036D /* Kanna.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C48B19001E5266D1000ED799 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E131DACF200006A036D /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C4D50DDD1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
 		C4D50DDE1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
-		C4D50DEC1BFB58EE0053B624 /* Erik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C431787F1BFA3E1A00C04250 /* Erik.framework */; };
 		C4D50DF21BFB59030053B624 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
 		C4E4B2751D8EE60A009D8AA7 /* Erik.h in Headers */ = {isa = PBXBuildFile; fileRef = C4E4B2731D8EE60A009D8AA7 /* Erik.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4F7D01C1C088A0100EF359B /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7D01B1C088A0100EF359B /* Future.swift */; };
@@ -53,6 +61,35 @@
 			remoteInfo = ErikOSX;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C48B18F71E5266AC000ED799 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C48B18F81E5266B4000ED799 /* BrightFutures.framework in CopyFiles */,
+				C48B18F91E5266B4000ED799 /* FileKit.framework in CopyFiles */,
+				C48B18FA1E5266B4000ED799 /* Kanna.framework in CopyFiles */,
+				C48B18FB1E5266B4000ED799 /* Result.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C48B18FC1E5266CA000ED799 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C48B18FD1E5266D1000ED799 /* BrightFutures.framework in CopyFiles */,
+				C48B18FE1E5266D1000ED799 /* FileKit.framework in CopyFiles */,
+				C48B18FF1E5266D1000ED799 /* Kanna.framework in CopyFiles */,
+				C48B19001E5266D1000ED799 /* Result.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C42828D71BF9EDE1005EC7C3 /* Erik.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Erik.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,10 +134,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C46F2E191DACF200006A036D /* Kanna.framework in Frameworks */,
-				C42828E21BF9EDE1005EC7C3 /* Erik.framework in Frameworks */,
 				C46F2E1B1DACF200006A036D /* Result.framework in Frameworks */,
 				C46F2E151DACF200006A036D /* BrightFutures.framework in Frameworks */,
 				C46F2E171DACF200006A036D /* FileKit.framework in Frameworks */,
+				C42828E21BF9EDE1005EC7C3 /* Erik.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,8 +155,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C48B18ED1E525BAB000ED799 /* Erik.framework in Frameworks */,
 				C46F2E251DACF210006A036D /* Kanna.framework in Frameworks */,
-				C4D50DEC1BFB58EE0053B624 /* Erik.framework in Frameworks */,
 				C46F2E271DACF210006A036D /* Result.framework in Frameworks */,
 				C46F2E211DACF210006A036D /* BrightFutures.framework in Frameworks */,
 				C46F2E231DACF210006A036D /* FileKit.framework in Frameworks */,
@@ -132,7 +169,7 @@
 		630BA295A9583F1A0F53DE04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C46F2E0F1DACF1DA006A036D /* OSX */,
+				C46F2E0F1DACF1DA006A036D /* Mac */,
 				C46F2E0E1DACF1D5006A036D /* iOS */,
 			);
 			name = Frameworks;
@@ -203,7 +240,7 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		C46F2E0F1DACF1DA006A036D /* OSX */ = {
+		C46F2E0F1DACF1DA006A036D /* Mac */ = {
 			isa = PBXGroup;
 			children = (
 				C46F2E1C1DACF210006A036D /* BrightFutures.framework */,
@@ -211,7 +248,7 @@
 				C46F2E1E1DACF210006A036D /* Kanna.framework */,
 				C46F2E1F1DACF210006A036D /* Result.framework */,
 			);
-			name = OSX;
+			name = Mac;
 			sourceTree = "<group>";
 		};
 		C4D50DE81BFB58EE0053B624 /* ErikOSXTests */ = {
@@ -286,6 +323,7 @@
 				C42828DD1BF9EDE1005EC7C3 /* Sources */,
 				C42828DE1BF9EDE1005EC7C3 /* Frameworks */,
 				C42828DF1BF9EDE1005EC7C3 /* Resources */,
+				C48B18FC1E5266CA000ED799 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -322,6 +360,7 @@
 				C4D50DE31BFB58EE0053B624 /* Sources */,
 				C4D50DE41BFB58EE0053B624 /* Frameworks */,
 				C4D50DE51BFB58EE0053B624 /* Resources */,
+				C48B18F71E5266AC000ED799 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -350,7 +389,6 @@
 					};
 					C42828E01BF9EDE1005EC7C3 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = GGU39CDBL2;
 						LastSwiftMigration = 0800;
 					};
 					C431787E1BFA3E1A00C04250 = {
@@ -506,11 +544,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Carthage/Checkouts/Kanna/Modules";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -550,10 +591,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Carthage/Checkouts/Kanna/Modules";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -574,6 +618,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2 ";
 				INFOPLIST_FILE = Erik/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -581,6 +626,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Erik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -599,12 +645,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2 ";
 				INFOPLIST_FILE = Erik/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Erik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -613,15 +661,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2 ";
 				INFOPLIST_FILE = ErikTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Carthage/Checkouts/Kanna/Modules";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -630,15 +681,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2 ";
 				INFOPLIST_FILE = ErikTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Carthage/Checkouts/Kanna/Modules";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -656,6 +710,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = ErikOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
@@ -682,6 +737,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = ErikOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
@@ -704,12 +760,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2 ";
 				INFOPLIST_FILE = ErikOSXTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Carthage/Checkouts/Kanna/Modules";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -724,12 +782,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2 ";
 				INFOPLIST_FILE = ErikOSXTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.ErikOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Carthage/Checkouts/Kanna/Modules";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
