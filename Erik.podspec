@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   s.name         = "Erik"
-  s.version      = "2.0.1"
+  s.version      = "2.0.2"
   s.summary      = "A headless browser written in Swift"
   s.description  = <<-DESC
                     Erik is an headless browser based on WebKit and HTML parser Kanna.

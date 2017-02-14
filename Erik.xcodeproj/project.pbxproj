@@ -37,6 +37,10 @@
 		C48B18FE1E5266D1000ED799 /* FileKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E111DACF200006A036D /* FileKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C48B18FF1E5266D1000ED799 /* Kanna.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E121DACF200006A036D /* Kanna.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C48B19001E5266D1000ED799 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C46F2E131DACF200006A036D /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C4AAB7241E52C3E100348D04 /* KannaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AAB7231E52C3E100348D04 /* KannaTests.swift */; };
+		C4AAB7261E52C40000348D04 /* google.html in Resources */ = {isa = PBXBuildFile; fileRef = C4AAB7251E52C40000348D04 /* google.html */; };
+		C4AAB7271E52C40000348D04 /* google.html in Resources */ = {isa = PBXBuildFile; fileRef = C4AAB7251E52C40000348D04 /* google.html */; };
+		C4AAB7281E52C48E00348D04 /* KannaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AAB7231E52C3E100348D04 /* KannaTests.swift */; };
 		C4D50DDD1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
 		C4D50DDE1BFB51130053B624 /* Erik.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D50DDC1BFB51130053B624 /* Erik.swift */; };
 		C4D50DF21BFB59030053B624 /* ErikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */; };
@@ -109,6 +113,8 @@
 		C46F2E1D1DACF210006A036D /* FileKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FileKit.framework; path = Carthage/Build/Mac/FileKit.framework; sourceTree = "<group>"; };
 		C46F2E1E1DACF210006A036D /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/Mac/Kanna.framework; sourceTree = "<group>"; };
 		C46F2E1F1DACF210006A036D /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
+		C4AAB7231E52C3E100348D04 /* KannaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KannaTests.swift; sourceTree = "<group>"; };
+		C4AAB7251E52C40000348D04 /* google.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = google.html; sourceTree = SOURCE_ROOT; };
 		C4D50DDC1BFB51130053B624 /* Erik.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Erik.swift; sourceTree = "<group>"; };
 		C4D50DE71BFB58EE0053B624 /* ErikOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErikOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D50DEB1BFB58EE0053B624 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -214,7 +220,9 @@
 		C42828E51BF9EDE1005EC7C3 /* ErikTests */ = {
 			isa = PBXGroup;
 			children = (
+				C4AAB7251E52C40000348D04 /* google.html */,
 				C42828E61BF9EDE1005EC7C3 /* ErikTests.swift */,
+				C4AAB7231E52C3E100348D04 /* KannaTests.swift */,
 				C42828E81BF9EDE1005EC7C3 /* Info.plist */,
 			);
 			path = ErikTests;
@@ -379,7 +387,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = phimage;
 				TargetAttributes = {
 					C42828D61BF9EDE1005EC7C3 = {
@@ -431,6 +439,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4AAB7261E52C40000348D04 /* google.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +454,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4AAB7271E52C40000348D04 /* google.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42828E71BF9EDE1005EC7C3 /* ErikTests.swift in Sources */,
+				C4AAB7241E52C3E100348D04 /* KannaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D50DF21BFB59030053B624 /* ErikTests.swift in Sources */,
+				C4AAB7281E52C48E00348D04 /* KannaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,7 +637,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"TEST\"";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Erik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.2;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -652,7 +664,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tv.phimage.Erik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.2;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 3.0;

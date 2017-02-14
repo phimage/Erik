@@ -13,20 +13,23 @@ import BrightFutures
 import Result
 
 let url = URL(string:"https://www.google.com")!
-let PageLoadedPolicy = WebKitLayoutEngine.PageLoadedPolicy.navigationDelegate
+let PageLoadedPolicy: WebKitLayoutEngine.PageLoadedPolicy = .navigationDelegate
 
 #if os(OSX)
 let googleFormSelector = "f"
 #elseif os(iOS)
 let googleFormSelector = "gs"
 #endif
+let inputSelector  = "input[name='q']"
 
 class ErikTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
         
-        (Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
+        let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine
+        engine?.pageLoadedPolicy = PageLoadedPolicy
+        //engine?.javascriptToGetContent = .innerHTML
     }
     
     override func tearDown() {
@@ -85,7 +88,7 @@ class ErikTests: XCTestCase {
                 
                 //print(doc)
                 // do a google search
-                if let input = docVisit.querySelector("input[name='q']") {
+                if let input = docVisit.querySelector(inputSelector) {
                     inputExpectation.fulfill()
                     print(input)
                     
@@ -98,7 +101,7 @@ class ErikTests: XCTestCase {
                             XCTFail("\(error)")
                         }
                         else if let doc = obj {
-                            if let input2 = doc.querySelector("input[name='q']") {
+                            if let input2 = doc.querySelector(inputSelector) {
                                 print(input2)
                                 let currentValue = input2["value"]
                                 XCTAssertEqual(value, currentValue)
@@ -108,6 +111,7 @@ class ErikTests: XCTestCase {
                             }
                             
                             print("HTML: \(doc.toHTML)")
+                            //print("text: \(doc.text)")
                             if let form = doc.querySelector(googleFormSelector) as? Form {
                                 submitExpectation.fulfill()
                                 
@@ -148,9 +152,9 @@ class ErikTests: XCTestCase {
             
         }
         
-        self.waitForExpectations(timeout: 20, handler: { error in
+        self.waitForExpectations(timeout: 20) { error in
             XCTAssertNil(error, "Oh, we got timeout")
-        })
+        }
     }
     
     
@@ -269,7 +273,8 @@ class ErikTests: XCTestCase {
     func testContentAtStart() {
         let expectation = self.expectation(description: "start content")
         let browser = Erik()
-        (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
+        let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine
+        engine?.pageLoadedPolicy = PageLoadedPolicy
         browser.noContentPattern = nil
         browser.currentContent {(obj, err) -> Void in
             if let _ = obj {
@@ -288,7 +293,8 @@ class ErikTests: XCTestCase {
     func testContentAtStartNoContent() {
         let expectation = self.expectation(description: "start content")
         let browser = Erik()
-        (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
+        let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine
+        engine?.pageLoadedPolicy = PageLoadedPolicy
         browser.currentContent {(obj, err) -> Void in
 
             if let _ = obj {
@@ -336,7 +342,8 @@ class ErikTests: XCTestCase {
         
         let visitExpectation = self.expectation(description: "visit")
         let browser = Erik()
-        (browser.layoutEngine as? WebKitLayoutEngine)?.pageLoadedPolicy = PageLoadedPolicy
+        let engine = Erik.sharedInstance.layoutEngine as? WebKitLayoutEngine
+        engine?.pageLoadedPolicy = PageLoadedPolicy
   
         var future: Future<Document, NSError> = browser.visitFuture(url: url)
    

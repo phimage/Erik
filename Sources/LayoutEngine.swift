@@ -52,6 +52,8 @@ public typealias LayoutEngine = URLBrowser & JavaScriptEvaluator
 let JavascriptErrorHandler = "erikError"
 let JavascriptEndHandler = "erikEnd"
 
+// Protocole which define a navigate boolean
+// Useful to know if currently in navigation processs
 public protocol Navigable {
     var navigate: Bool {get set}
 }
@@ -59,6 +61,7 @@ public protocol Navigable {
 import WebKit
 open class WebKitLayoutEngine: NSObject, LayoutEngine {
 
+    // Policy to detect page loading end
     public enum PageLoadedPolicy {
         // `webView.isLoading`
         case isLoading
@@ -93,6 +96,7 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
         }
     }
     
+    // javascript method to get page content
     public enum JavascriptToGetContent {
         case outerHTML
         case innerHTML
@@ -111,7 +115,7 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
         
     }
     
-
+    // policy to detect page loading end
     public var pageLoadedPolicy: PageLoadedPolicy = .isLoading {
         didSet {
             if self.pageLoadedPolicy == .navigationDelegate {
@@ -119,17 +123,24 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
             }
         }
     }
+    // javascript used to get page content
     public var javascriptToGetContent: JavascriptToGetContent = .outerHTML
     
     fileprivate var navigable: Navigable?
+    // Timeout for page loading end detection
     open var pageLoadTimeout: TimeInterval = 20
+    // true if first page loaded
     open fileprivate(set) var firstPageLoaded = false
 
-    
+    // Serial queue where javascript is executed
     open var javaScriptQueue = DispatchQueue(label: "ErikJavaScript")
+    // Serial queue where functions callbacks are executed
     open var callBackQueue = DispatchQueue(label: "ErikCallBack")
+    // Serial queue where Erik wait for page loading
     open var waitLoadingQueue = DispatchQueue(label: "ErikLoading")
+    // Timeout for javascript execution (to get error, or return value)
     open var javaScriptWaitTime: TimeInterval = 20
+    // Default name of javascript variable to get a return value
     open var javaScriptResultVarName: String = "resultErik"
 
     open let webView: WKWebView

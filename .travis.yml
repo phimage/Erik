@@ -1,0 +1,24 @@
+language: objective-c
+osx_image: xcode8
+global:
+  - LC_CTYPE=en_US.UTF-8
+  - LANG=en_US.UTF-8
+  - WORKSPACE=Erik.xcworkspace
+  - IOS_FRAMEWORK_SCHEME="Erik"
+  - MACOS_FRAMEWORK_SCHEME="ErikOSX"
+  - IOS_SDK=iphonesimulator10.0
+  - MACOS_SDK=macosx10.12
+env:
+  - DESTINATION="OS=10.0,name=iPhone 6s" SCHEME="$IOS_FRAMEWORK_SCHEME" SDK="$IOS_SDK"
+  - DESTINATION="arch=x86_64" SCHEME="$MACOS_FRAMEWORK_SCHEME" SDK=macosx10.12
+before_install:
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - brew update
+  - brew outdated carthage || brew upgrade carthage
+script:
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION"
+    -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c
+before_deploy:
+  - carthage build --no-skip-current
