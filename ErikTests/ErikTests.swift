@@ -15,11 +15,6 @@ import Result
 let url = URL(string:"https://www.google.com")!
 let PageLoadedPolicy: WebKitLayoutEngine.PageLoadedPolicy = .navigationDelegate
 
-#if os(OSX)
-let googleFormSelector = "f"
-#elseif os(iOS)
-let googleFormSelector = "gs"
-#endif
 let inputSelector  = "input[name='q']"
 
 class ErikTests: XCTestCase {
@@ -112,7 +107,7 @@ class ErikTests: XCTestCase {
                             
                             print("HTML: \(doc.toHTML)")
                             //print("text: \(doc.text)")
-                            if let form = doc.querySelector(googleFormSelector) as? Form {
+                            if let form = doc.querySelectorAll("form").first as? Form {
                                 submitExpectation.fulfill()
                                 
                                 form.submit()
