@@ -16,7 +16,11 @@ let url = URL(string:"https://www.google.com")!
 let PageLoadedPolicy: WebKitLayoutEngine.PageLoadedPolicy = .navigationDelegate
 
 let inputSelector  = "input[name='q']"
-
+#if os(OSX)
+let googleFormSelector = "f"
+#elseif os(iOS)
+let googleFormSelector = "gs"
+#endif
 class ErikTests: XCTestCase {
 
     override func setUp() {
