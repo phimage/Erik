@@ -86,7 +86,6 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
             case .navigationDelegate:
                 return { engine in
                     if let delegate = engine.navigable {
-                        assert(engine.navigable as? WKNavigationDelegate === engine.webView.navigationDelegate)
                         return delegate.navigate
                     }
                     assertionFailure("No navigation deletage found")
@@ -133,7 +132,7 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
     open fileprivate(set) var firstPageLoaded = false
 
     // Serial queue where javascript is executed
-    open var javaScriptQueue = DispatchQueue(label: "ErikJavaScript")
+    open var javaScriptQueue = DispatchQueue.main
     // Serial queue where functions callbacks are executed
     open var callBackQueue = DispatchQueue(label: "ErikCallBack")
     // Serial queue where Erik wait for page loading
