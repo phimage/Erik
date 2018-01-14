@@ -133,7 +133,7 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
     open fileprivate(set) var firstPageLoaded = false
 
     // Serial queue where javascript is executed
-    open var javaScriptQueue = DispatchQueue(label: "ErikJavaScript")
+    open var javaScriptQueue = DispatchQueue.main
     // Serial queue where functions callbacks are executed
     open var callBackQueue = DispatchQueue(label: "ErikCallBack")
     // Serial queue where Erik wait for page loading
@@ -272,10 +272,10 @@ extension WebKitLayoutEngine {
     }
     
     fileprivate func handleHTML(_ completionHandler: CompletionHandler?) {
-        DispatchQueue.main.async { [unowned self] in
+        javaScriptQueue.async { [unowned self] in
          
             self.webView.evaluateJavaScript(self.javascriptToGetContent.javascript) { (obj, error) -> Void in
-                DispatchQueue.main.async {
+                javaScriptQueue.async {
                     completionHandler?(obj, error)
                 }
             }
