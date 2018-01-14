@@ -86,6 +86,7 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
             case .navigationDelegate:
                 return { engine in
                     if let delegate = engine.navigable {
+                        assert(engine.navigable as? WKNavigationDelegate === engine.webView.navigationDelegate)
                         return delegate.navigate
                     }
                     assertionFailure("No navigation deletage found")
@@ -274,7 +275,7 @@ extension WebKitLayoutEngine {
         javaScriptQueue.async { [unowned self] in
          
             self.webView.evaluateJavaScript(self.javascriptToGetContent.javascript) { [unowned self] (obj, error) -> Void in
-                self.callBackQueue.async {
+                self.javaScriptQueue.async {
                     completionHandler?(obj, error)
                 }
             }
@@ -407,7 +408,7 @@ extension WebKitLayoutEngine: Semaphorable {}
 
 protocol Semaphorable: AnyObject {}
 
-class SemaphoreBox: AnyObject  {
+class SemaphoreBox  {
     let semaphore = DispatchSemaphore(value: 0)
     var object: AnyObject?
 }
@@ -457,17 +458,23 @@ extension Semaphorable {
     
     var semaphores: [SemaphorableKey: SemaphoreBox] {
         get {
-            if let o = objc_getAssociatedObject(self, SemaphorableKeys.semaphores) as? [SemaphorableKey: SemaphoreBox]  {
+            if let semaphores = SemaphorableKeys.semaphores, let o = objc_getAssociatedObject(self, semaphores) as? [SemaphorableKey: SemaphoreBox]  {
                 return o
             }
             else {
                 let obj = [SemaphorableKey: SemaphoreBox]()
-                objc_setAssociatedObject(self, SemaphorableKeys.semaphores, obj, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                if let semaphores = SemaphorableKeys.semaphores {
+                     objc_setAssociatedObject(self, semaphores, obj, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                }
+               
                 return obj
             }
         }
         set {
-            objc_setAssociatedObject(self, SemaphorableKeys.semaphores, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+             if let semaphores = SemaphorableKeys.semaphores {
+                 objc_setAssociatedObject(self, semaphores, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+           
         }
     }
 
