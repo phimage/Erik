@@ -90,3 +90,70 @@ extension Erik {
         return Erik.sharedInstance.evaluateFuture(javaScript: javaScript)
     }
 }
+
+extension Element {
+
+    public typealias FutureError = NSError // TODO AnyError?
+    fileprivate static func toFutureError(_ error: Error) -> FutureError {
+        return error as FutureError
+    }
+
+    public func clickFuture() -> Future<Any?, FutureError> {
+        let promise = Promise<Any?, FutureError>()
+
+        self.click { (obj, err) -> Void in
+            if let obj = obj {
+                promise.success(obj)
+            }
+            else if let error = err {
+                promise.failure(Erik.toFutureError(error))
+            }
+            else {
+                promise.success(nil)
+            }
+        }
+
+        return promise.future
+    }
+
+}
+
+extension Form {
+
+    open func submitFuture() -> Future<Any?, FutureError> {
+        let promise = Promise<Any?, FutureError>()
+
+        self.click { (obj, err) -> Void in
+            if let obj = obj {
+                promise.success(obj)
+            }
+            else if let error = err {
+                promise.failure(Erik.toFutureError(error))
+            }
+            else {
+                promise.success(nil)
+            }
+        }
+
+        return promise.future
+    }
+
+    open func resetFuture() -> Future<Any?, FutureError> {
+        let promise = Promise<Any?, FutureError>()
+
+        self.reset { (obj, err) -> Void in
+            if let obj = obj {
+                promise.success(obj)
+            }
+            else if let error = err {
+                promise.failure(Erik.toFutureError(error))
+            }
+            else {
+                promise.success(nil)
+            }
+        }
+
+        return promise.future
+    }
+
+}
