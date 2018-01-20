@@ -265,7 +265,9 @@ extension WebKitLayoutEngine {
                 completionHandler(ErikError.timeOutError(time: pageLoadTimeout))
                 return
             }
+        #if os(OSX)
             RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date.distantFuture)
+        #endif
         }
         completionHandler(nil)
     }
