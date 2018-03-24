@@ -35,7 +35,7 @@ public enum ErikError: Error {
     // No content returned
     case noContent
     // HTML is not parsable
-    case htmlNotParsable(html: String)
+    case htmlNotParsable(html: String, error: Error)
     // Invalid url submited (NSURL init failed)
     case invalidURL(urlString: String)
 }
@@ -143,13 +143,13 @@ open class Erik {
             return
         }
         
-        guard let doc = self.htmlParser.parse(html, encoding: encoding) else {
-            completionHandler?(nil, ErikError.htmlNotParsable(html: html))
-            return
+        do {
+            let doc = try self.htmlParser.parse(html, encoding: encoding)
+            doc.layoutEngine = layoutEngine
+            completionHandler?(doc, error)
+        } catch {
+            completionHandler?(nil, ErikError.htmlNotParsable(html: html, error: error))
         }
-        
-        doc.layoutEngine = layoutEngine
-        completionHandler?(doc, error)
     }
 
 }

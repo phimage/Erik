@@ -23,18 +23,16 @@ SOFTWARE.
 import Foundation
 
 public protocol HTMLParser {
-    func parse(_ html: String, encoding: String.Encoding) -> Document?
+    func parse(_ html: String, encoding: String.Encoding) throws -> Document
 }
 
 import Kanna
 class KanaParser: HTMLParser {
     static let instance = KanaParser()
-
-    func parse(_ html: String, encoding: String.Encoding) -> Document? {
-        if let doc = Kanna.HTML(html: html, encoding: encoding) {
-            return Document(rawValue: doc)
-        }
-        return nil
+    
+    func parse(_ html: String, encoding: String.Encoding) throws -> Document {
+        let doc = try Kanna.HTML(html: html, encoding: encoding)
+        return Document(rawValue: doc)
     }
     
     static var escapeJavaScript: (String) -> String = {

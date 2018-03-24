@@ -109,7 +109,7 @@ class ErikTests: XCTestCase {
                                 XCTFail("input not found ")
                             }
                             
-                            print("HTML: \(doc.toHTML)")
+                            print("HTML: \(doc.toHTML ?? "none")")
                             //print("text: \(doc.text)")
                             if let form = doc.querySelectorAll("form").first as? Form {
                                 submitExpectation.fulfill()

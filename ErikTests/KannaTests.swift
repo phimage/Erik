@@ -29,14 +29,15 @@ class KannaTests: XCTestCase {
         }
         do {
             let html = try TextFile(path: path).read()
-            guard let parsed = Kanna.HTML(html: html, encoding: .utf8) else {
+            guard let parsed = try? Kanna.HTML(html: html, encoding: .utf8) else {
                 XCTFail("failed to parse")
                 return
             }
+            XCTAssertEqual(html, parsed.toHTML)
             
             let doc = Document(rawValue: parsed)
             
-            guard  let compare = doc.text else {
+            guard  let compare = doc.toHTML else {
                 XCTFail("no content")
                 return
             }
