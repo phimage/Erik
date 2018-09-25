@@ -260,14 +260,14 @@ extension WebKitLayoutEngine {
     fileprivate func handleLoadRequestCompletion(completionHandler: (Error?) -> Void) {
         // wait load finish
         let condition = pageLoadedPolicy.continueCondition
-        let max = NSDate().timeIntervalSince1970 + pageLoadTimeout
+        let max = Date().timeIntervalSince1970 + pageLoadTimeout
         while(condition(self)) {
-            if pageLoadTimeout > 0 && NSDate().timeIntervalSince1970 > max  {
+            if pageLoadTimeout > 0 && Date().timeIntervalSince1970 > max  {
                 completionHandler(ErikError.timeOutError(time: pageLoadTimeout))
                 return
             }
         #if os(OSX)
-            RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date.distantFuture)
+            RunLoop.current.run(mode: RunLoop.Mode.default, before: Date.distantFuture)
         #endif
         }
         completionHandler(nil)
