@@ -143,7 +143,7 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
     // Default name of javascript variable to get a return value
     open var javaScriptResultVarName: String = "resultErik"
 
-    open let webView: WKWebView
+    public let webView: WKWebView
     
     init(webView: WKWebView) {
         self.webView = webView
