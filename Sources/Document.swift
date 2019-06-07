@@ -323,7 +323,7 @@ open class Element: Node {
 
 public extension Array where Element: Node {
     
-    public var toHTML: String? {
+    var toHTML: String? {
         let html = reduce("") {
             if let text = $1.toHTML {
                 return $0 + text
@@ -333,7 +333,7 @@ public extension Array where Element: Node {
         return html.isEmpty == false ? html : nil
     }
     
-    public var innerHTML: String? {
+    var innerHTML: String? {
         let html = reduce("") {
             if let text = $1.innerHTML {
                 return $0 + text
@@ -343,7 +343,7 @@ public extension Array where Element: Node {
         return html.isEmpty == false ? html : nil
     }
     
-    public var text: String? {
+    var text: String? {
         let html = reduce("") {
             if let text = $1.text {
                 return $0 + text

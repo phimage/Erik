@@ -1,4 +1,3 @@
-github "Thomvis/BrightFutures" "7.0.0"
-github "antitypical/Result" "4.0.0"
-github "nvzqz/FileKit" "cb1a5285ca780d66264a3e70862f9845ff1cfb18"
-github "tid-kijyun/Kanna" "4.0.2"
+github "Thomvis/BrightFutures" "8.0.1"
+github "nvzqz/FileKit" "48b5ddb287f131a5c628badc819b880453f94449"
+github "tid-kijyun/Kanna" "5.0.0"

@@ -10,7 +10,6 @@ import XCTest
 @testable import Erik
 import FileKit
 import BrightFutures
-import Result
 
 let url = URL(string:"https://www.google.com")!
 let PageLoadedPolicy: WebKitLayoutEngine.PageLoadedPolicy = .navigationDelegate

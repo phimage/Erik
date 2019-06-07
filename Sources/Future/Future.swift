@@ -24,7 +24,6 @@ SOFTWARE.
 
 import Foundation
 import BrightFutures
-import Result
 
 extension Erik {
 

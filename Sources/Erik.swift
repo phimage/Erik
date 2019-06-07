@@ -179,11 +179,6 @@ extension Erik {
     public static func load(urlRequest: Foundation.URLRequest, completionHandler: DocumentCompletionHandler?) {
         Erik.sharedInstance.load(urlRequest: urlRequest, completionHandler: completionHandler)
     }
-
-    @available(*, deprecated: 1.1, obsoleted: 1.2, message: "Use url")
-    public static var currentURL: URL? {
-        return Erik.sharedInstance.url
-    }
     
     public static var url: URL? {
         return Erik.sharedInstance.url
