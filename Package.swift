@@ -1,30 +1,19 @@
-// Package.swift
-/*
- The MIT License (MIT)
- Copyright (c) 2016 Eric Marchand (phimage)
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
-
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
     name: "Erik",
+    products: [
+        .library(name: "Erik", targets: ["Erik"]),
+    ],
     dependencies: [
-        .Package(url: "https://github.com/tid-kijyun/Kanna.git", majorVersion: 4),
-        .Package(url: "https://github.com/Thomvis/BrightFutures.git", majorVersion: 6)
+        .package(url: "https://github.com/tid-kijyun/Kanna.git", .upToNextMajor(from: "5.0.0")),
+        .package(url: "https://github.com/Thomvis/BrightFutures.git", .upToNextMajor(from: "8.0.0")),
+        .package(url: "https://github.com/nvzqz/FileKit.git", .upToNextMajor(from: "6.0.0"))
+    ],
+    targets: [
+        .target(name: "Erik", dependencies: ["Kanna", "BrightFutures"], path: "Sources"),
+        .testTarget(name: "ErikTests", dependencies: ["Erik", "Kanna", "BrightFutures", "FileKit"], path: "ErikTests")
     ]
 )
+
