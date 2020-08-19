@@ -13,7 +13,9 @@
 <a href="https://paypal.me/ericphimage">
 <img src="https://buymecoffee.intm.org/img/button-paypal-white.png" alt="Buy me a coffee" height="35">
 </a>
-
+<a href="https://saucelabs.com">
+<img src="https://images.gitads.io/Erik" alt="GitAds" height="35"/>
+</a>
 
 [<img align="left" src="logo.png" hspace="20">](#logo) Erik is a [headless browser](https://en.wikipedia.org/wiki/Headless_browser) based on [WebKit](https://fr.wikipedia.org/wiki/WebKit) and HTML parser [Kanna](https://github.com/tid-kijyun/Kanna).
 
@@ -24,6 +26,8 @@ let browser = Erik.visit(url: url) { document, error in
     // browse HTML element, click, submit form and more
 }
 ```
+
+
 
 ## Navigation
 Go to an url
