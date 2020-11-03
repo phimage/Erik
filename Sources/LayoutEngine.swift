@@ -86,7 +86,7 @@ open class WebKitLayoutEngine: NSObject, LayoutEngine {
             case .navigationDelegate:
                 return { engine in
                     if let delegate = engine.navigable {
-                        assert(engine.navigable as? WKNavigationDelegate === engine.webView.navigationDelegate)
+//                        assert(engine.navigable as? WKNavigationDelegate === engine.webView.navigationDelegate)
                         return delegate.navigate
                     }
                     assertionFailure("No navigation deletage found")
