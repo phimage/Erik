@@ -16,10 +16,10 @@ before_install:
   - gem install xcpretty --no-document --quiet
   - brew update
   - brew outdated carthage || brew upgrade carthage
+before_script:
+  - carthage build --no-skip-current
 script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION"
     -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c
-before_deploy:
-  - carthage build --no-skip-current
