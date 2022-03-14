@@ -27,8 +27,8 @@ public protocol HTMLParser {
 }
 
 import Kanna
-class KanaParser: HTMLParser {
-    static let instance = KanaParser()
+class KannaParser: HTMLParser {
+    static let instance = KannaParser()
     
     func parse(_ html: String, encoding: String.Encoding) throws -> Document {
         let doc = try Kanna.HTML(html: html, encoding: encoding)
@@ -278,10 +278,10 @@ open class Element: Node {
         return selectors.reduce("var \(varName) = document;\n") { result, selector in
             if selector.hasSuffix(":erik-child") {
                 let erikSelector = selector.replacingOccurrences(of: ":erik-child", with: "")
-                return result + "\(varName) = \(varName).querySelector('\(KanaParser.escapeJavaScript(erikSelector))');\n"
+                return result + "\(varName) = \(varName).querySelector('\(KannaParser.escapeJavaScript(erikSelector))');\n"
             }
             else {
-                return result + "\(varName) = \(varName).querySelectorAll('\(KanaParser.escapeJavaScript(selector))')[\(index)];\n"
+                return result + "\(varName) = \(varName).querySelectorAll('\(KannaParser.escapeJavaScript(selector))')[\(index)];\n"
             }
         }
     }

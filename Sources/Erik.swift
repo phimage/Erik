@@ -58,7 +58,7 @@ open class Erik {
         } else {
             self.layoutEngine = WebKitLayoutEngine()
         }
-        self.htmlParser = KanaParser.instance
+        self.htmlParser = KannaParser.instance
     }
 
     // Get current url
